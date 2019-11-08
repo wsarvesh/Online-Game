@@ -1,0 +1,23 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+
+    <script src="{% static 'js/timer.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <meta charset="utf-8">
+    <title>PICTIONARY</title>
+  </head>
+  <body class="body1 bodywhite">
+
+  {% block content %}{% endblock content %}
+    <!-- first load django static tag. -->
+
+
+
+  </body>
+</html>

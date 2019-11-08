@@ -1,0 +1,96 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>PICTIONARY</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript"></script>
+
+<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'>
+<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css'>
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.0/css/bootstrapValidator.min.css'>
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+</head>
+<body class="body1">
+<!-- partial:index.partial.html -->
+<!-- <div class="jumbotron2 jumbotron align-items-center"> -->
+<div class="con aligning">
+<div class="container2">
+<h1 style="color:white">PICTIONARY</h1>
+    <form class="well form-horizontal blu" action="/pictionary/" method="post"  enctype="multipart/form-data">
+      {% csrf_token %}
+<fieldset>
+
+<!-- Form Name -->
+<legend><center><h2><b>TEAM NAMES</b></h2></center></legend><br>
+
+<!-- Text input-->
+
+<div class="form-group">
+  <label class="col-md-4 control-label">Red Team:</label>  
+  <div class="col-md-5">
+  <div class="input-group">
+    {{login.team1}}
+  <span class="input-group-addon"><i class="glyphicon glyphicon-user" style="color:red"></i></span>
+  <!-- <input  name="red_team" placeholder="Red Team" class="form-control"  type="text"> -->
+    
+    </div>
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="col-md-4 control-label">Yellow Team:</label>  
+  <div class="col-md-5">
+  <div class="input-group">
+    {{login.team2}}
+  <span class="input-group-addon"><i class="glyphicon glyphicon-user" style="color:gold"></i></span>
+  <!-- <input  name="yellow_team" placeholder="Yellow Team" class="form-control"  type="text"> -->
+  
+    </div>
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="col-md-4 control-label">Blue Team:</label>  
+  <div class="col-md-5">
+  <div class="input-group">
+    {{login.team3}}
+  <span class="input-group-addon"><i class="glyphicon glyphicon-user" style="color:blue"></i></span>
+  <!-- <input  name="blue_team" placeholder="Blue Team" class="form-control"  type="text"> -->
+  
+    </div>
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="col-md-4 control-label">Green Team:</label>  
+  <div class="col-md-5">
+  <div class="input-group">
+    {{login.team4}}
+  <span class="input-group-addon"><i class="glyphicon glyphicon-user" style="color:green"></i></span>
+  <!-- <input  name="green_team" placeholder="Green Team" class="form-control"  type="text"> -->
+  
+    </div>
+  </div>
+</div>
+<!-- Button -->
+<div class="form-group">
+  <label class="col-md-4 control-label"></label>
+  <div class="col-md-4"><br>
+    <center><button type="submit" class="btn btn-primary" name='play'>PLAY PICTIONARY</button></center>
+  </div>
+</div>
+
+</fieldset>
+</form>
+</div>
+    </div><!-- /.container -->
+<!-- partial -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.5/js/bootstrapvalidator.min.js'></script><script  src="./script.js"></script>
+
+</body>
+</html>
