@@ -5,15 +5,15 @@
   margin: auto;
 }
 
-.container3{
-  background-color: black;
+.footer1{
+  left: 0;
+  bottom: 0;
   width: 100%;
-}
-
-.footer_text{
-  font-size: 15;
+  background-color: black;
   color: white;
   text-align: right;
+  font-size: 10;
+  text-transform: uppercase;
 }
 
 .blu{
