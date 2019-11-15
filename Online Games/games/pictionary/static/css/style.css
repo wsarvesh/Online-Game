@@ -5,6 +5,17 @@
   margin: auto;
 }
 
+.container3{
+  background-color: black;
+  width: 100%;
+}
+
+.footer_text{
+  font-size: 15;
+  color: white;
+  text-align: right;
+}
+
 .blu{
   background-color: #183c79;
   box-shadow: 5px 10px;
