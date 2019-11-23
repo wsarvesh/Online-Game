@@ -5,16 +5,27 @@
   <head>
 
     <script src="{% static 'js/timer.js' %}"></script>
-    <link rel="stylesheet" href="{% static 'css/style1.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style3.css' %}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
     <title>PICTIONARY</title>
   </head>
   <body class="body1 bodywhite">
+    
+    <!-- <div class="container"> -->
+      <div class="row">
+        <div class="col-lg-6">
+          {% block content %}{% endblock content %}
+        </div>
+        <div class="col-lg-6">
+          {% block content1 %}{% endblock content1 %}
+        </div>
+      </div>
+    <!-- </div> -->
 
-  {% block content %}{% endblock content %}
     <!-- first load django static tag. -->
 
 
