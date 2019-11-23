@@ -3685,7 +3685,7 @@ function __doPostBack(eventTarget, eventArgument) {
 										<span onclick="app.toggleFavoriteItem(this,event);" class="item-button item-button-favorite glyphicon glyphicon-heart"></span>
 									</div>
 									<div class="item-image-wrapper">
-										<img class="lazy-load" onerror="ImageLoadError(this)" data-src="/f/items-dl/c9f5b6e5-7e69-4b73-bbf9-1672e3e02f1b.jpg" src="/i/loading.png" alt= " Beyoncé " />
+										<img class="lazy-load" onerror="ImageLoadError(this)" data-src="/f/items-dl/c9f5b6e5-7e69-4b73-bbf9-1672e3e02f1b.jpg" src="/i/loading.png" alt= " Beyonce " />
 									</div>
 									<div class="item-name">
 										Beyonc&#233;

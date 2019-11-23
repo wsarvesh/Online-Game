@@ -1942,7 +1942,7 @@ function __doPostBack(eventTarget, eventArgument) {
 										<span onclick="app.toggleFavoriteItem(this,event);" class="item-button item-button-favorite glyphicon glyphicon-heart"></span>
 									</div>
 									<div class="item-image-wrapper">
-										<img onerror="ImageLoadError(this)" src="https://image.tmdb.org/t/p/w185/5pQlc8dp5dXzWg1yM70DZrsDpOl.jpg" alt= " 8½ (1963) " />
+										<img onerror="ImageLoadError(this)" src="https://image.tmdb.org/t/p/w185/5pQlc8dp5dXzWg1yM70DZrsDpOl.jpg" alt= " 8 1/2 (1963) " />
 									</div>
 									<div class="item-name">
 										8&#189; (1963)
@@ -5489,7 +5489,7 @@ function __doPostBack(eventTarget, eventArgument) {
 										<span onclick="app.toggleFavoriteItem(this,event);" class="item-button item-button-favorite glyphicon glyphicon-heart"></span>
 									</div>
 									<div class="item-image-wrapper">
-										<img class="lazy-load" onerror="ImageLoadError(this)" data-src="https://image.tmdb.org/t/p/w185/fX2PwdgUf2IbXIywBA7Yjlbvtbh.jpg" src="/i/loading-tall.png" alt= " Sigur Rós: Heima (2007) " />
+										<img class="lazy-load" onerror="ImageLoadError(this)" data-src="https://image.tmdb.org/t/p/w185/fX2PwdgUf2IbXIywBA7Yjlbvtbh.jpg" src="/i/loading-tall.png" alt= " Sigur Ros: Heima (2007) " />
 									</div>
 									<div class="item-name">
 										Sigur R&#243;s: Heima (2007)
@@ -6717,7 +6717,7 @@ function __doPostBack(eventTarget, eventArgument) {
 										<span onclick="app.toggleFavoriteItem(this,event);" class="item-button item-button-favorite glyphicon glyphicon-heart"></span>
 									</div>
 									<div class="item-image-wrapper">
-										<img class="lazy-load" onerror="ImageLoadError(this)" data-src="https://image.tmdb.org/t/p/w185/9cJETuLMc6R0bTWRA5i7ctY9bxk.jpg" src="/i/loading-tall.png" alt= " WALL·E (2008) " />
+										<img class="lazy-load" onerror="ImageLoadError(this)" data-src="https://image.tmdb.org/t/p/w185/9cJETuLMc6R0bTWRA5i7ctY9bxk.jpg" src="/i/loading-tall.png" alt= " WALL.E (2008) " />
 									</div>
 									<div class="item-name">
 										WALL&#183;E (2008)
@@ -6822,7 +6822,7 @@ function __doPostBack(eventTarget, eventArgument) {
 										<span onclick="app.toggleFavoriteItem(this,event);" class="item-button item-button-favorite glyphicon glyphicon-heart"></span>
 									</div>
 									<div class="item-image-wrapper">
-										<img class="lazy-load" onerror="ImageLoadError(this)" data-src="https://image.tmdb.org/t/p/w185/2woVot4i5Yo8RYyfnSgdhH7WEQZ.jpg" src="/i/loading-tall.png" alt= " La Jetée (1962) " />
+										<img class="lazy-load" onerror="ImageLoadError(this)" data-src="https://image.tmdb.org/t/p/w185/2woVot4i5Yo8RYyfnSgdhH7WEQZ.jpg" src="/i/loading-tall.png" alt= " La Jetee (1962) " />
 									</div>
 									<div class="item-name">
 										La Jet&#233;e (1962)
@@ -12757,7 +12757,7 @@ function __doPostBack(eventTarget, eventArgument) {
 										<span onclick="app.toggleFavoriteItem(this,event);" class="item-button item-button-favorite glyphicon glyphicon-heart"></span>
 									</div>
 									<div class="item-image-wrapper">
-										<img onerror="ImageLoadError(this)" src="https://image.tmdb.org/t/p/w185/4vGcn1FlsaXdPuFZ3Rhdtkg65Ay.jpg" alt= " Marketa Lazarová (1967) " />
+										<img onerror="ImageLoadError(this)" src="https://image.tmdb.org/t/p/w185/4vGcn1FlsaXdPuFZ3Rhdtkg65Ay.jpg" alt= " Marketa Lazarova (1967) " />
 									</div>
 									<div class="item-name">
 										Marketa Lazarov&#225; (1967)
@@ -12867,7 +12867,7 @@ function __doPostBack(eventTarget, eventArgument) {
 										<span onclick="app.toggleFavoriteItem(this,event);" class="item-button item-button-favorite glyphicon glyphicon-heart"></span>
 									</div>
 									<div class="item-image-wrapper">
-										<img class="lazy-load" onerror="ImageLoadError(this)" data-src="https://image.tmdb.org/t/p/w185/y2rl0OkMfZHpBaQYPfSJmLMOxwp.jpg" src="/i/loading-tall.png" alt= " Nausicaä of the Valley of the Wind (1984) " />
+										<img class="lazy-load" onerror="ImageLoadError(this)" data-src="https://image.tmdb.org/t/p/w185/y2rl0OkMfZHpBaQYPfSJmLMOxwp.jpg" src="/i/loading-tall.png" alt= " Nausicaa of the Valley of the Wind (1984) " />
 									</div>
 									<div class="item-name">
 										Nausica&#228; of the Valley of the Wind (1984)
@@ -13145,7 +13145,7 @@ function __doPostBack(eventTarget, eventArgument) {
 										<span onclick="app.toggleFavoriteItem(this,event);" class="item-button item-button-favorite glyphicon glyphicon-heart"></span>
 									</div>
 									<div class="item-image-wrapper">
-										<img class="lazy-load" onerror="ImageLoadError(this)" data-src="https://image.tmdb.org/t/p/w185/vYRDKkEOKMIPRYWP1pSNqGrJGMo.jpg" src="/i/loading-tall.png" alt= " Plácido (1961) " />
+										<img class="lazy-load" onerror="ImageLoadError(this)" data-src="https://image.tmdb.org/t/p/w185/vYRDKkEOKMIPRYWP1pSNqGrJGMo.jpg" src="/i/loading-tall.png" alt= " Placido (1961) " />
 									</div>
 									<div class="item-name">
 										Pl&#225;cido (1961)
