@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<div onmousedown="WhichButton(event)">Click this text with one of your mouse buttons to return a number.
+  <p>
+  1 = The left mouse button<br>
+  2 = The right mouse button<br>
+  4 = The middle mouse button<br>
+  8 = The fourth mouse button (typically the "Browser Back" button)<br>
+  16 = The fifth mouse button (typically the "Browser Forward" button)<br>
+  </p>
+</div>
+
+<p><strong>Tip:</strong> The return values are combined if you press two buttons at once.</p>
+
+<p><strong>Note:</strong> The buttons property is not supported in IE8 and
+earlier and Safari.</p>
+
+<h2>You pressed button: <span id="demo"></span></h2>
+
+<a href="ttest.html">hi</a>
+
+<script>
+function WhichButton(event) {
+  var x = event.buttons;
+  alert("I am an alert box!");
+  document.getElementById("demo").innerHTML = x;
+}
+</script>
+
+</body>
+</html>
