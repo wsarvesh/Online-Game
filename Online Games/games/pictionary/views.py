@@ -121,3 +121,11 @@ def login(request):
     else:
         login = Loginform()
         return render(request,'pictionary/login.html',{'login':login})
+
+
+def canvas(request):
+    if request.method == "POST":
+
+        return render(request,'pictionary/canvas.html')
+
+    return render(request,'pictionary/canvas.html')

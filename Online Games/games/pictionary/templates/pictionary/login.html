@@ -90,7 +90,18 @@
 </fieldset>
 </form>
 </div>
+
+<form action="/pictionary/" method='post'>
+  {% csrf_token %}
+    <div class="form-group">
+      <label class="col-md-4 control-label"></label>
+      <div class="col-md-4"><br>
+        <center><button type="submit" class="btn btn-primary" name='canvas'>CANVAS</button></center>
+      </div>
     </div>
+  </form>
+    </div>
+
     <!-- /.container -->
 <!-- partial -->
   <div class="footer1">
