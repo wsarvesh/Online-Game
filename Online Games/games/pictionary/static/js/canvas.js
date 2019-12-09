@@ -31,10 +31,6 @@ function clearCanvas(canvas,ctx) {
 function sketchpad_mouseDown() {
     mouseDown=1;
     drawDot(ctx,mouseX,mouseY,1);
-    // ctx.beginPath();
-    // ctx.lineTo(mouseX, mouseY);
-    // ctx.stroke();
-    // ctx.closePath();
 }
 
 // Keep track of the mouse button being released
@@ -49,11 +45,8 @@ function sketchpad_mouseMove(e) {
 
     // Draw a dot if the mouse button is currently being pressed
     if (mouseDown==1) {
-        // ctx.beginPath();
-        // drawDot(ctx,mouseX,mouseY,5);
         ctx.lineTo(mouseX, mouseY);
         ctx.stroke();
-        // ctx.closePath();
     }
 }
 
@@ -78,10 +71,7 @@ function sketchpad_touchStart() {
     getTouchPos();
 
     drawDot(ctx,touchX,touchY,1);
-    // ctx.beginPath();
-    // ctx.lineTo(touchX, touchY);
-    // ctx.stroke();
-    // ctx.closePath();
+
 
     // Prevents an additional mousedown event being triggered
     event.preventDefault();
@@ -93,11 +83,10 @@ function sketchpad_touchMove(e) {
     getTouchPos(e);
 
     // During a touchmove event, unlike a mousemove event, we don't need to check if the touch is engaged, since there will always be contact with the screen by definition.
-    // drawDot(ctx,touchX,touchY,5); 
-    // ctx.beginPath();
+
     ctx.lineTo(touchX, touchY);
     ctx.stroke();
-    // ctx.closePath();
+
 
 
     // Prevent a scrolling action as a result of this touchmove triggering.
