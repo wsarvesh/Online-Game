@@ -1,0 +1,22 @@
+{% load staticfiles %}
+
+<html> 
+<head> 
+  <meta name="viewport" content="user-scalable=no,initial-scale=1.0,maximum-scale=1.0" />
+
+  <style>
+  body { padding:10px; margin:0px; background-color: #ccc; }
+  #main { margin: 10px auto 0px auto; }
+  </style>
+  
+  <!-- <script src="draw.js"></script> -->
+
+</head> 
+<body>
+<button id="clear">clear</button><br>
+<canvas id="main" width="300" height="300"></canvas>
+
+
+</body>
+<script src="{% static 'js/draw.js' %}"></script>
+</html>

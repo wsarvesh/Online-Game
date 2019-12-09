@@ -124,8 +124,7 @@ def login(request):
 
 
 def canvas(request):
-    if request.method == "POST":
-
-        return render(request,'pictionary/canvas.html')
-
+    # if request.method == "POST":
+    # 
+    #     return render(request,'pictionary/canvas.html')
     return render(request,'pictionary/canvas.html')
