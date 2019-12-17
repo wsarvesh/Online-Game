@@ -122,26 +122,12 @@
   {{form.as_p}}
   <!-- <button id = "st" onclick="timer()">Start timer</button> -->
   <button type="submit" name="correct" class="btns" onclick="nextturn()">CORRECT</button>
-  <button type="submit" id = "wrong" name="wrong" onclick="nextturn()" style="display: none;">WRONG</button>
+  <button type="submit" id="wrong" name="wrong" onclick="nextturn()" style="display: none;">WRONG</button>
 </form>
 <br><br><br>
 </center>
 {% endif %}
 
-
-<!-- <h2>{{pd}}</h2> -->
-
-<!-- <b><u>TURN: {{p_turn}}</u></b> -->
-
-<!-- <br>
-
-{{Card}}<br>
-
-<b>{{Word}}</b> -->
-
-<!-- <center>
-
-</center> -->
 {% endif %}
 
 
@@ -169,7 +155,14 @@
 
   {% endfor %}
   
+  {% if valid == 2  %}
+  
+  <center>
+  <button style="align:right;" type="submit" id = "wrong1" class="btns" name="wrong1" onclick="skipturn()">SKIP</button>
+  </center>
+  
   {% endif %}
 
+  {% endif %}
 
 {% endblock content1 %}

@@ -11,6 +11,10 @@ function nextturn(){
 
 }
 
+function skipturn(){
+  document.getElementById("wrong").click();
+}
+
 
 function timer() {
 var now1 = new Date().getTime();
