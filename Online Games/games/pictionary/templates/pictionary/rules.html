@@ -1,0 +1,32 @@
+{% extends 'pictionary/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<h3><b>STEPS:</b><br>
+1. Contestants must split into 1 to 4 teams of 2 or more players.<br>
+2. Enter team names on one device and press play.<br>
+3. Each team must open the application on another device and open the Canvas.<br>
+4. At each turn, one player of the team will roll the die.<br>
+5. After rolling, the team must choose one person who will draw in that round.<br>
+6. The chosen player will click on show card and look at the card privately.<br>
+7. A timer of 1:30 minutes will start when Show Card is pressed.<br>
+8. The player must try to draw the 1 of the given 2 options of their team's Canvas.<br>
+9. The remaining team players must guess the card.<br>
+10. If the guess is correct, Press correct and the team will be awarded points. Next team's turn will appear.<br>
+11. If the timer runs out, the next teams turn will appear. No points will be awarded.<br>
+12. If the contestant gives up, the can skip their turn by pressing Skip.<br>
+13. Points are awarded based on the die roll. The first team to reach 25 points wins the game.<br></h3>
+
+{% endblock content %}
+
+
+{% block content1 %}
+<h3><b>NOTE:</b><br>
+1. The same player cannot draw for two turns in a row.<br>
+2. The cards are segregated into 6 categories: Name/Place/Animal, Actions, Objects, Movies & Random.<br>
+3. After the card appears, the contestant is allowed tell their teammates the category of the card.<br>
+4. The player who is drawing is not allowed to speak at any point while drawing except to declare the category of the card.<br></h3>
+
+{% endblock content1 %}
