@@ -87,3 +87,16 @@
   text-transform: uppercase;
   font-size: 50px;
 }
+
+.canbtn{
+  /* display: block; */
+  background: white;
+  color: black;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.canbtn:hover{
+  text-decoration: none;
+}
