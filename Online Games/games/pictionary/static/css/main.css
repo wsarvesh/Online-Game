@@ -1,0 +1,155 @@
+@font-face {
+  font-family: Wallington;
+  src: url(WallingtonRegular-PYK7.ttf);
+  }
+
+body{
+  font-family: Wallington;
+}
+
+.minheight{
+  min-height: 100vh;
+}
+
+.bg{
+  background-color: #304e81;
+}
+
+/* COLORS */
+
+.bg-red{
+  background: #ff5a5a;
+}
+.bg-green{
+  background: #75d76d;
+}
+.bg-blue{
+  background: #5d90ff;
+}
+.bg-yellow{
+  background: #fff66c;
+}
+.bg-orange{
+  background: #eb7f59;
+}
+.bg-pink{
+  background: #f179b7;
+}
+
+.border-red{
+  border:3px solid #ff5a5a;
+}
+.border-green{
+  border:3px solid #75d76d;
+}
+.border-blue{
+  border:3px solid #5d90ff;
+}
+.border-yellow{
+  border:3px solid #fff66c;
+}
+.border-orange{
+  border:3px solid #eb7f59;
+}
+.border-pink{
+  border:3px solid #f179b7;
+}
+
+.col-red{
+  color: #ff5a5a;
+}
+.col-green{
+  color: #75d76d;
+}
+.col-blue{
+  color: #5d90ff;
+}
+.col-yellow{
+  color: #fff66c;
+}
+.col-orange{
+  color: #eb7f59;
+}
+.col-pink{
+  color: #f179b7;
+}
+
+.golden{
+  color: #bf9b30;
+}
+.golden-border{
+  border: 3px solid #bf9b30;
+}
+
+
+
+/* ANIMATION */
+
+.fade-in-up {
+    /* opacity: 0; */
+    animation: fadeInUp ease 3s;
+    -webkit-animation: fadeInUp ease 3s;
+    -moz-animation: fadeInUp ease 3s;
+    -o-animation: fadeInUp ease 3s;
+    -ms-animation: fadeInUp ease 3s;
+}
+
+@keyframes fadeInUp {
+    from {
+        transform: translate3d(0,40px,0);
+        opacity:0;
+    }
+
+    to {
+        transform: translate3d(0,0,0);
+        opacity: 1
+    }
+}
+
+@-moz-keyframes fadeIn {
+  from {
+      transform: translate3d(0,40px,0);
+      opacity:0;
+  }
+
+  to {
+      transform: translate3d(0,0,0);
+      opacity: 1
+  }
+}
+
+@-webkit-keyframes fadeIn {
+  from {
+      transform: translate3d(0,40px,0);
+      opacity:0;
+  }
+
+  to {
+      transform: translate3d(0,0,0);
+      opacity: 1
+  }
+}
+
+@-o-keyframes fadeIn {
+  from {
+      transform: translate3d(0,40px,0);
+      opacity:0;
+  }
+
+  to {
+      transform: translate3d(0,0,0);
+      opacity: 1
+  }
+}
+
+@-ms-keyframes fadeIn {
+  from {
+      transform: translate3d(0,40px,0);
+      opacity:0;
+  }
+
+  to {
+      transform: translate3d(0,0,0);
+      opacity: 1
+  }
+}

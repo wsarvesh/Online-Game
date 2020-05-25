@@ -1,32 +1,84 @@
-{% extends 'pictionary/base.html' %}
-
 {% load static %}
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <title>Pictionary</title>
 
-{% block content %}
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-<h3><b>STEPS:</b><br>
-1. Contestants must split into 1 to 4 teams of 2 or more players.<br>
-2. Enter team names on one device and press play.<br>
-3. Each team must open pictionary on another device and open the Canvas.<br>
-4. At each turn, one player of the team will roll the die.<br>
-5. After rolling, the team must choose one person who will draw in that round.<br>
-6. The chosen player will click on show card and look at the card privately.<br>
-7. A timer of 1:30 minutes will start when Show Card is pressed.<br>
-8. The player must try to draw the 1 of the given 2 options of their team's Canvas.<br>
-9. The remaining team players must guess the card.<br>
-10. If the guess is correct, Press correct and the team will be awarded points. Next team's turn will appear.<br>
-11. If the timer runs out, the next teams turn will appear. No points will be awarded.<br>
-12. If the contestant gives up, the can skip their turn by pressing Skip.<br>
-13. Points are awarded based on the die roll. The first team to reach 25 points wins the game.<br></h3>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- <script src="http://code.jquery.com/jquery-1.9.1.js"></script> -->
 
-{% endblock content %}
+    <link rel="stylesheet" href="{% static 'css/board.css' %}">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
 
+  </head>
+  <body class="bg">
+    
+    <div class="container-fluid d-flex align-items-center justify-content-center" style="min-height:100vh">
+      
+      <div class="row">
+        <div class="col-12 mb-2 mt-3 fade-in-up mx-auto text-uppercase text-white">
+          <center>Pictionary<center><br>
+            <center>How to Play<center>
+        </div>
+        
+        <div class="col-11 mb-2 mt-3 pt-2 pb-2 fade-in-up mx-auto golden-border text-white" style="font-size:2vh;">
+          <center>
+            <b>STEPS:</b><br><br>
+            1. Contestants must split into 1 to 6 teams of 2 or more players.<br>
+            2. Enter team names on one device and press play.<br>
+            3. Each team must open pictionary on another device and open the Canvas.<br>
+            4. At each turn, one player of the team will roll the die.<br>
+            5. After rolling, the team must choose one person who will draw in that round.<br>
+            6. The chosen player will click on show card and look at the card privately.<br>
+            7. A timer of 1:30 minutes will start when Show Card is pressed.<br>
+            8. The player must try to draw the 1 of the given 2 options of their team's Canvas.<br>
+            9. The remaining team players must guess the card.<br>
+            10. If the guess is correct, Press correct and the team will be awarded points. Next team's turn will appear.<br>
+            11. If the timer runs out, the next teams turn will appear. No points will be awarded.<br>
+            12. If the contestant gives up, the can skip their turn by pressing Skip.<br>
+            13. Points are awarded based on the die roll. The first team to reach 25 points wins the game.<br><br>
+            <center>
+        </div>
+        
+        
+        <div class="col-11 mb-2 mt-3 pt-2 pb-2 fade-in-up mx-auto golden-border text-white" style="font-size:2vh;">
+          <center>
+            <b>NOTE:</b><br><br>
+            1. The same player cannot draw for two turns in a row.<br>
+            2. The cards are segregated into 6 categories: Animals & Places, Actions, Objects, Food & Random.<br>
+            3. After the card appears, the contestant is allowed tell their teammates the category of the card.<br>
+            4. The player who is drawing is not allowed to speak at any point while drawing except to declare the category of the card.<br><br>
+            <center>
+        </div>
+        
+        <div class="col-12 mb-2 mt-2 fade-in-up mx-auto">
+          <center>
+            <button class="again-btn pt-3 pb-2" onclick="window.location.href = '/pictionary/';">
+              &nbsp; &nbsp; PLAY &nbsp; NOW
+            </button>
+            <center>
+        </div>
+      </div>
 
-{% block content1 %}
-<h3><b>NOTE:</b><br>
-1. The same player cannot draw for two turns in a row.<br>
-2. The cards are segregated into 6 categories: Name/Place/Animal, Actions, Objects, Movies & Random.<br>
-3. After the card appears, the contestant is allowed tell their teammates the category of the card.<br>
-4. The player who is drawing is not allowed to speak at any point while drawing except to declare the category of the card.<br></h3>
+    </div>
 
-{% endblock content1 %}
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+
+  </body>
+</html>

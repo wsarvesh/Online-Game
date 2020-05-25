@@ -1,0 +1,167 @@
+
+.welcome{
+  font-size: 5vh;
+  color: white;
+}
+
+.box{
+  /* width:100vw; */
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #fff;
+  opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: #fff;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+  color: #fff;
+}
+
+.inputbox{
+  border:0;
+  background: none;
+  display: block;
+  margin: 20px auto;
+  text-align: center;
+  border: 2px solid #3498db;
+  padding: 14px 10px;
+  width: 60vw;
+  outline: none;
+  color: white;
+  border-radius: 24px;
+  transition: 0.5s;
+}
+.inputbox:focus{
+  width: 80vw;
+}
+
+.inputbox:focus::-webkit-input-placeholder { color:transparent; }
+.inputbox:focus:-moz-placeholder { color:transparent; } /* FF 4-18 */
+.inputbox:focus::-moz-placeholder { color:transparent; } /* FF 19+ */
+.inputbox:focus:-ms-input-placeholder { color:transparent; } /* IE 10+ */
+
+.border-red{
+  border-color: red;
+}
+
+.add-btn{
+  border:0;
+  background: none;
+  display: block;
+  margin: 20px auto;
+  text-align: center;
+  border: 2px solid #81a6e3;
+  padding: 14px 40px;
+  outline: none;
+  color: white;
+  border-radius: 24px;
+  cursor: pointer;
+  font-weight: 700;
+  transition: all 0.75s;
+}
+.add-btn:hover{
+  background: #81a6e3;
+  color: #fff;
+}
+.add-btn:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.canvas-btn{
+  border:0;
+  background: none;
+  display: block;
+  margin: 20px auto;
+  text-align: center;
+  border: 2px solid #fff;
+  padding: 14px 40px;
+  outline: none;
+  color: white;
+  border-radius: 24px;
+  cursor: pointer;
+  font-weight: 700;
+  transition: all 0.75s;
+}
+.canvas-btn:hover{
+  background: #fff;
+  color:#304e81;
+}
+
+.canvas-btn:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.trans{
+  transition: all 2s;
+}
+
+
+/* CHECKBOXES */
+
+
+.mark{
+  display:block;
+  height:7vh;
+  width:9vh;
+  /* background: #c2322d; */
+  border-radius: 5px;
+  transition: all 1s;
+  position:relative;
+  border: 2px solid #fff;
+}
+.mark::after {
+  content: "";
+  position: absolute;
+  width:3vh;
+  height:5vh;
+  border-right: 5px solid #fff;
+  border-bottom: 5px solid #fff;
+  top:40%;
+  left:50%;
+  transform: translate(-50%,-50%) rotateZ(45deg);
+  transition: all 1s;
+  opacity: 0;
+}
+
+#check1:checked ~ .mark{
+  opacity : 0.7;
+}
+#check1:checked ~ .mark::after{
+  opacity : 1;
+}
+#check2:checked ~ .mark{
+  opacity : 0.7;
+}
+#check2:checked ~ .mark::after{
+  opacity : 1;
+}
+#check3:checked ~ .mark{
+  opacity : 0.7;
+}
+#check3:checked ~ .mark::after{
+  opacity : 1;
+}
+#check4:checked ~ .mark{
+  opacity : 0.7;
+}
+#check4:checked ~ .mark::after{
+  opacity : 1;
+}
+#check5:checked ~ .mark{
+  opacity : 0.7;
+}
+#check5:checked ~ .mark::after{
+  opacity : 1;
+}
+#check6:checked ~ .mark{
+  opacity : 0.7;
+}
+#check6:checked ~ .mark::after{
+  opacity : 1;
+}

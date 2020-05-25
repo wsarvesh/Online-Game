@@ -20,6 +20,7 @@ a:hover{
     position:relative;
     background-color: white; /* Necessary for correct mouse co-ords in Firefox */
 }
+
 #clearbutton {
     font-size: 16px;
     padding: 10px; 

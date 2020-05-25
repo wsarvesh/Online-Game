@@ -1,0 +1,7 @@
+import csv
+from pictionary.models import Cards
+with open('Pictionary_Data.csv') as csvfile:
+    reader = csv.DictReader(csvfile)
+    for row in reader:
+            p = Cards(card_title=row['title'],card_object=row['object'],card_action=row['action'],card_food=row['food'],card_allplay=row['allplay'])
+            p.save()

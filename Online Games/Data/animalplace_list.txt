@@ -1,0 +1,474 @@
+The Statue of Liberty
+New York
+USA
+The Eiffel Tower
+Paris
+France
+St. Basil's Cathedral
+Moscow
+Russia
+Blue Domed Church
+Santorini
+Greece
+Egipt
+The Pyramids of Giza
+Egypt
+The Little Mermaid
+Copenhagen
+Denmark
+France
+Holland
+The Great Chinese Wall
+China
+The Taj Mahal
+Agra
+India
+Machu Picchu
+Peru
+Big Ben
+London
+Dubai
+Tower of Pisa
+Italy
+Christ the Redeeme
+Rio de Janeiro
+Lascaux
+France
+Mecca
+Saudi Arabia
+Loch Ness
+Scotland
+Mont St. Michel
+France
+Bran Castle
+Transylvania
+Romania
+Agia Sophia
+Istanbul
+Turkey
+Brandenburg Gate
+Berlin
+Germany
+Acropolis of Athens
+Greece
+Sagrada Familia
+Barcelona
+Spain
+Uluru
+the Northern Territory
+Australia
+Neuschwanstein
+Bavaria
+Mount Fuji
+Japan
+Stonehenge
+Mount Eden crater
+New Zealand
+Easter Island
+the Polynesian Triangle
+Pacific Ocean
+Capitol Hill
+Washington DC
+Al Aqsa Mosque
+Jerusalem
+Angkor Wat at Cambodia
+Manneken Pis
+Brussels
+Mount Rushmore
+South Dakota
+The Grand Canyon
+Arizona
+Nevado Mismi
+Peru
+Japan
+Petra
+Jordan
+Trevi Fountain
+Rome
+Italy
+Auschwitz
+Poland
+Cape of Good Hope
+South Africa
+North Cape
+Norway
+Chichen Itza
+Mexico
+Inukshuk
+Canada
+Table Mountain
+Cape Town
+South Africa
+Golden Gate Bridge
+San Francisco
+California
+Sydney Opera House
+Australia
+Parc Guell
+Barcelona
+Spain
+Kilimanjaro
+Tanzania
+Forbidden City
+Beijing
+The Colosseum
+Rome
+Italy
+Twyfelfontein
+Namibia
+Tower Bridge
+London
+The Blue Mosque
+Istanbul
+The Sphinx
+Bucegi
+Romania
+Millau Bridge
+France
+Luxor Temple
+Egypt
+Dom
+Berlin
+Faisal Mosque
+Islamabad
+Pakistan
+Kremlin
+Moscow
+The Empire State Building
+New York
+Hermitage
+Saint Petersburg
+Newgrange
+Ireland
+Waterloo
+Belgium
+Carnac
+France
+Tilicho Lake
+Nepal
+Temple of Besakih
+Bali
+Indonesia
+Pompeii
+Italy
+The Wailing Wall
+Jerusalem
+Konark Sun Temple
+India
+Abu Simbel
+Egypt
+Middle of the Earth
+Ecuador
+The Prophet's Mosque
+Medina
+Jin Mao and SWFC
+Shanghai
+Sacré Coeur
+Paris
+France
+American Cemetery
+Normandy
+Potala Palace
+Llasa
+Tibet
+Angel Falls
+Venezuela
+The Louvre
+Paris
+France
+Atomium
+Brussels
+White Cliffs of Dover
+Great Britain
+Minaret of Jam
+Afghanistan
+Golden Temple of Amritsar
+India
+The Palace of Parliament
+Bucharest
+Romania
+Rock of Gibraltar
+Lotus Temple
+New Delhi
+India
+California
+CN Tower
+Canada
+Hollywood Sign
+Los Angeles
+Ephesus
+Turkey
+Twelve Apostles
+Australia
+Piazza San Marco
+Venice
+Italy
+Vinson Massif
+Antarctic
+Dog
+Puppy
+Turtle
+Rabbit
+Parrot
+Cat
+Kitten
+Goldfish
+Mouse
+Tropical fish
+Hamster
+Cow
+Rabbit
+Ducks
+Shrimp
+Pig
+Goat
+Crab
+Deer
+Bee
+Sheep
+Fish
+Turkey
+Dove
+Chicken
+Horse
+Crow
+Peacock
+Dove
+Sparrow
+Goose
+Stork
+Pigeon
+Turkey
+Hawk
+Bald eagle
+Raven
+Parrot
+Flamingo
+Seagull
+Ostrich
+Swallow
+Black bird
+Penguin
+Robin
+Swan
+Owl
+Woodpecker
+Squirrel
+Dog
+Chimpanzee
+Ox
+Lion
+Panda
+Walrus
+Otter
+Mouse
+Kangaroo
+Goat
+Horse
+Monkey
+Cow
+Koala
+Mole
+Elephant
+Leopard
+Hippopotamus
+Giraffe
+Fox
+Coyote
+Hedgehong
+Sheep
+Deer
+Giraffe
+Woodpecker
+Camel
+Starfish
+Koala
+Alligator
+Owl
+Tiger
+Bear
+Blue whale
+Coyote
+Chimpanzee
+Raccoon
+Lion
+Arctic wolf
+Crocodile
+Dolphin
+Elephant
+Squirrel
+Snake
+Kangaroo
+Hippopotamus
+Elk
+Fox
+Gorilla
+Bat
+Hare
+Toad
+Frog
+Deer
+Rat
+Badger
+Lizard
+Mole
+Hedgehog
+Otter
+Reindeer
+Crab
+Fish
+Seal
+Octopus
+Shark
+Seahorse
+Walrus
+Starfish
+Whale
+Penguin
+Jellyfish
+Squid
+Lobster
+Pelican
+Clams
+Seagull
+Dolphin
+Shells
+Sea urchin
+Cormorant
+Otter
+Pelican
+Sea anemone
+Sea turtle
+Sea lion
+Coral
+Moth
+Bee
+Butterfly
+Spider
+ladybug
+Ant
+Dragonfly
+Fly
+Mosquito
+Grasshopper
+Beetle
+Cockroach
+Centipede
+Worm
+Louse
+frog
+frogspawn
+newt
+tadpole
+toad
+scorpion
+spider
+tarantula
+albatross
+biddy
+blackbird
+canary
+crow
+cuckoo
+dove,
+pigeon
+duck
+eagle
+falcon
+finch
+flamingo
+goose
+gull
+hawk
+jackdaw
+jay
+kestrel
+kookaburra
+mallard
+nightingale
+nuthatch
+ostrich
+owl
+parakeet
+parrot
+peacock
+pelican
+penguin
+pheasant
+piranha
+raven
+robin
+rooster
+sparrow
+stork
+swallow
+swan
+swift
+tit
+turkey
+vulture
+woodpecker
+wren
+anteater
+antelope
+armadillo
+badger
+bat
+bear
+beaver
+bullock
+camel
+chimpanzee
+dachshund
+deer, hart
+dolphin
+elephant
+elk , moose
+fox
+gazelle
+gerbil
+giraffe
+goat
+grizzly bear
+guinea pig
+hamster
+hare
+hare
+hedgehog
+horse
+hyena
+lion
+llama
+lynx
+mammoth
+marmot
+mink
+mole
+mongoose
+mouse
+mule
+otter
+panda
+pig, hog
+platypus
+polar bear
+polecat
+pony
+porcupine
+prairie dog
+puma
+racoon
+rat
+reindeer
+rhinoceros
+seal
+seal
+sheep
+skunk
+sloth
+squirrel
+tiger
+weasel
+whale
+wolf
+zebra
