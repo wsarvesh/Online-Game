@@ -25,7 +25,7 @@ SECRET_KEY = '$e@(&naowi**54l6fkk@j6uok7cdj33f$-^-7au7-q)r-6i8r2'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['coffeecoders.pythonanywhere.com']
 
 
 # Application definition

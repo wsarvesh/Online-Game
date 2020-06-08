@@ -30,11 +30,11 @@
       document.getElementById("diceimg").setAttribute("src", dice[ranNum-1]);
       }
 
-      var ranInt = Math.floor( 1 + Math.random() * 6 );
+      var ranInt = Math.floor( 3 + Math.random() * 6 );
 
-      MyVar=setInterval(rolldice,75);
+      MyVar=setInterval(rolldice,150);
 
-      var delayInMilliseconds = ranInt*500;
+      var delayInMilliseconds = 2000;
 
       setTimeout(function() {
           var dice = ["{% static 'img/dice1b.png' %}","{% static 'img/dice2b.png' %}","{% static 'img/dice3b.png' %}","{% static 'img/dice4b.png' %}","{% static 'img/dice5b.png' %}","{% static 'img/dice6b.png' %}"];
@@ -191,7 +191,7 @@
                           <div class="container">
                             <center>
                               PICTIONARY CARD<br><br>
-                              <p class="mb-0 text-uppercase" style="font-size:8vh;"> {{gen}} </p>
+                              <p class="mb-0 text-uppercase" style="font-size:6vh;"> {{gen}} </p>
                               (Flip Card to Look at <br> what you have to draw !)
                             </center>
 
