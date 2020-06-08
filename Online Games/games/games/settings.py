@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'pictionary.apps.PictionaryConfig',
-    'index.apps.IndexConfig'
+    'index.apps.IndexConfig',
+    'classifier.apps.ClassifierConfig',
 ]
 
 MIDDLEWARE = [

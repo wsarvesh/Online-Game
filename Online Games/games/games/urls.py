@@ -20,5 +20,6 @@ from django.conf.urls import url
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('pictionary/',include("pictionary.urls")),
+    path('classifier/',include("classifier.urls")),
     path('',include("index.urls"))
 ]
