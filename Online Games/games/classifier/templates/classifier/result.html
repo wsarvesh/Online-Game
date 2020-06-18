@@ -1,0 +1,193 @@
+{% load static %}
+
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    <title>Classifier</title>
+
+    <link rel="stylesheet" href="{% static 'classify.css' %}">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+      <script>
+
+     $(document).ready(function() {
+
+        $("#main1").fadeIn(800, function(){
+          $("#main").slideDown(1000);
+        });
+
+        $(".class-card").each(function(){
+          var id = "#"+$(this).attr("id");
+          console.log(id);
+          var cardid = "#instruct"+$(this).attr("id");
+          console.log(cardid);
+          var contentid = cardid+"_inside";
+          console.log(contentid);
+          $(id).click(function(){
+           if(!$(contentid).is(":visible")){
+             $(cardid).animate({width:'100%'}, 'slow', function(){
+               $(contentid).slideDown("slow", function(){
+                 $(cardid).removeClass('instruct-btn');
+               });
+             });
+           }
+           else if(!$(contentid).is(":hidden")){
+             $(contentid).slideUp('slow',function(){
+               $(cardid).animate({width:'80%'},'slow',function(){
+                 $(cardid).addClass('instruct-btn');
+               });
+             });
+
+           }
+          });
+        })
+
+        $(".slide-toggle").click(function(){
+          $(".box").animate({
+            width: "toggle"
+          },'slow');
+        });
+
+     });
+
+</script>
+
+  </head>
+  <body class="dark">
+
+    <div class="d-flex justify-content-center align-items-center screen-size">
+      <div class="container-fluid mt-4 mb-4" style="width:90vw;">
+        <div class="row">
+          <div class="col-12">
+            <div class="card dark-card module border-color" id="main1" style="--notchSize: 80px;--bcolor:#008e8c;display:none;">
+                <div class="mt-4 mb-4">
+                  <center>
+                  <h1 class="text-white">Name of the File</h1>
+                  <span class="text-white">R E S U L T S</span>
+                </center>
+                </div>
+                <div id="main" style="display:none">
+                  <center>
+
+                    <div class="container-fluid">
+                      <div class="row d-flex justify-content-around">
+                        <div class="col-4 mt-4">
+                          <div class="module pt-2 pb-2 border-color instruct-btn instruct classify-card" id="instruct1" style="--notchSize: 30px;--bcolor:#3f4569;width:80%;">
+                            <center><span class="text-white class-card" id="1">C L A S S I F I E R &nbsp; C A R D</span></center>
+
+                            <div class="mr-3 ml-3 text-white" style="display:none" id="instruct1_inside">
+                              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+                              veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
+                              esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-4 mt-4">
+                          <div class="module pt-2 pb-2 border-color instruct-btn instruct classify-card" id="instruct2" style="--notchSize: 30px;--bcolor:#3f4569;width:80%;">
+                            <center><span class="text-white class-card" id="2">C L A S S I F I E R &nbsp; C A R D</span></center>
+                            <div class="mr-3 ml-3 text-white" style="display:none" id="instruct2_inside">
+                              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+                              veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
+                              esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-4 mt-4">
+                          <div class="module pt-2 pb-2 border-color instruct-btn instruct classify-card" id="instruct3" style="--notchSize: 30px;--bcolor:#3f4569;width:80%;">
+                            <center><span class="text-white class-card" id="3">C L A S S I F I E R &nbsp; C A R D</span></center>
+                            <div class="mr-3 ml-3 text-white" style="display:none" id="instruct3_inside">
+                              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+                              veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
+                              esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-4 mt-4">
+                          <div class="module pt-2 pb-2 border-color instruct-btn instruct classify-card" id="instruct4" style="--notchSize: 30px;--bcolor:#3f4569;width:80%;">
+                            <center><span class="text-white class-card" id="4">C L A S S I F I E R &nbsp; C A R D</span></center>
+                            <div class="mr-3 ml-3 text-white" style="display:none" id="instruct4_inside">
+                              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+                              veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
+                              esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-4 mt-4">
+                          <div class="module pt-2 pb-2 border-color instruct-btn instruct classify-card" id="instruct5" style="--notchSize: 30px;--bcolor:#3f4569;width:80%;">
+                            <center><span class="text-white class-card" id="5">C L A S S I F I E R &nbsp; C A R D</span></center>
+                            <div class="mr-3 ml-3 text-white" style="display:none" id="instruct5_inside">
+                              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+                              veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
+                              esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                            </div>
+                          </div>
+                        </div>
+
+
+                      </div>
+
+                    </div>
+
+                <div class="container-fluid mt-4 mb-4">
+                  <div class="row">
+                    <div class="col-4">
+                      <div class="mt-3 mb-1 pt-2 pb-2 module border-color h-fill" style="--notchSize:60px;--bcolor:#014143;width:90%;min-height:40vh;">
+                        <div class="container">
+                          <div class="row">
+                            <div class="col-12">
+                              <span class="text-white">GRAPH</span>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <div class="mt-3 mb-1 pt-2 pb-2 module border-color h-fill" style="--notchSize:60px;--bcolor:#014143;width:90%;min-height:40vh;">
+
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <div class="mt-3 mb-1 pt-2 pb-2 module border-color h-fill" style="--notchSize:60px;--bcolor:#014143;width:90%;min-height:40vh;">
+
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <div class="mt-5 mb-1 pt-2 pb-2 module border-color h-fill" style="--notchSize:60px;--bcolor:#3f4569;width:90%;height:20vh;">
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+
+                </center>
+
+
+            </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+  </body>
+</html>

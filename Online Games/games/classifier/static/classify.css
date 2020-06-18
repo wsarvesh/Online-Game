@@ -1,0 +1,190 @@
+@font-face {
+  font-family: TrulyMadly;
+  src: url(TrulyMadly.ttf);
+  }
+
+body{
+  font-family: TrulyMadly;
+  font-size: 20px;
+}
+
+.dark {
+  background-color: #1a2035;
+}
+
+.screen-size{
+  min-height: 100vh;
+  /* min-width: 100vw; */
+}
+
+.dark-card{
+  background: rgba(0,0,0,0.2);
+}
+
+.light-card{
+  background: rgba(1,1,1,0.2);
+}
+
+.module {
+  /* --notchSize: 80px; */
+  
+  clip-path: 
+    polygon(
+      0% 0%, /* top left */
+      0% 0%, /* top left */
+      calc(100% - var(--notchSize)) 0%, /* top right */
+      100% var(--notchSize), /* top right */
+      100% 100%, /* bottom right */
+      100% 100%, /* bottom right */
+      var(--notchSize) 100%, /* bottom left */
+      0% calc(100% - var(--notchSize)) /* bottom left */
+    );
+}
+
+.border-color{
+  border-top: solid var(--bcolor) 3px;
+  border-bottom: solid var(--bcolor) 3px;
+  border-left: solid var(--bcolor) 3px;
+  border-right: solid var(--bcolor) 3px;
+}
+
+.hover-btn{
+  color:white;
+  width: var(--btn);
+  transition: all 1s;
+}
+.hover-btn:hover{
+  width:calc(var(--btn) + 15%);
+  background-color: var(--bcolor);
+  cursor:pointer;
+}
+
+.loading-btn{
+  color:white;
+  width: var(--btn);
+  transition: all 1s;
+  background-color: var(--bcolor);
+}
+.loading-btn:hover{
+  cursor:pointer;
+}
+
+.instruct{
+  transition: background-color 1s;
+}
+
+.instruct-btn{
+  color:white;
+  transition: background-color 1s;
+}
+.instruct-btn:hover{
+  width:30%;
+  background-color: var(--bcolor);
+  cursor:pointer;
+}
+
+.h-fill{
+  transition: background-color 1s;
+}
+.h-fill:hover{
+  /* background-color: var(--bcolor);
+  background-opacity: 0.5; */
+  background: rgba(1,1,1,0.2);
+}
+
+/* DRAG N DROP */
+
+.demo-droppable {
+  /* background: #08c; */
+  width:100%;
+  color: #fff;
+  padding: 100px 0;
+  text-align: center;
+}
+.demo-droppable:hover {
+  cursor:pointer;
+}
+.demo-droppable.dragover {
+  background-color: rgba(1,1,1,0.2);
+}
+
+/* DEMO */
+.box{
+      overflow: hidden;
+  }
+  .box-inner{
+      min-width: 30vw;
+  }
+  
+/* RADIO / CHECKBOX */
+
+.big-label{
+  font-size:20px;
+  vertical-align: center;
+}
+.big-radio{
+  height:20px;
+  width:20px;
+  vertical-align: center;
+}
+.big-check{
+  height:20px;
+  width:20px;
+  vertical-align: center;
+}
+
+.mark{
+  display:block;
+  height:3vh;
+  width:3vh;
+  background: #3f4569;
+  border-radius: 5px;
+  transition: all 1s;
+  position:relative;
+  border: 2px solid #fff;
+}
+.mark::after {
+  content: "";
+  position: absolute;
+  width:2vh;
+  height:4vh;
+  border-right: 3px solid #fff;
+  border-bottom: 3px solid #fff;
+  top:30%;
+  left:50%;
+  transform: translate(-50%,-50%) rotateZ(45deg);
+  transition: all 1s;
+  opacity: 0;
+}
+
+.attrs:checked ~ .mark{
+  opacity : 0.7;
+}
+.attrs:checked ~ .mark::after{
+  opacity : 1;
+}
+
+/* SCROLL */
+
+/* width */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #1a2035;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #3f4569;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  /* background: #555; */
+  /* opacity:0.7;
+  cursor:pointer; */
+}
+

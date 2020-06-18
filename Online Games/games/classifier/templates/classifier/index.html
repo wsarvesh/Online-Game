@@ -1,10 +1,169 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
+{% load static %}
+
+<html lang="en">
   <head>
+    <!-- Required meta tags -->
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
     <title>Classifier</title>
+
+    <link rel="stylesheet" href="{% static 'classify.css' %}">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+      <script>
+
+     $(document).ready(function() {
+
+        $("#main1").fadeIn(800, function(){
+          $("#main").slideDown(1000);
+        })
+
+        $("#instruct").click(function(){
+
+         if(!$("#instruct_inside").is(":visible")){
+           $('#instruct').animate({width:'75%'}, 'slow', function(){
+             $("#instruct_inside").slideDown("slow", function(){
+               $('#instruct').removeClass('instruct-btn');
+             });
+           });
+         }
+         else if(!$("#instruct-inside").is(":hidden")){
+           $("#instruct_inside").slideUp('slow',function(){
+             $('#instruct').animate({width:'30%'},'slow',function(){
+               $('#instruct').addClass('instruct-btn');
+             });
+           });
+
+         }
+        });
+
+        $(".slide-toggle").click(function(){
+          $(".box").animate({
+            width: "toggle"
+          },'slow');
+        });
+
+        $("#load").click(function(){
+          $("#loading").html("L O A D I N G . . .");
+          $("#load").removeClass("hover-btn");
+          $("#load").addClass("loading-btn");
+          $("#load-btn").click();
+
+        })
+
+     });
+
+</script>
+
   </head>
-  <body>
-    Hello World
+  <body class="dark">
+
+    <div class="d-flex justify-content-center align-items-center screen-size">
+      <div class="container">
+        <div class="row">
+
+          <div class="col-12">
+            <div class="card dark-card module border-color" id="main1" style="--notchSize: 80px;--bcolor:#008e8c;display:none;">
+                <div class="mt-3 mb-3">
+                  <center>
+                  <h1 class="text-white">Welcome to the Classifier</h1>
+                  <span class="text-white">tagline tagline tagline tagline tagline </span>
+                </center>
+                </div>
+                <div id="main" style="display:none">
+
+                  <form action="/classifier/" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                  <center>
+                <div class="module pt-2 pb-2 border-color instruct-btn instruct" id="instruct" style="--notchSize: 20px;--bcolor:#3f4569;width:30%;">
+                  <center><span class="text-white">I N S T R U C T I O N S</span></center>
+                  <div class="mr-3 ml-3 text-white" style="display:none" id="instruct_inside">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+                    veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
+                    esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                  </div>
+                </div>
+
+                <div class="mt-3 mb-1 pt-2 pb-2 module border-color" style="--notchSize:30px;--bcolor:#014143;width:90%;height:30vh;">
+                  <div class="d-flex justify-content-center align-items-center" style="height:inherit">
+                    <div class="demo-droppable">
+                      <p class="disp">Drag files here or click to upload</p>
+                      <!-- <div class="output"></div> -->
+                    </div>
+                  </div>
+                </div>
+
+                </center>
+
+                <div class="" style="width:100%;">
+                  <center>
+                    <div style="width:85%;" class="d-flex justify-content-start" >
+                        <div class="mt-4 mb-3 pt-2 pb-2 module border-color light-card hover-btn slide-toggle" id="demo" style="--notchSize:15px;--bcolor:#3f4569;--btn:30%">
+                            <center>USE DEMO FILES</center>
+                        </div>
+                        &nbsp;&nbsp;
+                        <div class="d-flex align-items-center py-0 my-0">
+                          <div class="box mt-4 mb-3 pt-2 pb-1 light-card module" style="display:none;--notchSize:15px;">
+                              <div class="box-inner text-white d-flex justify-content-around" style="">
+                                <!-- <div class=""> -->
+                                  <div class="rad">
+                                    <label class="big-label"><input type="radio" class="big-radio" name="demo" value="IRIS"> &nbsp;&nbsp; IRIS</label>
+                                  </div>
+                                  <div class="rad">
+                                    <label class="big-label"><input type="radio" class="big-radio" name="demo" value="HEART"> &nbsp;&nbsp; HEART</label>
+                                  </div>
+                                  <div class="rad">
+                                    <label class="big-label"><input type="radio" class="big-radio" name="demo" value="WINE"> &nbsp;&nbsp; WINE</label>
+                                  </div>
+
+                                <!-- </div> -->
+                              </div>
+                          </div>
+                        </div>
+
+                    </div>
+                  </center>
+                </div>
+
+                <div style="width:95%">
+
+
+                    <div class="d-flex justify-content-end align-items-center">
+
+                        <div class="mt-3 mb-5 pt-2 pb-2 module border-color light-card hover-btn" id="load" style="--notchSize:15px;--bcolor:#014143;--btn:25%">
+                          <center>
+                            <span id="loading"> L O A D &nbsp; F I L E </span>
+                          </center>
+                        </div>
+                        <div style="display:none">
+                        <input type="file" name="file" class="input" />
+                        <button type="submit" name="button" id="load-btn"></button>
+                      </div>
+                    </div>
+
+
+              </div>
+              </form>
+            </div>
+              </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+        <script src="{% static 'input.js' %}"></script>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
   </body>
 </html>
