@@ -44,7 +44,7 @@
                 <div class="mt-4 mb-4">
                   <center>
                   <h1 class="text-white text-upperrcase">{{file_name}}</h1>
-                  <span class="text-white">22 attributes in this file</span>
+                  <span class="text-white">{{attr}} attributes in this file</span>
                 </center>
                 </div>
                 <div id="main" style="display:none">
@@ -64,23 +64,16 @@
                               </div>
                             </div>
                             <div class="row ml-5">
-
+                              {% for i in cols %}
                               <div class="col-4 mb-2 d-flex justify-content-start">
                                 <div class="ch-wrap">
-                                  <input type="radio" name="end" value="" id="end1" class="attrs" hidden/>
-                                  <label for="end1"  class="mark"></label>
+                                  <input type="radio" name="end" value="" id="end{{forloop.counter}}" class="attrs" hidden/>
+                                  <label for="end{{forloop.counter}}"  class="mark"></label>
                                 </div>
                                 &nbsp;&nbsp;
-                                <label for="end1" class="text-white"> IRIS </label>
+                                <label for="end{{forloop.counter}}" class="text-white text-uppercase"> {{i}} </label>
                               </div>
-                              <div class="col-4 mb-2 d-flex justify-content-start">
-                                <div class="ch-wrap">
-                                  <input type="radio" name="end" value="" id="end2" class="attrs" hidden/>
-                                  <label for="end2"  class="mark"></label>
-                                </div>
-                                &nbsp;&nbsp;
-                                <label for="end2" class="text-white"> IRIS </label>
-                              </div>
+                              {% endfor %}
 
                             </div>
                           </div>
@@ -95,22 +88,16 @@
                             </div>
                           </div>
                           <div class="row ml-5">
+                            {% for i in cols %}
                             <div class="col-4 mb-2 d-flex justify-content-start">
                               <div class="ch-wrap">
-                                <input type="checkbox" name="" value="" id="attr" class="attrs" hidden/>
-                                <label for="attr"  class="mark"></label>
+                                <input type="checkbox" name="attr" value="" id="attr{{forloop.counter}}" class="attrs" hidden/>
+                                <label for="attr{{forloop.counter}}"  class="mark"></label>
                               </div>
                               &nbsp;&nbsp;
-                              <label for="attr" class="text-white"> IRIS </label>
+                              <label for="attr{{forloop.counter}}" class="text-white text-uppercase"> {{i}} </label>
                             </div>
-                            <div class="col-4 mb-2 d-flex justify-content-start">
-                              <div class="ch-wrap">
-                                <input type="checkbox" name="" value="" id="attr2" class="attrs" hidden/>
-                                <label for="attr2"  class="mark"></label>
-                              </div>
-                              &nbsp;&nbsp;
-                              <label for="attr2" class="text-white"> IRIS </label>
-                            </div>
+                            {% endfor %}
                           </div>
                         </div>
                       </div>
@@ -123,23 +110,17 @@
                               <span class="text-white">S E L E C T &nbsp;&nbsp;&nbsp; C L A S S I F I C A T I O N &nbsp;&nbsp;&nbsp; M E T H O D S</span>
                             </div>
                           </div>
-                          <div class="row ml-5 mt-2">
+                          <div class="row ml-5 mt-2 d-flex justify-content-around">
+                            {% for i in classifiers %}
                             <div class="col-4 mb-2 d-flex justify-content-start">
                               <div class="ch-wrap">
-                                <input type="checkbox" name="" value="" id="classify1" class="attrs" hidden/>
-                                <label for="classify1"  class="mark"></label>
+                                <input type="checkbox" name="classifier" value="" id="classify{{forloop.counter}}" class="attrs" hidden/>
+                                <label for="classify{{forloop.counter}}"  class="mark"></label>
                               </div>
                               &nbsp;&nbsp;
-                              <label for="classify1" class="text-white"> IRIS </label>
+                              <label for="classify{{forloop.counter}}" class="text-white"> {{i}} </label>
                             </div>
-                            <div class="col-4 mb-2 d-flex justify-content-start">
-                              <div class="ch-wrap">
-                                <input type="checkbox" name="" value="" id="classify1" class="attrs" hidden/>
-                                <label for="classify1"  class="mark"></label>
-                              </div>
-                              &nbsp;&nbsp;
-                              <label for="classify1" class="text-white"> IRIS </label>
-                            </div>
+                            {% endfor %}
                           </div>
                         </div>
                       </div>
