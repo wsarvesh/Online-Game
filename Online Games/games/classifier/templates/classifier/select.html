@@ -28,7 +28,7 @@
             width: "toggle"
           },'slow');
         });
-        
+
         $(".end-wrap").each(function(){
           var id = $(this).attr("id");
           var endid = "#end-"+id;
@@ -41,10 +41,10 @@
                     $(attrsid).fadeIn("slow");
                   }
                 });
-              });  
-          })
+              });
+          });
         });
-        
+
         $("#opt").click(function(){
           $("#ebox").attr("style","background:#014143;--notchSize:60px;--bcolor:#014143;width:90%;min-height:20vh;");
           $("#abox").attr("style","background:#014143;--notchSize:60px;--bcolor:#014143;width:90%;min-height:20vh;");
@@ -56,9 +56,16 @@
           });
 
         });
+
+        $("#browse").click(function(){
+          $("#loading").html("S T A R T I N G . . .");
+          $("#load").removeClass("hover-btn");
+          $("#load").addClass("loading-btn");
+          $("#start-btn").click();
+        });
      });
-     
-     
+
+
 
 </script>
 
@@ -76,6 +83,8 @@
                   <span class="text-white">{{attr}} attributes in this file</span>
                 </center>
                 </div>
+                <form action="/classifier/select/?file={{file_name}}" method="POST" target="_blank">
+                  {% csrf_token %}
                 <div id="main" style="display:none">
                   <center>
                 <div class="module pt-2 pb-2 border-color instruct-btn" id="opt" style="--notchSize: 20px;--bcolor:#3f4569;width:50%;">
@@ -96,7 +105,7 @@
                               {% for i in cols %}
                               <div class="col-4 mb-2 d-flex justify-content-start">
                                 <div class="ch-wrap end-wrap" id="{{forloop.counter}}">
-                                  <input type="radio" name="end" value="" id="end-{{forloop.counter}}" class="attrs" hidden/>
+                                  <input type="radio" name="end" value="{{i}}" id="end-{{forloop.counter}}" class="attrs" hidden/>
                                   <label for="end-{{forloop.counter}}"  class="mark"></label>
                                 </div>
                                 &nbsp;&nbsp;
@@ -121,7 +130,7 @@
                             <div class="col-4 mb-2 attr-wrap" id="attr-div-{{forloop.counter}}">
                             <div class=" d-flex justify-content-start">
                               <div class="ch-wrap">
-                                <input type="checkbox" name="attr" value="" id="attr-{{forloop.counter}}" class="attrs" hidden/>
+                                <input type="checkbox" name="attr" value="{{i}}" id="attr-{{forloop.counter}}" class="attrs" hidden/>
                                 <label for="attr-{{forloop.counter}}"  class="mark"></label>
                               </div>
                               &nbsp;&nbsp;
@@ -145,7 +154,7 @@
                               {% for i in classifiers %}
                               <div class="col-4 mb-2 mt-3 d-flex justify-content-center">
                                 <div class="ch-wrap">
-                                  <input type="checkbox" name="classifier" value="" id="classify{{forloop.counter}}" class="attrs" hidden/>
+                                  <input type="checkbox" name="classifier" value="{{i}}" id="classify{{forloop.counter}}" class="attrs" hidden/>
                                   <label for="classify{{forloop.counter}}"  class="mark"></label>
                                 </div>
                                 &nbsp;&nbsp;&nbsp;&nbsp;
@@ -153,34 +162,36 @@
                               </div>
                               {% endfor %}
                             </div>
-                          
+
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
+
                 </center>
 
                 <div style="width:95%">
-                  <form class="" action="index.html" method="post">
 
                     <div class="d-flex justify-content-end align-items-center">
 
                         <div class="mt-3 mb-3 pt-2 pb-2 module border-color light-card hover-btn" id="browse" style="--notchSize:15px;--bcolor:#014143;--btn:25%">
                           <center>
-                            S T A R T
+                            <span id="loading">S T A R T</span>
                           </center>
                         </div>
                         <div style="display:none">
-                        <input type="file" class="input" />
-                        <button type="submit" name="button"></button>
+
+                        <input type="number" name="train" value="80" hidden />
+                        <input type="number" name="test" value="20" hidden />
+                        <button type="submit" id="start-btn" name="button"></button>
                       </div>
                     </div>
-                  </form>
 
               </div>
 
             </div>
+          </form>
               </div>
           </div>
         </div>

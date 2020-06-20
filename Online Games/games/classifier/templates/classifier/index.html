@@ -46,6 +46,13 @@
           $(".box").animate({
             width: "toggle"
           },'slow');
+          $(".big-radio").each(function(){
+            var id = "#"+$(this).attr("id");
+            if($(id).is(':checked')){
+              $(id).prop("checked",false);
+            }
+          });
+
         });
 
         $("#load").click(function(){
@@ -54,7 +61,7 @@
           $("#load").addClass("loading-btn");
           $("#load-btn").click();
 
-        })
+        });
 
      });
 
@@ -112,13 +119,13 @@
                               <div class="box-inner text-white d-flex justify-content-around" style="">
                                 <!-- <div class=""> -->
                                   <div class="rad">
-                                    <label class="big-label"><input type="radio" class="big-radio" name="demo" value="IRIS"> &nbsp;&nbsp; IRIS</label>
+                                    <label class="big-label"><input type="radio" class="big-radio" id="demo1" name="demo" value="iris"> &nbsp;&nbsp; IRIS</label>
                                   </div>
                                   <div class="rad">
-                                    <label class="big-label"><input type="radio" class="big-radio" name="demo" value="HEART"> &nbsp;&nbsp; HEART</label>
+                                    <label class="big-label"><input type="radio" class="big-radio" id="demo2" name="demo" value="heart"> &nbsp;&nbsp; HEART</label>
                                   </div>
                                   <div class="rad">
-                                    <label class="big-label"><input type="radio" class="big-radio" name="demo" value="WINE"> &nbsp;&nbsp; WINE</label>
+                                    <label class="big-label"><input type="radio" class="big-radio" id="demo3" name="demo" value="wine"> &nbsp;&nbsp; WINE</label>
                                   </div>
 
                                 <!-- </div> -->

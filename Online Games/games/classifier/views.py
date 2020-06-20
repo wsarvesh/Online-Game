@@ -13,8 +13,12 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
+from pandas.io.json import json_normalize
 import pandas as pd
 import numpy as np
+import time
+import json
+import re
 
 clfa = LogisticRegression(random_state = 42)
 clfb = SVC(random_state = 912, kernel = 'rbf')
@@ -23,36 +27,59 @@ clfd = DecisionTreeClassifier()
 clff = RandomForestClassifier()
 clf = LogisticRegression(random_state = 42)
 
-data = pd.DataFrame()
+# data = pd.DataFrame()
 
 def home(request):
 
     if request.method == "POST":
         IP = InputForm(request.POST)
         if IP.is_valid():
-            print(request.FILES['file'])
-            file = request.FILES['file']
             demo = IP.cleaned_data['demo']
-            fs = FileSystemStorage(location='classifier/media/')
+            if demo != "" :
+                demo = demo + ".csv"
+                og_name = demo
+                data = pd.read_csv("classifier/media/demo_data/" + demo, encoding='latin1')
+                request.session['data'] = data.to_json()
+                return HttpResponseRedirect("select/?file="+og_name)
+            file = request.FILES['file']
+            fs = FileSystemStorage(location='classifier/media/user_data/')
             name = "user_file." + file.name.split(".")[-1]
             og_name = file.name
-            dir = listdir('classifier/media/')
+            dir = listdir('classifier/media/user_data/')
             [fs.delete(i) for i in dir]
             filename = fs.save(name, file)
-            uploaded_file_url = fs.url(filename)
-            global data
-            data = pd.read_csv("classifier/" + uploaded_file_url, encoding='latin1')
+            data = pd.read_csv("classifier/media/user_data/"+filename, encoding='latin1')
+            request.session['data'] = data.to_json()
             return HttpResponseRedirect("select/?file="+og_name)
 
     IP = InputForm()
     return render(request,'classifier/index.html')
 
 def select(request):
-    file = request.GET['file']
-    global data
-    classifiers = ['Logistic Regression', 'Support Vector Machine', 'Decision Tree', 'RandomForest', 'XGBoost']
-    d = {'file_name':file, 'attr':len(data.columns), 'cols':data.columns, 'classifiers':classifiers}
-    return render(request,'classifier/select.html', d)
+    if 'data' in request.session:
+        if request.method == "POST":
+            SF = SelectForm(request.POST)
+            if SF.is_valid():
+                HttpResponseRedirect("result/")
+                time.sleep(20)
+                end = SF.cleaned_data['end']
+                attr= SF.cleaned_data['attr']
+                attr = re.findall(r"\'(.+?)\'", attr)
+                classifier = SF.cleaned_data['classifier']
+                classifier = re.findall(r"\'(.+?)\'", classifier)
+                train = SF.cleaned_data['train']
+                test = SF.cleaned_data['test']
+                print(end, attr, classifier, train, test)
+                return render(request, 'classifier/result.html', {'classifier':classifier}) #LOADING
+        jsondata = request.session['data']
+        jdata = json.loads(jsondata)
+        data = pd.DataFrame(jdata)
+        file = request.GET['file']
+        classifiers = ['Logistic Regression', 'Support Vector Machine', 'Decision Tree', 'RandomForest', 'XGBoost']
+        d = {'file_name':file, 'attr':len(data.columns), 'cols':data.columns, 'classifiers':classifiers}
+        SF = SelectForm()
+        return render(request,'classifier/select.html', d)
+    return render(request, 'classifier/index.html')
 
 def result(request):
     return render(request,'classifier/result.html')
