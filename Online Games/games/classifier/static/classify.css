@@ -164,6 +164,10 @@ body{
   opacity : 1;
 }
 
+.class-card{
+  cursor: pointer;
+}
+
 /* SCROLL */
 
 /* width */
@@ -187,4 +191,43 @@ body{
   /* opacity:0.7;
   cursor:pointer; */
 }
+
+
+/* GRAPHS */
+.chart-area {
+  position: relative;
+  height: 10rem;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .chart-area {
+    height: 20rem;
+  }
+}
+
+.chart-bar {
+  position: relative;
+  height: 10rem;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .chart-bar {
+    height: 20rem;
+  }
+}
+
+.chart-pie {
+  position: relative;
+  height: 15rem;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .chart-pie {
+    height: calc(20rem - 43px) !important;
+  }
+}
+
 
