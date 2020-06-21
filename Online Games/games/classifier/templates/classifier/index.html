@@ -52,7 +52,11 @@
               $(id).prop("checked",false);
             }
           });
-
+        });
+        
+        $("#demo").click(function(){
+          $("#demo").toggleClass("hover-btn");
+          $("#demo").toggleClass("hover-btn-fin");
         });
 
         $("#load").click(function(){
@@ -87,7 +91,7 @@
                   <form action="/classifier/" method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
                   <center>
-                <div class="module pt-2 pb-2 border-color instruct-btn instruct" id="instruct" style="--notchSize: 20px;--bcolor:#3f4569;width:30%;">
+                <div class="module pt-2 pb-2 mb-4 border-color instruct-btn instruct" id="instruct" style="--notchSize: 20px;--bcolor:#3f4569;width:30%;">
                   <center><span class="text-white">I N S T R U C T I O N S</span></center>
                   <div class="mr-3 ml-3 text-white" style="display:none" id="instruct_inside">
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim

@@ -30,7 +30,6 @@ clf = LogisticRegression(random_state = 42)
 # data = pd.DataFrame()
 
 def home(request):
-
     if request.method == "POST":
         IP = InputForm(request.POST)
         if IP.is_valid():
@@ -51,7 +50,6 @@ def home(request):
             data = pd.read_csv("classifier/media/user_data/"+filename, encoding='latin1')
             request.session['data'] = data.to_json()
             return HttpResponseRedirect("select/?file="+og_name)
-
     IP = InputForm()
     return render(request,'classifier/index.html')
 
@@ -60,8 +58,6 @@ def select(request):
         if request.method == "POST":
             SF = SelectForm(request.POST)
             if SF.is_valid():
-                HttpResponseRedirect("result/")
-                time.sleep(20)
                 end = SF.cleaned_data['end']
                 attr= SF.cleaned_data['attr']
                 attr = re.findall(r"\'(.+?)\'", attr)
@@ -70,13 +66,16 @@ def select(request):
                 train = SF.cleaned_data['train']
                 test = SF.cleaned_data['test']
                 print(end, attr, classifier, train, test)
-                return render(request, 'classifier/result.html', {'classifier':classifier}) #LOADING
+                return render(request, 'classifier/loading.html', {'classifier':classifier}) #LOADING
         jsondata = request.session['data']
         jdata = json.loads(jsondata)
         data = pd.DataFrame(jdata)
         file = request.GET['file']
-        classifiers = ['Logistic Regression', 'Support Vector Machine', 'Decision Tree', 'RandomForest', 'XGBoost']
-        d = {'file_name':file, 'attr':len(data.columns), 'cols':data.columns, 'classifiers':classifiers}
+        classifiers = ['Logistic Regression', 'Decision Tree','Support Vector Machine', 'RandomForest', 'XGBoost']
+        # classify = [[i," ".join("&nbsp;" if x==" " else x for x in list(i))] for i in classifiers]
+        classify = [[i," ".join("\t" if x==" " else x for x in list(i))] for i in classifiers]
+        print(classify)
+        d = {'file_name':file, 'attr':len(data.columns), 'cols':data.columns, 'classifiers':classifiers ,"classifier":classify}
         SF = SelectForm()
         return render(request,'classifier/select.html', d)
     return render(request, 'classifier/index.html')
