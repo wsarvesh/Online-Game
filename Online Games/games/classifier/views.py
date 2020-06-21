@@ -60,26 +60,25 @@ def select(request):
             if SF.is_valid():
                 end = SF.cleaned_data['end']
                 attr= SF.cleaned_data['attr']
-                attr = re.findall(r"\'(.+?)\'", attr)
+                # attr = re.findall(r"\'(.+?)\'", attr)
                 classifier = SF.cleaned_data['classifier']
-                classifier = re.findall(r"\'(.+?)\'", classifier)
+                # classifier = re.findall(r"\'(.+?)\'", classifier)
                 train = SF.cleaned_data['train']
                 test = SF.cleaned_data['test']
-                print(end, attr, classifier, train, test)
-                return render(request, 'classifier/loading.html', {'classifier':classifier}) #LOADING
+                file = request.GET['file']
+                # print(end, attr, classifier, train, test)
+                return render(request, 'classifier/loading.html', {'classifier':classifier,"end":end,"attr":attr,"train":train,"test":test,"file":file})
         jsondata = request.session['data']
         jdata = json.loads(jsondata)
         data = pd.DataFrame(jdata)
         file = request.GET['file']
         classifiers = ['Logistic Regression', 'Decision Tree','Support Vector Machine', 'RandomForest', 'XGBoost']
-        # classify = [[i," ".join("&nbsp;" if x==" " else x for x in list(i))] for i in classifiers]
-        classify = [[i," ".join("\t" if x==" " else x for x in list(i))] for i in classifiers]
-        print(classify)
-        d = {'file_name':file, 'attr':len(data.columns), 'cols':data.columns, 'classifiers':classifiers ,"classifier":classify}
+        d = {'file_name':file, 'attr':len(data.columns), 'cols':data.columns, 'classifiers':classifiers}
         SF = SelectForm()
         return render(request,'classifier/select.html', d)
     return render(request, 'classifier/index.html')
 
 def result(request):
+    
     return render(request,'classifier/result.html')
 # Create your views here.
