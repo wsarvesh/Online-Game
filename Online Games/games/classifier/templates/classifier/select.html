@@ -60,7 +60,7 @@
           });
 
         });
-        
+
         $("#attr-all").change(function(){
           if(!$("#attr-all").is(":checked")){
             $(".attrall").each(function(){
@@ -84,9 +84,9 @@
               }
             });
           }
-          
+
         });
-        
+
         $("#classify-all").change(function(){
           if(!$("#classify-all").is(":checked")){
             $(".classify").each(function(){
@@ -101,7 +101,7 @@
             });
           }
         });
-        
+
         $("#start").click(function(){
           $("#end-error").slideUp("slow");
           $("#attr-error").slideUp("slow");
@@ -129,10 +129,10 @@
           if(err === 3){
             $("#start-btn").click();
           }
-          
+
         });
-        
-        
+
+
 
      });
 
@@ -235,14 +235,14 @@
                           <div class="row">
                             <div class="col-12">
                               <span class="text-white">T R A I N &nbsp;&nbsp; T E S T &nbsp;&nbsp; S P L I T</span>
-                              <div class="mb-3 d-flex justify-content-between" style="width:85%;"> 
+                              <div class="mb-3 d-flex justify-content-between" style="width:85%;">
                                 <div class="text-white text-uppercase" style="font-size:25px"><span id="value">T r a i n : &nbsp; 80%</span></div>
                                 <div class="text-white text-uppercase" style="font-size:25px"><span id="tvalue">T e s t : &nbsp; 20%</span></div>
                               </div>
                               <div class="mb-4">
                                 <input type="range" class="slide" min="2" max="9" step="0.5" value="8">
                               </div>
-                              
+
                             </div>
                           </div>
 
@@ -302,8 +302,9 @@
 
                         <input type="number" name="train" id="train_val" value="80" />
                         <input type="number" name="test" id="test_val" value="20" />
-                        <button type="submit" id="start-btn" name="button"></button>
+                        <button type="submit" id="start-btn" name="start" value="start"></button>
                       </div>
+                      <button type="submit" id="start-btn" name="start" value="data"></button>
                     </div>
 
               </div>
@@ -315,10 +316,10 @@
         </div>
       </div>
     </div>
-    
+
     <script type="text/javascript">
           var elem = document.querySelector('input[type="range"]');
-          
+
           var rangeValue = function(){
             var x = elem.value;
             var val = document.getElementById('value');
@@ -330,15 +331,15 @@
             var disptval = "T e s t : &nbsp; "+ test + "%";
             val.innerHTML = dispval;
             tval.innerHTML = disptval;
-            
+
             var train_ip = document.getElementById("train_val");
             var test_ip = document.getElementById("test_val");
-            
+
             train_ip.value = train;
             test_ip.value = test;
           }
-          
-          elem.addEventListener("input", rangeValue);    
+
+          elem.addEventListener("input", rangeValue);
     </script>
 
     <!-- Optional JavaScript -->

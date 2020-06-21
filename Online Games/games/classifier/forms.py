@@ -10,3 +10,4 @@ class SelectForm(forms.Form):
     classifier = forms.CharField(widget=forms.CheckboxSelectMultiple())
     train = forms.CharField()
     test = forms.CharField()
+    start = forms.CharField()
