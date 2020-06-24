@@ -9,249 +9,381 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
-    <title>Classifier ABOY+UYTAsas</title>
+    <title>Classifier</title>
 
     <link rel="stylesheet" href="{% static 'classify.css' %}">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script> -->
 
       <script>
 
      $(document).ready(function() {
 
         $("#main1").fadeIn(800, function(){
-          $("#main").slideDown(1000);
-        });
-        
-        
-        $(".class-card").each(function(){
-          var id = "#"+$(this).attr("id");
-          var idnum = $(this).attr("id");
-          var cardid = "#instruct"+ idnum;
-          var contentid = cardid+"_inside";
-          var chartid = "#chartarea"+ idnum;
-          
-          $(id).click(function(){
-           if(!$(contentid).is(":visible")){
-             var pie = ".pie"+idnum;
-             if ($(pie).length == 0){
-               var canv = '<canvas class="pie'+idnum+'" id="PieChart'+idnum+'"></canvas>';
-               $(chartid).append(canv);
-             }
-             $(cardid).animate({width:'100%'}, 'slow', function(){
-               $(contentid).slideDown("slow", function(){
-                 $(cardid).removeClass('instruct-btn');
-                 $(chartid+"_btn").click();
-               });
-             });
-           }
-           else if(!$(contentid).is(":hidden")){
-             
-             $(contentid).slideUp('slow',function(){
-               $(cardid).animate({width:'80%'},'slow',function(){
-                 $(cardid).addClass('instruct-btn');
-                 var pie = ".pie"+idnum;
-                 console.log(pie);
-                 console.log($(pie).length);
-                 if ($(pie).length == 1){
-                   $(pie).remove();
-                 }
-                 if ($(pie).length == 0){
-                   var canv = '<canvas class="pie'+idnum+'" id="PieChart'+idnum+'"></canvas>';
-                   $(chartid).append(canv);
-                 }
-                 
-               });
-             });
-
-           }
+          $("#main").slideDown(1000,function(){
+            $(".start-slide").each(function(){
+              $(this).slideDown("slow");
+            });
           });
-        })
+        });
 
         $(".slide-toggle").click(function(){
           $(".box").animate({
             width: "toggle"
           },'slow');
         });
-        
-        
-        $("#graph-btn").click(function(){
-          $("#graphs").slideToggle("slow");
+
+        $(".end-wrap").each(function(){
+          var id = $(this).attr("id");
+          var endid = "#end-"+id;
+          $(endid).click(function(){
+              var attrid = "#attr-div-"+id;
+              var attrid_ip = "#attr-"+id;
+              $(attrid).fadeOut("slow",function(){
+                $(attrid_ip).prop("checked",false);
+                $(".attr-wrap").each(function(){
+                  var attrsid = "#"+$(this).attr("id");
+                  if(attrsid != attrid){
+                    $(attrsid).fadeIn("slow");
+                  }
+                });
+              });
+          });
         });
+
+        $("#opt").click(function(){
+          $("#ebox").attr("style","background:#014143;--notchSize:50px;--bcolor:#014143;width:90%;min-height:20vh;");
+          $("#abox").attr("style","background:#014143;--notchSize:50px;--bcolor:#014143;width:90%;min-height:20vh;");
+          $("#cbox").attr("style","background:#3f4569;--notchSize:60px;--bcolor:#3f4569;width:90%;height:25vh;");
+          $("#sbox").attr("style","background:#3f4569;--notchSize:30px;--bcolor:#3f4569;width:90%;");
+          $(this).animate({opacity: 1}, 500, function(){
+            $("#ebox").attr("style","--notchSize:50px;--bcolor:#014143;width:90%;min-height:20vh;");
+            $("#abox").attr("style","--notchSize:50px;--bcolor:#014143;width:90%;min-height:20vh;");
+            $("#cbox").attr("style","--notchSize:60px;--bcolor:#3f4569;width:90%;height:25vh;");
+            $("#sbox").attr("style","--notchSize:30px;--bcolor:#3f4569;width:90%;");
+          });
+
+        });
+
+        $("#attr-all").change(function(){
+          if(!$("#attr-all").is(":checked")){
+            $(".attrall").each(function(){
+              var ip_id = "#"+$(this).attr("id");
+              var arr = ip_id.split("-");
+              var idnum = arr[arr.length-1];
+              var attrid = "#attr-div-"+idnum;
+              if($(attrid).is(":visible")){
+                $(ip_id).prop("checked",false);
+              }
+            });
+          }
+          else{
+            $(".attrall").each(function(){
+              var ip_id = "#"+$(this).attr("id");
+              var arr = ip_id.split("-");
+              var idnum = arr[arr.length-1];
+              var attrid = "#attr-div-"+idnum;
+              if($(attrid).is(":visible")){
+                $(ip_id).prop("checked",true);
+              }
+            });
+          }
+
+        });
+
+        $("#classify-all").change(function(){
+          if(!$("#classify-all").is(":checked")){
+            $(".classify").each(function(){
+              var id = "#"+$(this).attr("id");
+              $(id).prop("checked",false);
+            });
+          }
+          else{
+            $(".classify").each(function(){
+              var id = "#"+$(this).attr("id");
+              $(id).prop("checked",true);
+            });
+          }
+        });
+
+        $("#start").click(function(){
+          $("#end-error").slideUp("slow");
+          $("#attr-error").slideUp("slow");
+          $("#class-error").slideUp("slow");
+
+          var err = 0;
+          if($('#end-select input:checked').length <= 0){
+            $("#end-error").slideDown("slow");
+          }
+          else{
+            err = err + 1;
+          }
+          if($('#attr-select input:checked').length <= 0){
+            $("#attr-error").slideDown("slow");
+          }
+          else{
+            err = err + 1;
+          }
+          if($('#class-select input:checked').length <= 0){
+            $("#class-error").slideDown("slow");
+          }
+          else{
+            err = err + 1;
+          }
+          if(err === 3){
+            $("#start-btn").click();
+          }
+
+        });
+        
+        $("#data").click(function(){
+          $("#end-error").slideUp("slow");
+          $("#attr-error").slideUp("slow");
+          $("#class-error").slideUp("slow");
+
+          var err = 0;
+          if($('#end-select input:checked').length <= 0){
+            $("#end-error").slideDown("slow");
+          }
+          else{
+            err = err + 1;
+          }
+          if($('#attr-select input:checked').length <= 0){
+            $("#attr-error").slideDown("slow");
+          }
+          else{
+            err = err + 1;
+          }
+          if(err === 2){
+            $("#data-btn").click();
+          }
+
+        });
+
+
 
      });
 
+
+
 </script>
-
-
 
   </head>
   <body class="dark">
 
     <div class="d-flex justify-content-center align-items-center screen-size">
-      <div class="container-fluid mt-4 mb-4" style="width:90vw;">
+      <div class="container-fluid mt-4 mb-4" style="width:80vw;">
         <div class="row">
           <div class="col-12">
             <div class="card dark-card module border-color" id="main1" style="--notchSize: 80px;--bcolor:#008e8c;display:none;">
                 <div class="mt-4 mb-4">
                   <center>
-                  <h1 class="text-white">Name of the File</h1>
-                  <span class="text-white">R E S U L T S</span>
+                  <h1 class="text-white text-uppercase ">{{file_name}} OKAAAY</h1>
+                  <span class="text-white">{{attr}} attributes in this file</span>
                 </center>
                 </div>
+                <form action="/classifier/select/?file={{file_name}}" method="POST" target="_blank">
+                  {% csrf_token %}
                 <div id="main" style="display:none">
                   <center>
+                <div class="module pt-2 pb-2 border-color instruct-btn" id="opt" style="--notchSize: 20px;--bcolor:#3f4569;width:50%;">
+                  <center><span class="text-white">S E L E C T &nbsp;&nbsp;&nbsp; O P T I O N S </span></center>
+                </div>
 
-                    <div class="container-fluid">
-                      <div class="row mx-3 d-flex justify-content-around">
-                        <div class="col-4 mt-4">
-                          <div class="module pt-2 pb-2 border-color instruct-btn instruct classify-card" id="instruct1" style="--notchSize: 30px;--bcolor:#3f4569;width:80%;">
-                            <div class="class-card" style="width:100%" id="1">
-                              <center>
-                                <span class="text-white">C L A S S I F I E R &nbsp; N A M E</span><br>
-                                <span class="text-white">8 4 %</span>
-                              </center>
-                            </div>
-                            
-                            <div class="mr-3 ml-3 text-white" style="display:none" id="instruct1_inside">
-                              <span class="text-white mt-2" style="font-size:40px"> 99% </span>
-                              <!-- <span class="text-white">MATRIX GRAPH</span> -->
-                              <div class="chart-pie mt-3 mb-3" style="width:75%" id="chartarea1">
-                                <!-- <canvas id="myPieChart"></canvas> -->
-                              </div>
-                              <button id="chartarea1_btn" type="button" name="button" onclick="chart(1,25,25,25,25)" hidden></button>
-                            </div>
-                          </div>
-                        </div>
-                        
-                        <div class="col-4 mt-4">
-                          <div class="module pt-2 pb-2 border-color instruct-btn instruct classify-card" id="instruct2" style="--notchSize: 30px;--bcolor:#3f4569;width:80%;">
-                            <div class="class-card" style="width:100%" id="2">
-                              <center>
-                                <span class="text-white">C L A S S I F I E R &nbsp; N A M E</span><br>
-                                <span class="text-white">8 4 %</span>
-                              </center>
-                            </div>
-                            
-                            <div class="mr-3 ml-3 text-white" style="display:none" id="instruct2_inside">
-                              <span class="text-white mt-2" style="font-size:40px"> 99% </span>
-                              <!-- <span class="text-white">MATRIX GRAPH</span> -->
-                              <div class="chart-pie mt-3 mb-3" style="width:75%" id="chartarea2">
-                                <!-- <canvas id="myPieChart"></canvas> -->
-                              </div>
-                              <button id="chartarea2_btn" type="button" name="button" onclick="chart(2,25,40,10,25)" hidden></button>
-                            </div>
-                          </div>
-                        </div>
-
-                      </div>
-
-                    </div>
-
-                <div class="container-fluid mt-4 mb-4">
+                <div class="container-fluid mt-4 mb-1">
                   <div class="row">
-                    <!-- <div class="col-6">
-                      <div class="mt-3 mb-1 pt-2 pb-2 module border-color h-fill" style="--notchSize:60px;--bcolor:#014143;width:90%;min-height:40vh;">
-                              <span class="text-white">GRAPH</span>
+                    <div class="col-6">
+                      <div class="mt-3 mb-1 pt-2 pb-2 module border-color h-fill" id="ebox" style="--notchSize:50px;--bcolor:#014143;width:90%;" >
+                          <div class="container">
+                            <div class="row">
+                              <div class="col-12 mb-3">
+                                <span class="text-white">S E L E C T &nbsp;&nbsp;&nbsp; E N D &nbsp;&nbsp;&nbsp; C L A S S</span>
+                              </div>
+                            </div>
+                            <div class="row ml-5 start-slide" style="display:none" id="end-select">
+                              {% for i in cols %}
+                              <div class="col-4 mb-2 d-flex justify-content-start">
+                                <div class="ch-wrap end-wrap" id="{{forloop.counter}}">
+                                  <input type="radio" name="end" value="{{i}}" id="end-{{forloop.counter}}" class="attrs" hidden/>
+                                  <label for="end-{{forloop.counter}}"  class="mark"></label>
+                                </div>
+                                &nbsp;&nbsp;
+                                <label for="end-{{forloop.counter}}" class="text-white text-uppercase"> {{i}} </label>
+                              </div>
+                              {% endfor %}
+
+                            </div>
+                          </div>
+                      </div>
+                      <div id="end-error" style="display:none">
+                        <span style="color:red">P L E A S E &nbsp; S E L E C T &nbsp; A &nbsp; F I E L D </span>
                       </div>
                     </div>
                     <div class="col-6">
-                      <div class="mt-3 mb-1 pt-2 pb-2 module border-color h-fill" style="--notchSize:60px;--bcolor:#014143;width:90%;min-height:40vh;">
-
-                      </div>
-                    </div> -->
-                    <div class="col-12">
-                      <div class="mt-5 mb-1 pt-2 pb-2 module border-color h-fill" style="--notchSize:60px;--bcolor:#3f4569;width:90%;">
-                        <div class="container-fluid">
+                      <div class="mt-3 mb-1 pt-2 pb-2 module border-color h-fill" id="abox" style="--notchSize:50px;--bcolor:#014143;width:90%;">
+                        <div class="container">
                           <div class="row">
-                            <div class="col-12" id="graph-btn">
-                              <span class="text-white"> R E S U L T &nbsp;&nbsp; G R A P H S </span>
+                            <div class="col-12 mb-3">
+                              <span class="text-white">S E L E C T &nbsp;&nbsp;&nbsp; A T T R I B U T E S</span>
                             </div>
                           </div>
-                          <div class="row" style="display:none" id="graphs">
-                            <div class="col-6">
-                              <div class="mt-3 mb-1 pt-2 pb-2 module border-color h-fill" style="--notchSize:60px;--bcolor:#014143;width:90%;min-height:40vh;">
-                                      <span class="text-white">GRAPH</span>
+                          <div class="row ml-5 start-slide" style="display:none" id="attr-select">
+                            {% for i in cols %}
+                            <div class="col-4 mb-2 attr-wrap" id="attr-div-{{forloop.counter}}">
+                            <div class=" d-flex justify-content-start">
+                              <div class="ch-wrap">
+                                <input type="checkbox" name="attr" value="{{i}}" id="attr-{{forloop.counter}}" class="attrs attrall" hidden/>
+                                <label for="attr-{{forloop.counter}}"  class="mark"></label>
                               </div>
+                              &nbsp;&nbsp;
+                              <label for="attr-{{forloop.counter}}" class="text-white text-uppercase"> {{i}} </label>
                             </div>
-                            <div class="col-6">
-                              <div class="mt-3 mb-1 pt-2 pb-2 module border-color h-fill" style="--notchSize:60px;--bcolor:#014143;width:90%;min-height:40vh;">
-                                    <span class="text-white">GRAPH</span>
+                          </div>
+                            {% endfor %}
+                            <div class="col-4 mb-2 attr-wrap">
+                            <div class=" d-flex justify-content-start">
+                              <div class="ch-wrap">
+                                <input type="checkbox" value="all" id="attr-all" class="attrs" hidden/>
+                                <label for="attr-all"  class="mark"></label>
                               </div>
+                              &nbsp;&nbsp;
+                              <label for="attr-all" class="text-white text-uppercase"> ALL </label>
                             </div>
+                          </div>
                           </div>
                         </div>
+                      </div>
+                      <div id="attr-error" style="display:none">
+                        <span style="color:red">P L E A S E &nbsp; S E L E C T &nbsp; A &nbsp; F I E L D </span>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <div class="mt-5 mb-1 pt-2 pb-2 module border-color h-fill" id="sbox" style="--notchSize:30px;--bcolor:#3f4569;width:90%;">
+                        <div class="container">
+                          <div class="row">
+                            <div class="col-12">
+                              <span class="text-white">T R A I N &nbsp;&nbsp; T E S T &nbsp;&nbsp; S P L I T</span>
+                              <div class="mb-3 d-flex justify-content-between" style="width:85%;">
+                                <div class="text-white text-uppercase" style="font-size:25px"><span id="value">T r a i n : &nbsp; 80%</span></div>
+                                <div class="text-white text-uppercase" style="font-size:25px"><span id="tvalue">T e s t : &nbsp; 20%</span></div>
+                              </div>
+                              <div class="mb-4">
+                                <input type="range" class="slide" min="2" max="9" step="0.5" value="8">
+                              </div>
 
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <div class="mt-5 mb-1 pt-2 pb-2 module border-color h-fill" id="cbox" style="--notchSize:60px;--bcolor:#3f4569;width:90%;height:25vh;">
+                        <div class="container-fluid">
+                          <div class="row">
+                            <div class="col-12">
+                              <span class="text-white">S E L E C T &nbsp;&nbsp;&nbsp; C L A S S I F I C A T I O N &nbsp;&nbsp;&nbsp; M E T H O D S</span>
+                            </div>
+                          </div>
+                            <div class="row mt-2 d-flex justify-content-around start-slide" style="width:100%;" id="class-select">
+                              {% for i in classifiers %}
+                              <div class="col-4 mb-2 mt-3 d-flex justify-content-center">
+                                <div class="ch-wrap">
+                                  <input type="checkbox" name="classifier" value="{{i}}" id="classify{{forloop.counter}}" class="attrs classify" hidden/>
+                                  <label for="classify{{forloop.counter}}"  class="mark"></label>
+                                </div>
+                                &nbsp;&nbsp;
+                                <label for="classify{{forloop.counter}}" class="text-white text-uppercase" style="letter-spacing: 2px;"> {{i}} </label>
+                              </div>
+                              {% endfor %}
+                              <div class="col-4 mb-2 mt-3 d-flex justify-content-center">
+                                <div class="ch-wrap">
+                                  <input type="checkbox" name="" value="{{i}}" id="classify-all" class="attrs" hidden/>
+                                  <label for="classify-all"  class="mark"></label>
+                                </div>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <label for="classify-all" class="text-white" style="letter-spacing: 2px;"> ALL CLASSIFIERS</label>
+                              </div>
+                            </div>
+
+                        </div>
+                      </div>
+                      <div id="class-error" style="display:none">
+                        <span style="color:red">P L E A S E &nbsp; S E L E C T &nbsp; A &nbsp; F I E L D </span>
                       </div>
                     </div>
                   </div>
                 </div>
 
+                <!-- </center> -->
 
+                <div style="width:75%">
 
-                </center>
+                    <div class="d-flex justify-content-between align-items-center">
+                      
+                      <div class="mt-3 mb-3 pt-2 pb-2 module border-color light-card hover-btn" id="data" style="--notchSize:15px;--bcolor:#014143;--btn:25%">
+                        <center>
+                          <span id="loading">D A T A &nbsp;&nbsp; S U M M A R Y</span>
+                        </center>
+                      </div>
 
+                        <div class="mt-3 mb-3 pt-2 pb-2 module border-color light-card hover-btn" id="start" style="--notchSize:15px;--bcolor:#014143;--btn:25%">
+                          <center>
+                            <span id="loading">S T A R T</span>
+                          </center>
+                        </div>
+                        <div style="display:none">
+
+                        <input type="number" name="train" id="train_val" value="80" />
+                        <input type="number" name="test" id="test_val" value="20" />
+                        <input type="text" name="redirect" value="loading" />
+                        <button type="submit" id="start-btn" name="start" value="start"></button>
+                        <button type="submit" id="data-btn" name="start" value="data"></button>
+                      </div>
+                      
+                    </div>
+
+              </div>
+              
+              </center>
 
             </div>
+          </form>
               </div>
           </div>
         </div>
       </div>
     </div>
+
+    <script type="text/javascript">
+          var elem = document.querySelector('input[type="range"]');
+
+          var rangeValue = function(){
+            var x = elem.value;
+            var val = document.getElementById('value');
+            var tval = document.getElementById('tvalue');
+            var train = x*10;
+            var test = 100-train;
+            console.log(train,test);
+            var dispval = "T r a i n : &nbsp; "+ train + "%";
+            var disptval = "T e s t : &nbsp; "+ test + "%";
+            val.innerHTML = dispval;
+            tval.innerHTML = disptval;
+
+            var train_ip = document.getElementById("train_val");
+            var test_ip = document.getElementById("test_val");
+
+            train_ip.value = train;
+            test_ip.value = test;
+          }
+
+          elem.addEventListener("input", rangeValue);
+    </script>
+
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-  
-    <!-- Page level plugins -->
-    <script src="{% static 'charts/Chart.min.js' %}"></script>
-  
-    <!-- Page level custom scripts -->
-    <script src="{% static 'charts/chart-area-demo.js' %}"></script>
-    <!-- <script src="{% static 'charts/chart-pie-demo.js' %}"></script> -->
-    
-    <script type="text/javascript">
-    
-    function chart(x,p1,p2,p3,p4){
-      var id = "PieChart" + x.toString();
-      console.log(id);
-      var ctx = document.getElementById(id);
-      var myPieChart = new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-          labels: ["Direct", "Referral", "Socialasdasd"],
-          datasets: [{
-            data: [p1,p2,p3,p4],
-            backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc'],
-            hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf'],
-            hoverBorderColor: "rgba(234, 236, 244, 1)",
-          }],
-        },
-        options: {
-          maintainAspectRatio: false,
-          tooltips: {
-            backgroundColor: "rgb(255,255,255)",
-            bodyFontColor: "#858796",
-            borderColor: '#dddfeb',
-            borderWidth: 1,
-            xPadding: 15,
-            yPadding: 15,
-            displayColors: false,
-            caretPadding: 10,
-          },
-          legend: {
-            display: false
-          },
-          cutoutPercentage: 80,
-        },
-      });
-    }
-    
-      
-    </script>
-    <script src="{% static 'charts/chart-bar-demo.js' %}"></script>
   </body>
 </html>
