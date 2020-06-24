@@ -32,7 +32,8 @@
           var cardid = "#instruct"+ idnum;
           var contentid = cardid+"_inside";
           var chartid = "#chartarea"+ idnum;
-
+          var acc_id = "#acc_" + idnum; 
+          var details = "#details_" + idnum;
           $(id).click(function(){
            if(!$(contentid).is(":visible")){
              var pie = ".pie"+idnum;
@@ -42,8 +43,67 @@
              }
              $(cardid).animate({width:'100%'}, 'slow', function(){
                $(contentid).slideDown("slow", function(){
-                 $(cardid).removeClass('instruct-btn');
-                 $(chartid+"_btn").click();
+                 // $(cardid).removeClass('instruct-btn');
+                 $(chartid+"_btn").click(); 
+                 countUp(acc_id);     
+                 $(details).slideDown("slow",function(){
+                   var prf_id = ["#prf1_"+idnum,"#prf2_"+idnum,"#prf3_"+idnum];
+                   var i;
+                   for(i=0;i<=3;i++){
+                     countUp(prf_id[i]);
+                   }
+                 });
+               });
+             });
+           }
+           else if(!$(contentid).is(":hidden")){
+            $(details).slideUp("slow",function(){
+              var prf_id = ["#prf1_"+idnum,"#prf2_"+idnum,"#prf3_"+idnum];
+              var i;
+              for(i=0;i<=3;i++){
+                $(prf_id[i]).text("0.0");
+              }
+              $(contentid).slideUp('slow',function(){
+                $(cardid).animate({width:'80%'},'slow',function(){
+                  // $(cardid).addClass('instruct-btn');
+                  $(acc_id).text("0.0");
+                  var pie = ".pie"+idnum;
+                  if ($(pie).length == 1){
+                    $(pie).remove();
+                  }
+                  if ($(pie).length == 0){
+                    var canv = '<canvas class="pie'+idnum+'" id="PieChart'+idnum+'"></canvas>';
+                    $(chartid).append(canv);
+                  }
+ 
+                });
+              });
+            });
+             
+
+           }
+          });
+        });
+        
+        // XXXXXXX
+        
+        $(".graph-card").each(function(){
+          var id = "#"+$(this).attr("id");
+          var idnum = $(this).attr("id");
+          var cardid = "#graph"+ idnum;
+          var contentid = cardid+"_inside";
+          var chartid = "#grapharea"+ idnum;
+          $(id).click(function(){
+           if(!$(contentid).is(":visible")){
+             var pie = ".pie"+idnum;
+             if ($(pie).length == 0){
+               var canv = '<canvas class="pie'+idnum+'" id="Graph'+idnum+'"></canvas>';
+               $(chartid).append(canv);
+             }
+             $(cardid).animate({width:'100%'}, 'slow', function(){
+               $(contentid).slideDown("slow", function(){
+                 // $(cardid).removeClass('instruct-btn');
+                $(chartid+"_btn").click();
                });
              });
            }
@@ -51,15 +111,13 @@
 
              $(contentid).slideUp('slow',function(){
                $(cardid).animate({width:'80%'},'slow',function(){
-                 $(cardid).addClass('instruct-btn');
+                 // $(cardid).addClass('instruct-btn');
                  var pie = ".pie"+idnum;
-                 console.log(pie);
-                 console.log($(pie).length);
                  if ($(pie).length == 1){
                    $(pie).remove();
                  }
                  if ($(pie).length == 0){
-                   var canv = '<canvas class="pie'+idnum+'" id="PieChart'+idnum+'"></canvas>';
+                   var canv = '<canvas class="pie'+idnum+'" id="Graph'+idnum+'"></canvas>';
                    $(chartid).append(canv);
                  }
 
@@ -68,24 +126,116 @@
 
            }
           });
-        })
-
-        $(".slide-toggle").click(function(){
-          $(".box").animate({
-            width: "toggle"
-          },'slow');
         });
-
-
-        $("#graph-btn").click(function(){
-          $("#graphs").slideToggle("slow");
+        
+        // XXXXX
+        
+        $("#open").click(function() {
+          
+          if(!$(".result_inside").is(":visible")){
+            $(".class-card").click();
+          }
+          else{
+            var open = 0;
+            $(".result_inside").each(function(){    
+              var id = $(this).attr("id");
+              var inst = $(this).attr("id").split("_");
+              var idnum = "#" + inst[0][inst[0].length -1];
+              if(!$(this).is(":visible")){
+                open = open + 1;
+                $(idnum).click();
+              }
+            });
+            if (open == 0){
+              $(".class-card").each(function(){
+                var id = "#instruct"+$(this).attr("id");
+                $(id).attr("style","background: #292d45;--notchSize: 30px;--bcolor:#3f4569;width:100%");
+                $(id).animate({opacity: 1}, 500, function(){
+                  $(id).attr("style","--notchSize: 30px;--bcolor:#3f4569;width:100%");
+                });
+              });
+            }
+          }
+          $("#main1").animate({opacity: 1}, 1200, function(){
+            $("#scroll_button2").click();
+            // $(id).attr("style","--notchSize: 30px;--bcolor:#3f4569;width:100%");
+          });
+          
         });
-
+        
+        $("#open_graph").click(function() {
+          
+          if(!$(".graphs_inside").is(":visible")){
+            $(".graph-card").click();
+          }
+          else{
+            var open = 0;
+            $(".graphs_inside").each(function(){
+              
+              var id = $(this).attr("id");
+              var inst = $(this).attr("id").split("_");
+              var idnum = "#" + inst[0][inst[0].length -2]+inst[0][inst[0].length -1];
+              console.log(idnum);
+              if(!$(this).is(":visible")){
+                open = open + 1;
+                $(idnum).click();
+              }
+            });
+            console.log(open);
+            if (open == 0){
+              $(".graph-card").each(function(){
+                var id = "#graph"+$(this).attr("id");
+                $(id).attr("style","background: #292d45;--notchSize: 30px;--bcolor:#3f4569;width:100%");
+                $(id).animate({opacity: 1}, 500, function(){
+                  $(id).attr("style","--notchSize: 30px;--bcolor:#3f4569;width:100%");
+                });
+              });
+            }
+          }
+          
+          $("#main1").animate({opacity: 1}, 1200, function(){
+            $("#scroll_button").click();
+          });
+          
+        });
+        
+        $("#scroll_button").click(function() { 
+          $("html, body").animate({ 
+              scrollTop: $('html, body').get(0).scrollHeight 
+          }, 2000);  
+            });
+            
+            $("#scroll_button2").click(function() { 
+              console.log("@22");
+              $("html, body").animate({ 
+                  scrollTop: 5 * $("#open")[0].scrollHeight
+                  // scrollTop: 100
+              }, 500);  
+                });
      });
+     
+     function countUp(id){
+       var $this = $(id),
+           countTo = $this.attr('data-count');
+     
+       $({ countNum: $this.text()}).animate({
+         countNum: countTo
+       },
+       {
+         duration: 1200,
+         easing:'linear',
+         step: function() {
+           var n = Math.random();
+           var add = n.toFixed(2);
+           $this.text(Math.floor(this.countNum) + parseFloat(add));
+         },
+         complete: function() {
+           $this.text(this.countNum);
+         } 
+       }); 
+     }
 
 </script>
-
-
 
   </head>
   <body class="dark">
@@ -94,10 +244,12 @@
       <div class="container-fluid mt-4 mb-4" style="width:90vw;">
         <div class="row">
           <div class="col-12">
+            <button type="button" id="scroll_button" name="button" hidden>SCROLL</button>
+            <button type="button" id="scroll_button2" name="button" hidden>SCROLL2</button>
             <div class="card dark-card module border-color" id="main1" style="--notchSize: 80px;--bcolor:#008e8c;display:none;">
                 <div class="mt-4 mb-4">
                   <center>
-                  <h1 class="text-white">Name of the File</h1>
+                  <h1 class="text-white text-uppercase">{{file}}</h1>
                   <span class="text-white">R E S U L T S</span>
                 </center>
                 </div>
@@ -105,95 +257,135 @@
                   <center>
 
                     <div class="container-fluid">
+                      <div class="row mx-3 d-flex justify-content-center">
+                        <div class="mt-3 mb-3 pt-2 pb-2 module border-color hover-btn2" id="open" style="--notchSize:15px;--bcolor:#014143;--btn:30%">
+                          <span class="text-white">O P E N &nbsp;&nbsp; R E S U L T S</span>
+                        </div>
+                      </div>
                       <div class="row mx-3 d-flex justify-content-around">
-                        {% for i in classifier %}
+                        {% for i in classification_report %}
                         <div class="col-4 mt-4">
-                          <div class="module pt-2 pb-2 border-color instruct-btn instruct classify-card" id="instruct{{forloop.counter}}" style="--notchSize: 30px;--bcolor:#3f4569;width:80%;">
+                          <div class="module pt-2 pb-2 border-color h-fill instruct classify-card" id="instruct{{forloop.counter}}" style="--notchSize: 30px;--bcolor:#3f4569;width:80%;">
                             <div class="class-card" style="width:100%" id="{{forloop.counter}}">
                               <center>
-                                <span class="text-white">{{i}}</span><br>
-                                <span class="text-white">8 4 %</span>
+                                <span class="text-white text-uppercase" style="letter-spacing: 2px;">{{i.0}}</span><br>
                               </center>
                             </div>
 
-                            <div class="mr-3 ml-3 text-white" style="display:none" id="instruct{{forloop.counter}}_inside">
-                              <span class="text-white mt-2" style="font-size:40px"> 99% </span>
-                              <!-- <span class="text-white">MATRIX GRAPH</span> -->
+                            <div class="mr-3 ml-3 text-white result_inside" style="display:none" id="instruct{{forloop.counter}}_inside">
                               <div class="chart-pie mt-3 mb-3" style="width:75%" id="chartarea{{forloop.counter}}">
+                                <div class="d-flex justify-content-center align-items-center" style="font-size:40px;height:100%;width:100%;z-index:-20;position:absolute">
+                                  <div id="acc_{{forloop.counter}}" data-count="{{i.2}}">0.0</div>%
+                                </div>
                                 <!-- <canvas id="myPieChart"></canvas> -->
                               </div>
-                              <button id="chartarea{{forloop.counter}}_btn" type="button" name="button" onclick="chart({{forloop.counter}},25,25,25,25)" hidden></button>
+                              <div class="mt-1 text-white">
+                                <center>ACCURACY</center>
+                              </div>
+                              <button id="chartarea{{forloop.counter}}_btn" type="button" name="button" onclick="acc_chart({{forloop.counter}},{{i.2}},{{i.3}})" hidden></button>
+                            </div>
+                            
+                            <div class="container" id="details_{{forloop.counter}}" style="display:none">
+                              <div class="row mb-2">
+                                <div class="col-6 text-white mb-2">
+                                  PRESICION
+                                </div>  
+                                <div class="col-6 text-white mb-2">
+                                  <span id="prf1_{{forloop.counter}}" data-count="{{ i.7.0 }}">0.0 </span><span>&nbsp; %</span>
+                                </div>
+                                <div class="col-6 text-white mb-2">
+                                  RECALL
+                                </div>  
+                                <div class="col-6 text-white mb-2">
+                                  <span id="prf2_{{forloop.counter}}" data-count="{{ i.7.1 }}">0.0 </span><span>&nbsp; %</span>
+                                </div>
+                                <div class="col-6 text-white mb-2">
+                                  F-1 SCORE
+                                </div>  
+                                <div class="col-6 text-white mb-2">
+                                  <span id="prf3_{{forloop.counter}}" data-count="{{ i.7.2 }}">0.0 </span><span>&nbsp; %</span>
+                                </div>
+                                <div class="col-12 mt-2">
+                                  <center>
+                                    <span class="text-white">R E P O R T</span>
+                                    <hr class="mt-0" style="width:90%;background-color: white">
+                                  </center>
+                                </div>
+                                <div class="col-12">
+                                  <div class="container-fluid">
+                                    {% for j in i.6 %}
+                                    <div class="row d-flex justify-content-around">
+                                      
+                                        {% for k in j%}
+                                        <div class="col-2 text-white mt-1 text-uppercase" style="font-size:14px;">
+                                          {{k}}
+                                        </div>
+                                        {% endfor %}
+                                      
+                                    </div>
+                                    {% endfor %}
+                                  </div>
+                                </div>
+                                <div class="col-12 mb-2">
+                                  <center>
+                                    <hr style="width:90%;background-color: white">
+                                  </center>
+                                </div>
+                              </div>
                             </div>
                           </div>
                         </div>
                         {% endfor %}
 
-                        <!-- <div class="col-4 mt-4">
-                          <div class="module pt-2 pb-2 border-color instruct-btn instruct classify-card" id="instruct2" style="--notchSize: 30px;--bcolor:#3f4569;width:80%;">
-                            <div class="class-card" style="width:100%" id="2">
-                              <center>
-                                <span class="text-white">C L A S S I F I E R &nbsp; N A M E</span><br>
-                                <span class="text-white">8 4 %</span>
-                              </center>
-                            </div>
-
-                            <div class="mr-3 ml-3 text-white" style="display:none" id="instruct2_inside">
-                              <span class="text-white mt-2" style="font-size:40px"> 99% </span>
-                              <div class="chart-pie mt-3 mb-3" style="width:75%" id="chartarea2">
-                              </div>
-                              <button id="chartarea2_btn" type="button" name="button" onclick="chart(2,25,40,10,25)" hidden></button>
-                            </div>
-                          </div>
-                        </div> -->
-
                       </div>
 
                     </div>
 
-                <div class="container-fluid mt-4 mb-4">
-                  <div class="row">
-                    <!-- <div class="col-6">
-                      <div class="mt-3 mb-1 pt-2 pb-2 module border-color h-fill" style="--notchSize:60px;--bcolor:#014143;width:90%;min-height:40vh;">
-                              <span class="text-white">GRAPH</span>
-                      </div>
+                <div class="container-fluid mt-4 mb-4" id="graph_scroll">
+                  <div class="row mx-3 d-flex justify-content-center">
+                    <div class="mt-3 mb-3 pt-2 pb-2 module border-color hover-btn2" id="open_graph" style="--notchSize:15px;--bcolor:#014143;--btn:30%">
+                      <span class="text-white">O P E N &nbsp;&nbsp; G R A P H S</span>
                     </div>
-                    <div class="col-6">
-                      <div class="mt-3 mb-1 pt-2 pb-2 module border-color h-fill" style="--notchSize:60px;--bcolor:#014143;width:90%;min-height:40vh;">
-
-                      </div>
-                    </div> -->
-                    <div class="col-12">
-                      <div class="mt-5 mb-1 pt-2 pb-2 module border-color h-fill" style="--notchSize:60px;--bcolor:#3f4569;width:90%;">
-                        <div class="container-fluid">
-                          <div class="row">
-                            <div class="col-12" id="graph-btn">
-                              <span class="text-white"> R E S U L T &nbsp;&nbsp; G R A P H S </span>
-                            </div>
-                          </div>
-                          <div class="row" style="display:none" id="graphs">
-                            <div class="col-6">
-                              <div class="mt-3 mb-1 pt-2 pb-2 module border-color h-fill" style="--notchSize:60px;--bcolor:#014143;width:90%;min-height:40vh;">
-                                      <span class="text-white">GRAPH</span>
-                              </div>
-                            </div>
-                            <div class="col-6">
-                              <div class="mt-3 mb-1 pt-2 pb-2 module border-color h-fill" style="--notchSize:60px;--bcolor:#014143;width:90%;min-height:40vh;">
-                                    <span class="text-white">GRAPH</span>
-                              </div>
-                            </div>
-                          </div>
+                  </div>
+                  
+                  <div class="row d-flex justify-content-around mb-5">
+                    
+                    {% for j,i in graphs %}
+                    <div class="col-4 mt-4">
+                      <div class="module pt-2 pb-2 border-color h-fill instruct classify-card" id="graph{{forloop.counter}}g" style="--notchSize: 30px;--bcolor:#3f4569;width:80%;">
+                        <div class="graph-card" style="width:100%" id="{{forloop.counter}}g">
+                          <center>
+                            <span class="text-white text-uppercase" style="letter-spacing: 2px;">{{ j }}</span><br>
+                          </center>
                         </div>
 
+                        <div class="mr-3 ml-3 text-white graphs_inside" style="display:none" id="graph{{forloop.counter}}g_inside">
+                          <div class="chart-bar mt-3 mb-3" style="width:100%" id="grapharea{{forloop.counter}}g">
+                            <!-- <canvas id="myPieChart"></canvas> -->
+                          </div>
+                          <button id="grapharea{{forloop.counter}}g_btn" type="button" name="button" onclick="graph_chart('{{forloop.counter}}g',{{i}},{{name}},'{{j}}');" hidden></button>
+                        </div>
+                      </div>
+                    </div>
+                    {% endfor %}
+                    <div class="col-4 mt-4">
+                      <div class="module pt-2 pb-2 border-color h-fill instruct classify-card" id="graph5g" style="--notchSize: 30px;--bcolor:#3f4569;width:80%;">
+                        <div class="graph-card" style="width:100%" id="5g">
+                          <center>
+                            <span class="text-white text-uppercase" style="letter-spacing: 2px;">TIME CONSUMPTION</span><br>
+                          </center>
+                        </div>
+                        <div class="mr-3 ml-3 text-white graphs_inside" style="display:none" id="graph5g_inside">
+                          <div class="chart-bar mt-3 mb-3" style="width:100%" id="grapharea5g">
+                            <!-- <canvas id="myPieChart"></canvas> -->
+                          </div>
+                          <button id="grapharea5g_btn" type="button" name="button" onclick="time_chart('5g',{{time_graph.0}},{{time_graph.1}},{{name}},'TRAINING','TESTING',{{time_graph.2}});" hidden></button>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-
-
-
                 </center>
-
-
             </div>
               </div>
           </div>
@@ -215,18 +407,19 @@
 
     <script type="text/javascript">
 
-    function chart(x,p1,p2,p3,p4){
+    function acc_chart(x,p1,p2){
       var id = "PieChart" + x.toString();
+      // var p2 = 100-p1
       console.log(id);
       var ctx = document.getElementById(id);
       var myPieChart = new Chart(ctx, {
         type: 'doughnut',
         data: {
-          labels: ["Direct", "Referral", "Socialasdasd"],
+          labels: ["Accurate Testing","Missed Testing"],
           datasets: [{
-            data: [p1,p2,p3,p4],
-            backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc'],
-            hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf'],
+            data: [p1,p2],
+            backgroundColor: ['#646da3', '#008e8c'],
+            hoverBackgroundColor: ['#484e73', '#006665'],
             hoverBorderColor: "rgba(234, 236, 244, 1)",
           }],
         },
@@ -245,9 +438,208 @@
           legend: {
             display: false
           },
-          cutoutPercentage: 80,
+          cutoutPercentage: 75,
         },
       });
+    }
+    
+    function graph_chart(x,vals,name,lbl){
+      var id = "Graph" + x.toString();
+      // var p2 = 100-p1
+      // console.log(id);
+      // console.log(vals);
+      // console.log(name);
+      var ctx = document.getElementById(id);
+      var myBarChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: name,
+          datasets: [{
+            label: lbl,
+            backgroundColor: ['#646da3', '#008e8c','#646da3', '#008e8c','#646da3'],
+            hoverBackgroundColor: ['#484e73', '#006665','#484e73', '#006665','#484e73'],
+            hoverBorderColor: "#ffffff",
+            borderColor: "#ffffff",
+            borderWidth: 2,
+            // data: [90,80,70,80],
+            data: vals,
+          },
+        ],
+        },
+        options: {
+          maintainAspectRatio: false,
+          layout: {
+            padding: {
+              left: 10,
+              right: 10,
+              top: 10,
+              bottom: 0
+            }
+          },
+          scales: {
+            xAxes: [{
+              time: {
+                unit: 'month'
+              },
+              gridLines: {
+                display: false,
+                drawBorder: false
+              },
+              ticks: {
+                maxTicksLimit: 6
+              },
+              maxBarThickness: 25,
+            }],
+            yAxes: [{
+              ticks: {
+                min: 0,
+                max: 100,
+                maxTicksLimit: 5,
+                padding: 10,
+                // Include a dollar sign in the ticks
+                callback: function(value, index, values) {
+                  return number_format(value,2) + "%";
+                }
+              },
+              gridLines: {
+                color: "#014143",
+                zeroLineColor: "#014143",
+                drawBorder: false,
+                // borderDash: [2],
+                // zeroLineBorderDash: [2]
+              }
+            }],
+          },
+          legend: {
+            display: false
+          },
+          tooltips: {
+            titleMarginBottom: 10,
+            titleFontColor: '#6e707e',
+            titleFontSize: 14,
+            backgroundColor: "rgb(255,255,255)",
+            bodyFontColor: "#858796",
+            borderColor: '#ffffff',
+            borderWidth: 1,
+            xPadding: 5,
+            yPadding: 5,
+            displayColors: false,
+            caretPadding: 10,
+            callbacks: {
+              label: function(tooltipItem, chart) {
+                var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+                return datasetLabel + ': ' + number_format(tooltipItem.yLabel,2)+ " %";
+              }
+            }
+          },
+        }
+      });
+
+    }
+    
+    function time_chart(x,vals1,vals2,name,lbl1,lbl2,maxt){
+      var id = "Graph" + x.toString();
+      // var p2 = 100-p1
+      console.log(id);
+      console.log(vals1);
+      console.log(vals2);
+      console.log(name);
+      var ctx = document.getElementById(id);
+      var myBarChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: name,
+          datasets: [{
+            label: lbl1,
+            backgroundColor: ['#646da3','#646da3','#646da3','#646da3','#646da3'],
+            hoverBackgroundColor: ['#484e73','#484e73','#484e73','#484e73','#484e73'],
+            hoverBorderColor: "#ffffff",
+            borderColor: "#ffffff",
+            borderWidth: 2,
+            // data: [90,80,70,80],
+            data: vals1,
+          },
+          {
+            label: lbl2,
+            backgroundColor: ['#008e8c','#008e8c','#008e8c','#008e8c','#008e8c'],
+            hoverBackgroundColor: ['#006665','#006665','#006665','#006665','#006665'],
+            hoverBorderColor: "#ffffff",
+            borderColor: "#ffffff",
+            borderWidth: 2,
+            // data: [90,80,70,80],
+            data: vals2,
+          }
+        ],
+        },
+        options: {
+          maintainAspectRatio: false,
+          layout: {
+            padding: {
+              left: 10,
+              right: 10,
+              top: 10,
+              bottom: 0
+            }
+          },
+          scales: {
+            xAxes: [{
+              time: {
+                unit: 'month'
+              },
+              gridLines: {
+                display: false,
+                drawBorder: false
+              },
+              ticks: {
+                maxTicksLimit: 6
+              },
+              maxBarThickness: 25,
+            }],
+            yAxes: [{
+              ticks: {
+                min: 0,
+                max: maxt,
+                maxTicksLimit: 5,
+                padding: 10,
+                // Include a dollar sign in the ticks
+                callback: function(value, index, values) {
+                  return number_format(value) + "ms";
+                }
+              },
+              gridLines: {
+                color: "#014143",
+                zeroLineColor: "#014143",
+                drawBorder: false,
+                // borderDash: [2],
+                // zeroLineBorderDash: [2]
+              }
+            }],
+          },
+          legend: {
+            display: false
+          },
+          tooltips: {
+            titleMarginBottom: 10,
+            titleFontColor: '#6e707e',
+            titleFontSize: 14,
+            backgroundColor: "rgb(255,255,255)",
+            bodyFontColor: "#858796",
+            borderColor: '#ffffff',
+            borderWidth: 1,
+            xPadding: 5,
+            yPadding: 5,
+            displayColors: false,
+            caretPadding: 10,
+            callbacks: {
+              label: function(tooltipItem, chart) {
+                var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+                return datasetLabel + ': ' + number_format(tooltipItem.yLabel)+ " ms";
+              }
+            }
+          },
+        }
+      });
+
     }
 
 

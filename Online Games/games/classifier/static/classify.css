@@ -67,6 +67,18 @@ body{
   cursor:pointer;
 }
 
+.hover-btn2{
+  color:white;
+  background-color: var(--bcolor);
+  width: var(--btn);
+  transition: all 0.5s;
+}
+.hover-btn2:hover{
+  /* background-color: var(--bcolor); */
+  opacity: 0.8;
+  cursor:pointer;
+}
+
 .loading-btn{
   color:white;
   width: var(--btn);
@@ -222,7 +234,8 @@ body{
 
 @media (min-width: 768px) {
   .chart-bar {
-    height: 20rem;
+    height: 15rem;
+    width: 100%;
   }
 }
 
@@ -234,7 +247,7 @@ body{
 
 @media (min-width: 768px) {
   .chart-pie {
-    height: calc(20rem - 43px) !important;
+    height: calc(15rem - 43px) !important;
   }
 }
 

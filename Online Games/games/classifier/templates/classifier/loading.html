@@ -22,7 +22,7 @@
 
         $("#main").fadeIn(2000,function(){
 
-          var delayInMilliseconds = 5000;
+          var delayInMilliseconds = 2000;
 
           setTimeout(function() {
             $("#result-submit").click()
@@ -55,13 +55,15 @@
                   <form action="/classifier/result/?file={{file}}" method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
 
-                <div style="width:95%" style="display:none;">
+                <div style="width:95%" style="">
                   <center>
-                        <div style="width:90%" style="display:none;">
+                        <div style="width:90%" style="">
                           <input type="text" name="train" value="{{train}}" />
                           <input type="text" name="test" value="{{test}}" />
                           <input type="text" name="end" value="{{end}}" />
                           <input type="text" name="attr" value="{{attr}}" />
+                          <input type="text" name="start" value="loading" />
+                          <input type="text" name="redirect" value="{{redirect}}" />
                           <input type="text" name="classifier" value="{{classifier}}" />
                         <button type="submit" name="button" id="result-submit">SUBMIT</button>
                       </div>

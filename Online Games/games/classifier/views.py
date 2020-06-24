@@ -32,6 +32,50 @@ clff = RandomForestClassifier()
 clf = LogisticRegression(random_state = 42)
 
 # data = pd.DataFrame()
+def clean_report(cl):
+    c = cl.split("\n")
+    c2 = [[i] for i in c if i != ""]
+    cx = [re.sub(' +',' ',i[0]) for i in c2]
+    c3 = ["".join(list(i)[1:]) if list(i)[0] == " " else "".join(list(i)) for i in cx]
+    c4 = []
+    for i in c3:
+        x = i.split(" ")
+        if x[0] == 'precision':
+            c4.append([" "]+["P","R","F1","S"])
+        elif x[0] == 'macro':
+            c4.append([(x[0] + ' avg')] + x[-4:])
+        elif x[1] == 'avg':
+            c4.append([("WT" + ' avg')] + x[-4:])
+        elif x[0] == 'accuracy':
+            c4.append(["--" for i in range(5)])
+            c4.append(['ACC'] + [" " for i in range(2)] + x[-2:])
+        else:
+            c4.append(x)
+    return c4
+
+def training(clf,xtrain, xtest, ytrain, ytest,name,name2):
+    t0 = time.clock()
+    cl = clf.fit(xtrain,ytrain)
+    t1 = time.clock()
+    yp = clf.predict(xtest)
+    t2 = time.clock()
+    tr_time = "{:.2f}".format((t1 - t0) * 1000)
+    te_time = "{:.2f}".format((t2 - t1) * 1000)
+    acc = "{:.2f}".format((sum(ytest == yp) / float(len(yp))) * 100)
+    # print(acc)
+    acc_score = accuracy_score(ytest, yp)
+    # print(acc_score)
+    d_acc = "{:.2f}".format(100-float(acc))
+    # print(d_acc)
+    cl = classification_report(ytest, yp)
+    cl_report = clean_report(cl)
+    # string = string.replace(/ +/g, ' ');
+    prf_score = precision_recall_fscore_support(ytest, yp, average='macro')
+    # print(prf_score)
+    prfs = ["{:.2f}".format(float(i)*100) for i in prf_score[:3]]
+    # print(prfs)
+    report = [name,cl,acc,d_acc,tr_time,te_time,cl_report,prfs,name2]
+    return report
 
 def train_model(end, attr, classifier, train, test, data):
     x = data[attr]
@@ -58,68 +102,24 @@ def train_model(end, attr, classifier, train, test, data):
     print(len(xtrain), len(xtest), len(ytrain), len(ytest), xtrain)
     xtrain[int_feat] = scaler.fit_transform(xtrain[int_feat])
     xtest[int_feat] = scaler.transform(xtest[int_feat])
+    classification_report = []
     for i in classifier:
         if i == 'Logistic Regression':
-            t0 = time.clock()
-            clf.append(clfa.fit(xtrain,ytrain))
-            t1 = time.clock()
-            yp = clfa.predict(xtest)
-            t2 = time.clock()
-            print(accuracy_score(ytest, yp))
-            print(classification_report(ytest, yp))
-            print(precision_recall_fscore_support(ytest, yp, average='weighted'))
-            train_time.append("{:.2f}".format((t1 - t0) * 1000))
-            test_time.append("{:.2f}".format((t2 - t1) * 1000))
-            accr.append("{:.2f}".format((sum(ytest == yp) / float(len(yp))) * 100))
+            report = training(clfa,xtrain, xtest, ytrain, ytest,i,"Log Reg")
+            classification_report.append(report)
         elif i == 'Decision Tree':
-            t0 = time.clock()
-            clf.append(clfd.fit(xtrain,ytrain))
-            t1 = time.clock()
-            yp = clfd.predict(xtest)
-            t2 = time.clock()
-            print(accuracy_score(ytest, yp))
-            print(classification_report(ytest, yp))
-            print(precision_recall_fscore_support(ytest, yp, average='weighted'))
-            train_time.append("{:.2f}".format((t1 - t0) * 1000))
-            test_time.append("{:.2f}".format((t2 - t1) * 1000))
-            accr.append("{:.2f}".format((sum(ytest == yp) / float(len(yp))) * 100))
+            report = training(clfd,xtrain, xtest, ytrain, ytest,i,"D Tree")
+            classification_report.append(report)
         elif i == 'Support Vector Machine':
-            t0 = time.clock()
-            clf.append(clfb.fit(xtrain,ytrain))
-            t1 = time.clock()
-            yp = clfb.predict(xtest)
-            t2 = time.clock()
-            print(accuracy_score(ytest, yp))
-            print(classification_report(ytest, yp))
-            print(precision_recall_fscore_support(ytest, yp, average='weighted'))
-            train_time.append("{:.2f}".format((t1 - t0) * 1000))
-            test_time.append("{:.2f}".format((t2 - t1) * 1000))
-            accr.append("{:.2f}".format((sum(ytest == yp) / float(len(yp))) * 100))
+            report = training(clfb,xtrain, xtest, ytrain, ytest,i,"SVM")
+            classification_report.append(report)
         elif i == 'RandomForest':
-            t0 = time.clock()
-            clf.append(clff.fit(xtrain,ytrain))
-            t1 = time.clock()
-            yp = clff.predict(xtest)
-            t2 = time.clock()
-            print(accuracy_score(ytest, yp))
-            print(classification_report(ytest, yp))
-            print(precision_recall_fscore_support(ytest, yp, average='weighted'))
-            train_time.append("{:.2f}".format((t1 - t0) * 1000))
-            test_time.append("{:.2f}".format((t2 - t1) * 1000))
-            accr.append("{:.2f}".format((sum(ytest == yp) / float(len(yp))) * 100))
+            report = training(clff,xtrain, xtest, ytrain, ytest,i,"RF")
+            classification_report.append(report)
         elif i == 'XGBoost':
-            t0 = time.clock()
-            clf.append(clfc.fit(xtrain,ytrain))
-            t1 = time.clock()
-            yp = clfc.predict(xtest)
-            t2 = time.clock()
-            print(accuracy_score(ytest, yp))
-            print(classification_report(ytest, yp))
-            print(precision_recall_fscore_support(ytest, yp, average='weighted'))
-            train_time.append("{:.2f}".format((t1 - t0) * 1000))
-            test_time.append("{:.2f}".format((t2 - t1) * 1000))
-            accr.append("{:.2f}".format((sum(ytest == yp) / float(len(yp))) * 100))
-    return clf, accr, train_time, test_time
+            report = training(clfc,xtrain, xtest, ytrain, ytest,i,"XGB")
+            classification_report.append(report)
+    return classification_report
 
 def home(request):
     if request.method == "POST":
@@ -155,12 +155,16 @@ def select(request):
                 classifier = SF.cleaned_data['classifier']
                 train = SF.cleaned_data['train']
                 test = SF.cleaned_data['test']
-                start = SF.cleaned_data['start']
-                print(start)
-                if start == "data":
-                    
                 file = request.GET['file']
-                return render(request, 'classifier/loading.html', {'classifier':classifier,"end":end,"attr":attr,"train":train,"test":test,"file":file})
+                start = SF.cleaned_data['start']
+                redirect = SF.cleaned_data['redirect']
+                if start == "data":
+                    redirect = "data_page"
+                    return render(request, 'classifier/loading.html', {'classifier':classifier,"end":end,"attr":attr,"train":train,"test":test,"file":file,"redirect":redirect})
+                else:
+                    redirect = "results_page"
+                    return render(request, 'classifier/loading.html', {'classifier':classifier,"end":end,"attr":attr,"train":train,"test":test,"file":file,"redirect":redirect})
+                
         jsondata = request.session['data']
         jdata = json.loads(jsondata)
         data = pd.DataFrame(jdata)
@@ -188,10 +192,32 @@ def result(request):
                 classifier = re.findall(r"\'(.+?)\'", classifier)
                 train = SF.cleaned_data['train']
                 test = SF.cleaned_data['test']
-                clf, accr, train_time, test_time = train_model(end, attr, classifier, float(train)/100, float(test)/100, data)
-                print(accr, train_time, test_time)
-                # print(end, attr, classifier, train, test)
-        return render(request, 'classifier/result.html', {'classifier':classifier,"end":end,"attr":attr,"train":train,"test":test,"file":file})
-
+                start = SF.cleaned_data['start']
+                redirect = SF.cleaned_data['redirect']
+                if redirect == "data_page":
+                    return render(request, 'classifier/data.html', {'classifier':classifier,"end":end,"attr":attr,"train":train,"test":test,"file":file})
+                elif redirect == "results_page":
+                    classification_report = train_model(end, attr, classifier, float(train)/100, float(test)/100, data)
+                    acc = []
+                    pre = []
+                    rec = []
+                    f1 = []
+                    time_tr = []
+                    time_te = []
+                    name = []
+                    graph_names = ["ACCURACY COMPARISON","PRECISION COMPARISON","RECALL COMPARISON","F1-SCORE COMPARISON"]
+                    for i in classification_report:
+                        name.append(i[-1])
+                        acc.append(i[2])
+                        pre.append(i[-2][0])
+                        rec.append(i[-2][1])
+                        f1.append(i[-2][2])
+                        time_tr.append(float(i[4]))
+                        time_te.append(float(i[5]))
+                    graph = [acc,pre,rec,f1]
+                    graphs = zip(graph_names,graph)
+                    max_time = max(max(time_tr),max(time_te))
+                    time_graph = [time_tr,time_te,max_time]
+                    return render(request, 'classifier/result.html', {'classification_report':classification_report,'graphs':graphs,"time_graph":time_graph,"name":name,"file":file})
     return render(request,'classifier/index.html')
 # Create your views here.
