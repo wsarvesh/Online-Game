@@ -164,7 +164,7 @@ def select(request):
                 else:
                     redirect = "results_page"
                     return render(request, 'classifier/loading.html', {'classifier':classifier,"end":end,"attr":attr,"train":train,"test":test,"file":file,"redirect":redirect})
-                
+
         jsondata = request.session['data']
         jdata = json.loads(jsondata)
         data = pd.DataFrame(jdata)
@@ -195,7 +195,18 @@ def result(request):
                 start = SF.cleaned_data['start']
                 redirect = SF.cleaned_data['redirect']
                 if redirect == "data_page":
-                    return render(request, 'classifier/data.html', {'classifier':classifier,"end":end,"attr":attr,"train":train,"test":test,"file":file})
+                    info = []
+                    datal = len(data)
+                    info.append(datal)                                                                                                                      #0
+                    attrl = len(data.columns)
+                    info.append(attrl)                                                                                                                      #1
+                    trainl = int(round(datal * int(train) / 100))
+                    info.append(trainl)                                                                                                                     #2
+                    testl = int(round(datal * int(test) / 100))
+                    info.append(testl)                                                                                                                      #3
+                    info.append(len(attr))                                                                                                                  #4
+                    print(datal, attrl, len(attr), trainl, testl)
+                    return render(request, 'classifier/data.html', {'classifier':classifier,"end":end,"attr":attr,"train":train,"test":test,"file":file, "info":info })
                 elif redirect == "results_page":
                     classification_report = train_model(end, attr, classifier, float(train)/100, float(test)/100, data)
                     acc = []
