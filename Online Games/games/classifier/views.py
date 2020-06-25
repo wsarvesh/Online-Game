@@ -159,7 +159,6 @@ def select(request):
                 start = SF.cleaned_data['start']
                 redirect = SF.cleaned_data['redirect']
                 if start == "data":
-                    print("jkjk")
                     redirect = "data_page"
                     return render(request, 'classifier/loading.html', {'classifier':classifier,"end":end,"attr":attr,"train":train,"test":test,"file":file,"redirect":redirect})
                 else:
