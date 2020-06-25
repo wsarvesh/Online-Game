@@ -82,19 +82,18 @@
         <div class="row">
           <div class="col-12">
             <div class="card dark-card module border-color" id="main1" style="--notchSize: 80px;--bcolor:#008e8c;display:none;">
-                <div class="mt-4 mb-4">
+                <div class="mt-4">
                   <center>
                   <h1 class="text-white text-uppercase ">{{file}}</h1>
+                  <span class="text-white">K N O W &nbsp; Y O U R &nbsp; D A T A</span>
                 </center>
                 </div>
-                <form action="/classifier/select/?file={{file_name}}" method="POST" target="_blank">
-                  {% csrf_token %}
                 <div id="main" style="display:none">
-                  <center>
 
-                <div class="container-fluid mt-4 mb-1">
-                  <div class="row">
+                <div class="container mt-2 mb-1">
+                  <div class="row d-flex justify-content-around">
                     <div class="col-6">
+                      <center>
                       <div class="mt-3 mb-1 pt-2 pb-2 module border-color h-fill" style="--notchSize:30px;--bcolor:#014143;width:90%;" >
                           <div class="container">
                             <div class="row">
@@ -109,8 +108,10 @@
                             </div>
                           </div>
                       </div>
+                    </center>
                     </div>
                     <div class="col-6">
+                      <center>
                       <div class="mt-3 mb-1 pt-2 pb-2 module border-color h-fill" style="--notchSize:30px;--bcolor:#014143;width:90%;" >
                           <div class="container">
                             <div class="row">
@@ -125,9 +126,13 @@
                             </div>
                           </div>
                       </div>
+                    </center>
                     </div>
+                  </div>
+                  <div class="row d-flex justify-content-center">
                     <div class="col-4">
-                      <div class="mt-3 mb-1 pt-2 pb-2 module border-color h-fill" style="--notchSize:30px;--bcolor:#014143;width:90%;" >
+                      <center>
+                      <div class="mt-3 mb-1 pt-2 pb-2 module border-color h-fill" style="--notchSize:30px;--bcolor:#014143;width:100%;" >
                           <div class="container">
                             <div class="row">
                               <div class="col-12">
@@ -141,9 +146,11 @@
                             </div>
                           </div>
                       </div>
+                    </center>
                     </div>
-                    <div class="col-8">
-                      <div class="mt-3 mb-1 pt-2 pb-2 module border-color h-fill" style="--notchSize:30px;--bcolor:#014143;width:90%;" >
+                    <div class="col-6">
+                      <center>
+                      <div class="mt-3 mb-1 pt-2 pb-2 module border-color h-fill" style="--notchSize:30px;--bcolor:#014143;width:100%;" >
                           <div class="container">
                             <div class="row">
                               <div class="col-12">
@@ -151,8 +158,8 @@
                               </div>
                             </div>
                             <div class="row start-slide mt-2" id="4" style="display:none;">
-                              <div class="col-6 text-white">
-                                <center> <span>{{end}}</span> </center>
+                              <div class="col-6 text-white text-uppercase">
+                                <center> <span style="font-size:60px;">{{end}}</span> </center>
                               </div>
                               <div class="col-6 text-white">
                                 <center><span class="counter" id="count_4" data-count="100" style="font-size:60px;">0</span></center>
@@ -160,11 +167,13 @@
                             </div>
                           </div>
                       </div>
+                    </center>
                     </div>
                     </div>
                     <div class="row d-flex justify-content-around">
                       <div class="col-3">
-                        <div class="mt-3 mb-1 pt-2 pb-2 module border-color h-fill" style="--notchSize:30px;--bcolor:#014143;width:90%;" >
+                        <center>
+                        <div class="mt-3 mb-1 pt-2 pb-2 module border-color h-fill" style="--notchSize:30px;--bcolor:#014143;width:100%;" >
                             <div class="container">
                               <div class="row">
                                 <div class="col-12">
@@ -178,9 +187,11 @@
                               </div>
                             </div>
                         </div>
+                      </center>
                       </div>
-                      <div class="col-4">
-                        <div class="mt-3 mb-1 pt-2 pb-2 module border-color h-fill" style="--notchSize:30px;--bcolor:#014143;width:90%;" >
+                      <div class="col-6">
+                        <center>
+                        <div class="mt-3 mb-1 pt-2 pb-2 module border-color h-fill" style="--notchSize:30px;--bcolor:#014143;width:100%;" >
                             <div class="container">
                               <div class="row">
                                 <div class="col-12">
@@ -189,20 +200,28 @@
                               </div>
                               <div class="row start-slide mt-2" id="51" style="display:none;">
                                 <div class="col-5 text-white">
-                                  <center><span class="counter" id="count_51" data-count="{{train}}" style="font-size:60px;">0</span></center>
+                                  <center>
+                                    <span class="counter" id="count_51" data-count="{{train}}" style="font-size:60px;">0</span>
+                                    <span style="font-size:60px;">%</span>
+                                  </center>
                                 </div>
                                 <div class="col-2 text-white">
                                   <center><span style="font-size:60px;">-</span></center>
                                 </div>
                                 <div class="col-5 text-white">
-                                  <center><span class="counter" id="count_52" data-count="{{test}}" style="font-size:60px;">0</span></center>
+                                  <center>
+                                    <span class="counter" id="count_52" data-count="{{test}}" style="font-size:60px;">0</span>
+                                    <span style="font-size:60px;">%</span>
+                                  </center>
                                 </div>
                               </div>
                             </div>
                         </div>
+                      </center>
                       </div>
                       <div class="col-3">
-                        <div class="mt-3 mb-1 pt-2 pb-2 module border-color h-fill" style="--notchSize:30px;--bcolor:#014143;width:90%;" >
+                        <center>
+                        <div class="mt-3 mb-1 pt-2 pb-2 module border-color h-fill" style="--notchSize:30px;--bcolor:#014143;width:100%;" >
                             <div class="container">
                               <div class="row">
                                 <div class="col-12">
@@ -216,17 +235,42 @@
                               </div>
                             </div>
                         </div>
+                      </center>
+                      </div>
+                    </div>
+                    
+                    <div class="row d-flex justify-content-center">
+                      <div class="col-12">
+                        <div class="mt-3 mb-1 pt-2 pb-2 module border-color h-fill" style="--notchSize:30px;--bcolor:#014143;width:100%;" >
+                        <div class="container-fluid">
+                          <div class="row">
+                            <div class="col-12">
+                              <center><span class="text-white text-uppercase" style="letter-spacing:2px">Range of Attributes</span><center>
+                            </div>
+                          </div>
+                          <div class="row start-slide mt-2 ml-4 mb-3" id="9" style="display:none;">
+                            {% for i in attr %}
+                            <div class="col-3 text-white text-uppercase">
+                              {{i}} <span> -:- </span>
+                            </div>
+                            <div class="col-3 text-white text-uppercase">
+                              RANGE
+                            </div>
+                            {% endfor %}
+                          </div>    
+                        </div> 
+                      </div> 
                       </div>
                     </div>
 
 
                   <div class="row mt-5">
                     <div class="col-12">
-                      <!-- <div class="row mx-3 d-flex justify-content-center"> -->
+                      <div class="row mx-3 d-flex justify-content-center">
                         <div class="mt-3 mb-3 pt-2 pb-2 module border-color hover-btn2" id="open_graph" style="--notchSize:15px;--bcolor:#014143;--btn:30%">
-                          <span class="text-white">O P E N &nbsp;&nbsp; G R A P H S</span>
+                          <center><span class="text-white">O P E N &nbsp;&nbsp; G R A P H S</span></center>
                         </div>
-                      <!-- </div> -->
+                      </div>
                     </div>
                     <div class="col-6">
                       <!-- <div class="col-4 mt-4"> -->
@@ -271,38 +315,7 @@
 
                 <!-- </center> -->
 
-                <div style="width:75%">
-
-                    <div class="d-flex justify-content-between align-items-center">
-
-                      <div class="mt-3 mb-3 pt-2 pb-2 module border-color light-card hover-btn" id="data" style="--notchSize:15px;--bcolor:#014143;--btn:25%">
-                        <center>
-                          <span id="loading">D A T A &nbsp;&nbsp; S U M M A R Y</span>
-                        </center>
-                      </div>
-
-                        <div class="mt-3 mb-3 pt-2 pb-2 module border-color light-card hover-btn" id="start" style="--notchSize:15px;--bcolor:#014143;--btn:25%">
-                          <center>
-                            <span id="loading">S T A R T</span>
-                          </center>
-                        </div>
-                        <div style="display:none">
-
-                        <input type="number" name="train" id="train_val" value="80" />
-                        <input type="number" name="test" id="test_val" value="20" />
-                        <input type="text" name="redirect" value="loading" />
-                        <button type="submit" id="start-btn" name="start" value="start"></button>
-                        <button type="submit" id="data-btn" name="start" value="data"></button>
-                      </div>
-
-                    </div>
-
-              </div>
-
-              </center>
-
             </div>
-          </form>
               </div>
           </div>
         </div>
