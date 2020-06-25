@@ -19,37 +19,19 @@
 
      $(document).ready(function() {
 
-        $("#main1").fadeIn(800, function(){
-          $("#main").slideDown(1000,function(){
-            $(".start-slide").each(function(){
-              $(this).slideDown("slow");
-            });
-          });
-        });
-
-        $(".slide-toggle").click(function(){
-          $(".box").animate({
-            width: "toggle"
-          },'slow');
-        });
-
-        $(".end-wrap").each(function(){
-          var id = $(this).attr("id");
-          var endid = "#end-"+id;
-          $(endid).click(function(){
-              var attrid = "#attr-div-"+id;
-              var attrid_ip = "#attr-"+id;
-              $(attrid).fadeOut("slow",function(){
-                $(attrid_ip).prop("checked",false);
-                $(".attr-wrap").each(function(){
-                  var attrsid = "#"+$(this).attr("id");
-                  if(attrsid != attrid){
-                    $(attrsid).fadeIn("slow");
-                  }
-                });
-              });
-          });
-        });
+       $("#main1").fadeIn(800, function(){
+         $("#main").slideDown(1000,function(){
+           $(".start-slide").each(function(){
+             $(this).slideDown("slow",function(){
+               // var id = "#count_"+$(this).attr("id");
+               // countUp(id);
+               $(".counter").each(function(){
+                 countUp(this);
+               })
+             });
+           });
+         });
+       });
 
         $("#opt").click(function(){
           $("#ebox").attr("style","background:#014143;--notchSize:50px;--bcolor:#014143;width:90%;min-height:20vh;");
@@ -65,104 +47,28 @@
 
         });
 
-        $("#attr-all").change(function(){
-          if(!$("#attr-all").is(":checked")){
-            $(".attrall").each(function(){
-              var ip_id = "#"+$(this).attr("id");
-              var arr = ip_id.split("-");
-              var idnum = arr[arr.length-1];
-              var attrid = "#attr-div-"+idnum;
-              if($(attrid).is(":visible")){
-                $(ip_id).prop("checked",false);
-              }
-            });
-          }
-          else{
-            $(".attrall").each(function(){
-              var ip_id = "#"+$(this).attr("id");
-              var arr = ip_id.split("-");
-              var idnum = arr[arr.length-1];
-              var attrid = "#attr-div-"+idnum;
-              if($(attrid).is(":visible")){
-                $(ip_id).prop("checked",true);
-              }
-            });
-          }
-
-        });
-
-        $("#classify-all").change(function(){
-          if(!$("#classify-all").is(":checked")){
-            $(".classify").each(function(){
-              var id = "#"+$(this).attr("id");
-              $(id).prop("checked",false);
-            });
-          }
-          else{
-            $(".classify").each(function(){
-              var id = "#"+$(this).attr("id");
-              $(id).prop("checked",true);
-            });
-          }
-        });
-
-        $("#start").click(function(){
-          $("#end-error").slideUp("slow");
-          $("#attr-error").slideUp("slow");
-          $("#class-error").slideUp("slow");
-
-          var err = 0;
-          if($('#end-select input:checked').length <= 0){
-            $("#end-error").slideDown("slow");
-          }
-          else{
-            err = err + 1;
-          }
-          if($('#attr-select input:checked').length <= 0){
-            $("#attr-error").slideDown("slow");
-          }
-          else{
-            err = err + 1;
-          }
-          if($('#class-select input:checked').length <= 0){
-            $("#class-error").slideDown("slow");
-          }
-          else{
-            err = err + 1;
-          }
-          if(err === 3){
-            $("#start-btn").click();
-          }
-
-        });
-        
-        $("#data").click(function(){
-          $("#end-error").slideUp("slow");
-          $("#attr-error").slideUp("slow");
-          $("#class-error").slideUp("slow");
-
-          var err = 0;
-          if($('#end-select input:checked').length <= 0){
-            $("#end-error").slideDown("slow");
-          }
-          else{
-            err = err + 1;
-          }
-          if($('#attr-select input:checked').length <= 0){
-            $("#attr-error").slideDown("slow");
-          }
-          else{
-            err = err + 1;
-          }
-          if(err === 2){
-            $("#data-btn").click();
-          }
-
-        });
-
 
 
      });
+     
+     function countUp(id){
+       var $this = $(id),
+           countTo = $this.attr('data-count');
+     
+       $({ countNum: $this.text()}).animate({
+         countNum: countTo
+       },
+       {
+         duration: 1200,
+         easing:'linear',
+         step: function() {
+           $this.text(Math.floor(this.countNum));
+         },
+         complete: function() {
+           $this.text(this.countNum);
+         } 
+       }); 
+     }
 
 
 
@@ -178,140 +84,165 @@
             <div class="card dark-card module border-color" id="main1" style="--notchSize: 80px;--bcolor:#008e8c;display:none;">
                 <div class="mt-4 mb-4">
                   <center>
-                  <h1 class="text-white text-uppercase ">{{file_name}} OKAAAY</h1>
-                  <span class="text-white">{{attr}} attributes in this file</span>
+                  <h1 class="text-white text-uppercase ">{{file}}</h1>
                 </center>
                 </div>
                 <form action="/classifier/select/?file={{file_name}}" method="POST" target="_blank">
                   {% csrf_token %}
                 <div id="main" style="display:none">
                   <center>
-                <div class="module pt-2 pb-2 border-color instruct-btn" id="opt" style="--notchSize: 20px;--bcolor:#3f4569;width:50%;">
-                  <center><span class="text-white">S E L E C T &nbsp;&nbsp;&nbsp; O P T I O N S </span></center>
-                </div>
 
                 <div class="container-fluid mt-4 mb-1">
                   <div class="row">
-                    <div class="col-6">
-                      <div class="mt-3 mb-1 pt-2 pb-2 module border-color h-fill" id="ebox" style="--notchSize:50px;--bcolor:#014143;width:90%;" >
+                    <div class="col-4">
+                      <div class="mt-3 mb-1 pt-2 pb-2 module border-color h-fill" style="--notchSize:30px;--bcolor:#014143;width:90%;" >
                           <div class="container">
                             <div class="row">
-                              <div class="col-12 mb-3">
-                                <span class="text-white">S E L E C T &nbsp;&nbsp;&nbsp; E N D &nbsp;&nbsp;&nbsp; C L A S S</span>
+                              <div class="col-12">
+                                <span class="text-white text-uppercase" style="letter-spacing:2px">Number of Attributes</span>
                               </div>
                             </div>
-                            <div class="row ml-5 start-slide" style="display:none" id="end-select">
-                              {% for i in cols %}
-                              <div class="col-4 mb-2 d-flex justify-content-start">
-                                <div class="ch-wrap end-wrap" id="{{forloop.counter}}">
-                                  <input type="radio" name="end" value="{{i}}" id="end-{{forloop.counter}}" class="attrs" hidden/>
-                                  <label for="end-{{forloop.counter}}"  class="mark"></label>
-                                </div>
-                                &nbsp;&nbsp;
-                                <label for="end-{{forloop.counter}}" class="text-white text-uppercase"> {{i}} </label>
+                            <div class="row start-slide mt-2" id="1" style="display:none;">
+                              <div class="col-12 text-white">
+                                <center><span class="counter" id="count_1" data-count="22" style="font-size:60px;">0</span></center>
                               </div>
-                              {% endfor %}
-
                             </div>
                           </div>
                       </div>
-                      <div id="end-error" style="display:none">
-                        <span style="color:red">P L E A S E &nbsp; S E L E C T &nbsp; A &nbsp; F I E L D </span>
+                    </div>
+                    <div class="col-4">
+                      <div class="mt-3 mb-1 pt-2 pb-2 module border-color h-fill" style="--notchSize:30px;--bcolor:#014143;width:90%;" >
+                          <div class="container">
+                            <div class="row">
+                              <div class="col-12">
+                                <span class="text-white text-uppercase" style="letter-spacing:2px">Number of Attributes</span>
+                              </div>
+                            </div>
+                            <div class="row start-slide mt-2" id="2" style="display:none;">
+                              <div class="col-12 text-white">
+                                <center><span class="counter" id="count_2" data-count="22" style="font-size:60px;">0</span></center>
+                              </div>
+                            </div>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <div class="mt-3 mb-1 pt-2 pb-2 module border-color h-fill" style="--notchSize:30px;--bcolor:#014143;width:90%;" >
+                          <div class="container">
+                            <div class="row">
+                              <div class="col-12">
+                                <span class="text-white text-uppercase" style="letter-spacing:2px">Number of Attributes</span>
+                              </div>
+                            </div>
+                            <div class="row start-slide mt-2" id="3" style="display:none;">
+                              <div class="col-12 text-white">
+                                <center><span class="counter" id="count_3" data-count="22" style="font-size:60px;">0</span></center>
+                              </div>
+                            </div>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-3">
+                      <div class="mt-3 mb-1 pt-2 pb-2 module border-color h-fill" style="--notchSize:30px;--bcolor:#014143;width:90%;" >
+                          <div class="container">
+                            <div class="row">
+                              <div class="col-12">
+                                <span class="text-white text-uppercase" style="letter-spacing:2px">Number of Attributes</span>
+                              </div>
+                            </div>
+                            <div class="row start-slide mt-2" id="4" style="display:none;">
+                              <div class="col-12 text-white">
+                                <center><span class="counter" id="count_4" data-count="52" style="font-size:60px;">0</span></center>
+                              </div>
+                            </div>
+                          </div>
                       </div>
                     </div>
                     <div class="col-6">
-                      <div class="mt-3 mb-1 pt-2 pb-2 module border-color h-fill" id="abox" style="--notchSize:50px;--bcolor:#014143;width:90%;">
-                        <div class="container">
-                          <div class="row">
-                            <div class="col-12 mb-3">
-                              <span class="text-white">S E L E C T &nbsp;&nbsp;&nbsp; A T T R I B U T E S</span>
-                            </div>
-                          </div>
-                          <div class="row ml-5 start-slide" style="display:none" id="attr-select">
-                            {% for i in cols %}
-                            <div class="col-4 mb-2 attr-wrap" id="attr-div-{{forloop.counter}}">
-                            <div class=" d-flex justify-content-start">
-                              <div class="ch-wrap">
-                                <input type="checkbox" name="attr" value="{{i}}" id="attr-{{forloop.counter}}" class="attrs attrall" hidden/>
-                                <label for="attr-{{forloop.counter}}"  class="mark"></label>
+                      <div class="mt-3 mb-1 pt-2 pb-2 module border-color h-fill" style="--notchSize:30px;--bcolor:#014143;width:90%;" >
+                          <div class="container">
+                            <div class="row">
+                              <div class="col-12">
+                                <span class="text-white text-uppercase" style="letter-spacing:2px">Number of Attributes</span>
                               </div>
-                              &nbsp;&nbsp;
-                              <label for="attr-{{forloop.counter}}" class="text-white text-uppercase"> {{i}} </label>
                             </div>
-                          </div>
-                            {% endfor %}
-                            <div class="col-4 mb-2 attr-wrap">
-                            <div class=" d-flex justify-content-start">
-                              <div class="ch-wrap">
-                                <input type="checkbox" value="all" id="attr-all" class="attrs" hidden/>
-                                <label for="attr-all"  class="mark"></label>
+                            <div class="row start-slide mt-2" id="51" style="display:none;">
+                              <div class="col-5 text-white">
+                                <center><span class="counter" id="count_51" data-count="75" style="font-size:60px;">0</span></center>
                               </div>
-                              &nbsp;&nbsp;
-                              <label for="attr-all" class="text-white text-uppercase"> ALL </label>
+                              <div class="col-2 text-white">
+                                <center><span style="font-size:60px;">-</span></center>
+                              </div>
+                              <div class="col-5 text-white">
+                                <center><span class="counter" id="count_52" data-count="25" style="font-size:60px;">0</span></center>
+                              </div>
                             </div>
                           </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div id="attr-error" style="display:none">
-                        <span style="color:red">P L E A S E &nbsp; S E L E C T &nbsp; A &nbsp; F I E L D </span>
                       </div>
                     </div>
+                    <div class="col-3">
+                      <div class="mt-3 mb-1 pt-2 pb-2 module border-color h-fill" style="--notchSize:30px;--bcolor:#014143;width:90%;" >
+                          <div class="container">
+                            <div class="row">
+                              <div class="col-12">
+                                <span class="text-white text-uppercase" style="letter-spacing:2px">Number of Attributes</span>
+                              </div>
+                            </div>
+                            <div class="row start-slide mt-2" id="6" style="display:none;">
+                              <div class="col-12 text-white">
+                                <center><span class="counter" id="count_6" data-count="80" style="font-size:60px;">0</span></center>
+                              </div>
+                            </div>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mt-5">
                     <div class="col-12">
-                      <div class="mt-5 mb-1 pt-2 pb-2 module border-color h-fill" id="sbox" style="--notchSize:30px;--bcolor:#3f4569;width:90%;">
-                        <div class="container">
-                          <div class="row">
-                            <div class="col-12">
-                              <span class="text-white">T R A I N &nbsp;&nbsp; T E S T &nbsp;&nbsp; S P L I T</span>
-                              <div class="mb-3 d-flex justify-content-between" style="width:85%;">
-                                <div class="text-white text-uppercase" style="font-size:25px"><span id="value">T r a i n : &nbsp; 80%</span></div>
-                                <div class="text-white text-uppercase" style="font-size:25px"><span id="tvalue">T e s t : &nbsp; 20%</span></div>
-                              </div>
-                              <div class="mb-4">
-                                <input type="range" class="slide" min="2" max="9" step="0.5" value="8">
-                              </div>
-
-                            </div>
-                          </div>
-
+                      <!-- <div class="row mx-3 d-flex justify-content-center"> -->
+                        <div class="mt-3 mb-3 pt-2 pb-2 module border-color hover-btn2" id="open_graph" style="--notchSize:15px;--bcolor:#014143;--btn:30%">
+                          <span class="text-white">O P E N &nbsp;&nbsp; G R A P H S</span>
                         </div>
-                      </div>
+                      <!-- </div> -->
                     </div>
-                    <div class="col-12">
-                      <div class="mt-5 mb-1 pt-2 pb-2 module border-color h-fill" id="cbox" style="--notchSize:60px;--bcolor:#3f4569;width:90%;height:25vh;">
-                        <div class="container-fluid">
-                          <div class="row">
-                            <div class="col-12">
-                              <span class="text-white">S E L E C T &nbsp;&nbsp;&nbsp; C L A S S I F I C A T I O N &nbsp;&nbsp;&nbsp; M E T H O D S</span>
-                            </div>
+                    <div class="col-6">
+                      <!-- <div class="col-4 mt-4"> -->
+                        <div class="module pt-2 pb-2 border-color h-fill instruct classify-card" id="graph1g" style="--notchSize: 30px;--bcolor:#3f4569;width:80%;">
+                          <div class="graph-card" style="width:100%" id="1g">
+                            <center>
+                              <span class="text-white text-uppercase" style="letter-spacing: 2px;">GRAPH</span><br>
+                            </center>
                           </div>
-                            <div class="row mt-2 d-flex justify-content-around start-slide" style="width:100%;" id="class-select">
-                              {% for i in classifiers %}
-                              <div class="col-4 mb-2 mt-3 d-flex justify-content-center">
-                                <div class="ch-wrap">
-                                  <input type="checkbox" name="classifier" value="{{i}}" id="classify{{forloop.counter}}" class="attrs classify" hidden/>
-                                  <label for="classify{{forloop.counter}}"  class="mark"></label>
-                                </div>
-                                &nbsp;&nbsp;
-                                <label for="classify{{forloop.counter}}" class="text-white text-uppercase" style="letter-spacing: 2px;"> {{i}} </label>
-                              </div>
-                              {% endfor %}
-                              <div class="col-4 mb-2 mt-3 d-flex justify-content-center">
-                                <div class="ch-wrap">
-                                  <input type="checkbox" name="" value="{{i}}" id="classify-all" class="attrs" hidden/>
-                                  <label for="classify-all"  class="mark"></label>
-                                </div>
-                                &nbsp;&nbsp;&nbsp;&nbsp;
-                                <label for="classify-all" class="text-white" style="letter-spacing: 2px;"> ALL CLASSIFIERS</label>
-                              </div>
+  
+                          <div class="mr-3 ml-3 text-white graphs_inside" id="graph1g_inside">
+                            <div class="chart-bar mt-3 mb-3" style="width:100%" id="grapharea1g">
+                              <canvas id="myPieChart"></canvas>
                             </div>
-
+                            <button id="grapharea1g_btn" type="button" name="button" onclick="graph_chart('1g',[25,25,25,75]);" hidden></button>
+                          </div>
                         </div>
-                      </div>
-                      <div id="class-error" style="display:none">
-                        <span style="color:red">P L E A S E &nbsp; S E L E C T &nbsp; A &nbsp; F I E L D </span>
-                      </div>
+                      <!-- </div> -->
                     </div>
+                    
+                    <div class="col-6">
+                      <!-- <div class="col-4 mt-4"> -->
+                        <div class="module pt-2 pb-2 border-color h-fill instruct classify-card" id="graph2g" style="--notchSize: 30px;--bcolor:#3f4569;width:80%;">
+                          <div class="graph-card" style="width:100%" id="2g">
+                            <center>
+                              <span class="text-white text-uppercase" style="letter-spacing: 2px;">GRAPH</span><br>
+                            </center>
+                          </div>
+  
+                          <div class="mr-3 ml-3 text-white graphs_inside" id="graph2g_inside">
+                            <div class="chart-bar mt-3 mb-3" style="width:100%" id="grapharea2g">
+                              <!-- <canvas id="myPieChart"></canvas> -->
+                            </div>
+                            <button id="grapharea2g_btn" type="button" name="button" onclick="graph_chart('2g',[25,25,25,75]);" hidden></button>
+                          </div>
+                        </div>
+                      <!-- </div> -->
+                    </div>
+                    
                   </div>
                 </div>
 
@@ -355,30 +286,42 @@
       </div>
     </div>
 
+    <script src="{% static 'charts/Chart.min.js' %}"></script>
+    
     <script type="text/javascript">
-          var elem = document.querySelector('input[type="range"]');
-
-          var rangeValue = function(){
-            var x = elem.value;
-            var val = document.getElementById('value');
-            var tval = document.getElementById('tvalue');
-            var train = x*10;
-            var test = 100-train;
-            console.log(train,test);
-            var dispval = "T r a i n : &nbsp; "+ train + "%";
-            var disptval = "T e s t : &nbsp; "+ test + "%";
-            val.innerHTML = dispval;
-            tval.innerHTML = disptval;
-
-            var train_ip = document.getElementById("train_val");
-            var test_ip = document.getElementById("test_val");
-
-            train_ip.value = train;
-            test_ip.value = test;
-          }
-
-          elem.addEventListener("input", rangeValue);
+    var ctx = document.getElementById("myPieChart");
+    var myPieChart = new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: ["Direct", "Referral", "Social"],
+        datasets: [{
+          data: [55, 30, 15],
+          backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc'],
+          hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf'],
+          hoverBorderColor: "rgba(234, 236, 244, 1)",
+        }],
+      },
+      options: {
+        maintainAspectRatio: false,
+        tooltips: {
+          backgroundColor: "rgb(255,255,255)",
+          bodyFontColor: "#858796",
+          borderColor: '#dddfeb',
+          borderWidth: 1,
+          xPadding: 15,
+          yPadding: 15,
+          displayColors: false,
+          caretPadding: 10,
+        },
+        legend: {
+          display: false
+        },
+        cutoutPercentage: 80,
+      },
+    });
+      
     </script>
+
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
