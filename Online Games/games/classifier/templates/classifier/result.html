@@ -32,7 +32,7 @@
           var cardid = "#instruct"+ idnum;
           var contentid = cardid+"_inside";
           var chartid = "#chartarea"+ idnum;
-          var acc_id = "#acc_" + idnum; 
+          var acc_id = "#acc_" + idnum;
           var details = "#details_" + idnum;
           $(id).click(function(){
            if(!$(contentid).is(":visible")){
@@ -44,8 +44,8 @@
              $(cardid).animate({width:'100%'}, 'slow', function(){
                $(contentid).slideDown("slow", function(){
                  // $(cardid).removeClass('instruct-btn');
-                 $(chartid+"_btn").click(); 
-                 countUp(acc_id);     
+                 $(chartid+"_btn").click();
+                 countUp(acc_id);
                  $(details).slideDown("slow",function(){
                    var prf_id = ["#prf1_"+idnum,"#prf2_"+idnum,"#prf3_"+idnum];
                    var i;
@@ -75,18 +75,18 @@
                     var canv = '<canvas class="pie'+idnum+'" id="PieChart'+idnum+'"></canvas>';
                     $(chartid).append(canv);
                   }
- 
+
                 });
               });
             });
-             
+
 
            }
           });
         });
-        
+
         // XXXXXXX
-        
+
         $(".graph-card").each(function(){
           var id = "#"+$(this).attr("id");
           var idnum = $(this).attr("id");
@@ -127,17 +127,17 @@
            }
           });
         });
-        
+
         // XXXXX
-        
+
         $("#open").click(function() {
-          
+
           if(!$(".result_inside").is(":visible")){
             $(".class-card").click();
           }
           else{
             var open = 0;
-            $(".result_inside").each(function(){    
+            $(".result_inside").each(function(){
               var id = $(this).attr("id");
               var inst = $(this).attr("id").split("_");
               var idnum = "#" + inst[0][inst[0].length -1];
@@ -160,18 +160,18 @@
             $("#scroll_button2").click();
             // $(id).attr("style","--notchSize: 30px;--bcolor:#3f4569;width:100%");
           });
-          
+
         });
-        
+
         $("#open_graph").click(function() {
-          
+
           if(!$(".graphs_inside").is(":visible")){
             $(".graph-card").click();
           }
           else{
             var open = 0;
             $(".graphs_inside").each(function(){
-              
+
               var id = $(this).attr("id");
               var inst = $(this).attr("id").split("_");
               var idnum = "#" + inst[0][inst[0].length -2]+inst[0][inst[0].length -1];
@@ -192,32 +192,32 @@
               });
             }
           }
-          
+
           $("#main1").animate({opacity: 1}, 1200, function(){
             $("#scroll_button").click();
           });
-          
+
         });
-        
-        $("#scroll_button").click(function() { 
-          $("html, body").animate({ 
-              scrollTop: $('html, body').get(0).scrollHeight 
-          }, 2000);  
+
+        $("#scroll_button").click(function() {
+          $("html, body").animate({
+              scrollTop: $('html, body').get(0).scrollHeight
+          }, 2000);
             });
-            
-            $("#scroll_button2").click(function() { 
+
+            $("#scroll_button2").click(function() {
               console.log("@22");
-              $("html, body").animate({ 
+              $("html, body").animate({
                   scrollTop: 5 * $("#open")[0].scrollHeight
                   // scrollTop: 100
-              }, 500);  
+              }, 500);
                 });
      });
-     
+
      function countUp(id){
        var $this = $(id),
            countTo = $this.attr('data-count');
-     
+
        $({ countNum: $this.text()}).animate({
          countNum: countTo
        },
@@ -231,8 +231,8 @@
          },
          complete: function() {
            $this.text(this.countNum);
-         } 
-       }); 
+         }
+       });
      }
 
 </script>
@@ -284,24 +284,24 @@
                               </div>
                               <button id="chartarea{{forloop.counter}}_btn" type="button" name="button" onclick="acc_chart({{forloop.counter}},{{i.2}},{{i.3}})" hidden></button>
                             </div>
-                            
+
                             <div class="container" id="details_{{forloop.counter}}" style="display:none">
                               <div class="row mb-2">
                                 <div class="col-6 text-white mb-2">
                                   PRESICION
-                                </div>  
+                                </div>
                                 <div class="col-6 text-white mb-2">
                                   <span id="prf1_{{forloop.counter}}" data-count="{{ i.7.0 }}">0.0 </span><span>&nbsp; %</span>
                                 </div>
                                 <div class="col-6 text-white mb-2">
                                   RECALL
-                                </div>  
+                                </div>
                                 <div class="col-6 text-white mb-2">
                                   <span id="prf2_{{forloop.counter}}" data-count="{{ i.7.1 }}">0.0 </span><span>&nbsp; %</span>
                                 </div>
                                 <div class="col-6 text-white mb-2">
                                   F-1 SCORE
-                                </div>  
+                                </div>
                                 <div class="col-6 text-white mb-2">
                                   <span id="prf3_{{forloop.counter}}" data-count="{{ i.7.2 }}">0.0 </span><span>&nbsp; %</span>
                                 </div>
@@ -315,13 +315,13 @@
                                   <div class="container-fluid">
                                     {% for j in i.6 %}
                                     <div class="row d-flex justify-content-around">
-                                      
+
                                         {% for k in j%}
                                         <div class="col-2 text-white mt-1 text-uppercase" style="font-size:14px;">
                                           {{k}}
                                         </div>
                                         {% endfor %}
-                                      
+
                                     </div>
                                     {% endfor %}
                                   </div>
@@ -341,15 +341,25 @@
 
                     </div>
 
+
+
                 <div class="container-fluid mt-4 mb-4" id="graph_scroll">
                   <div class="row mx-3 d-flex justify-content-center">
                     <div class="mt-3 mb-3 pt-2 pb-2 module border-color hover-btn2" id="open_graph" style="--notchSize:15px;--bcolor:#014143;--btn:30%">
                       <span class="text-white">O P E N &nbsp;&nbsp; G R A P H S</span>
                     </div>
                   </div>
-                  
+
+                  <form action="/classifier/result/?file={{file}}" method="POST">
+                    {% csrf_token %}
+
+                    <button type="submit" name="start" value="predict">predict</button>
+
+
+                  </form>
+
                   <div class="row d-flex justify-content-around mb-5">
-                    
+
                     {% for j,i in graphs %}
                     <div class="col-4 mt-4">
                       <div class="module pt-2 pb-2 border-color h-fill instruct classify-card" id="graph{{forloop.counter}}g" style="--notchSize: 30px;--bcolor:#3f4569;width:80%;">
@@ -442,7 +452,7 @@
         },
       });
     }
-    
+
     function graph_chart(x,vals,name,lbl){
       var id = "Graph" + x.toString();
       // var p2 = 100-p1
@@ -536,7 +546,7 @@
       });
 
     }
-    
+
     function time_chart(x,vals1,vals2,name,lbl1,lbl2,maxt){
       var id = "Graph" + x.toString();
       var ctx = document.getElementById(id);

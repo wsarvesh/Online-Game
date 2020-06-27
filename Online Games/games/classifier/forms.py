@@ -12,3 +12,6 @@ class SelectForm(forms.Form):
     test = forms.CharField(required=False)
     start = forms.CharField(required=False)
     redirect = forms.CharField(required=False)
+
+class PredictForm(forms.Form):
+    data = forms.CharField()

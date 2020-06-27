@@ -56,6 +56,7 @@ def clean_report(cl):
 def training(clf,xtrain, xtest, ytrain, ytest,name,name2):
     t0 = time.clock()
     cl = clf.fit(xtrain,ytrain)
+    model = cl.tolist()
     t1 = time.clock()
     yp = clf.predict(xtest)
     t2 = time.clock()
@@ -74,7 +75,7 @@ def training(clf,xtrain, xtest, ytrain, ytest,name,name2):
     # print(prf_score)
     prfs = ["{:.2f}".format(float(i)*100) for i in prf_score[:3]]
     # print(prfs)
-    report = [name,cl,acc,d_acc,tr_time,te_time,cl_report,prfs,name2]
+    report = [name,model,acc,d_acc,tr_time,te_time,cl_report,prfs,name2]
     return report
 
 def train_model(end, attr, classifier, train, test, data):
@@ -161,8 +162,11 @@ def select(request):
                 if start == "data":
                     redirect = "data_page"
                     return render(request, 'classifier/loading.html', {'classifier':classifier,"end":end,"attr":attr,"train":train,"test":test,"file":file,"redirect":redirect})
-                else:
+                elif start == "start":
                     redirect = "results_page"
+                    return render(request, 'classifier/loading.html', {'classifier':classifier,"end":end,"attr":attr,"train":train,"test":test,"file":file,"redirect":redirect})
+                elif start == "predict":
+                    redirect = "predict_page"
                     return render(request, 'classifier/loading.html', {'classifier':classifier,"end":end,"attr":attr,"train":train,"test":test,"file":file,"redirect":redirect})
 
         jsondata = request.session['data']
@@ -178,12 +182,15 @@ def select(request):
 def result(request):
     if 'data' in request.session:
         SF = SelectForm()
+        PF = PredictForm()
         jsondata = request.session['data']
         jdata = json.loads(jsondata)
         data = pd.DataFrame(jdata)
+        classification_report = []
         file = request.GET['file']
         if request.method == "POST":
             SF = SelectForm(request.POST)
+            PF = PredictForm(request.POST)
             if SF.is_valid():
                 end = SF.cleaned_data['end']
                 attr= SF.cleaned_data['attr']
@@ -205,10 +212,34 @@ def result(request):
                     testl = int(round(datal * int(test) / 100))
                     info.append(testl)                                                                                                                      #3
                     info.append(len(attr))                                                                                                                  #4
-                    print(datal, attrl, len(attr), trainl, testl)
+                    dataf = pd.DataFrame(data, columns=attr)
+                    min_data = dataf.min()
+                    max_data = dataf.max()
+                    unique_freq = []
+                    for i in attr:
+                        temp = []
+                        temp.append(i)
+                        temp.append(dataf[i].min())
+                        temp.append(dataf[i].max())
+                        count  = dataf[i].value_counts()
+                        ufreq = []
+                        # print(count)
+                        for j,k in zip(count, count.index):
+                            freq = []
+                            freq.append(k)
+                            freq.append(j)
+                            ufreq.append(freq)
+                        temp.append(ufreq)
+                        # print(temp)
+                        unique_freq.append(temp)
+                    print(unique_freq,"\n")
+                    # info.append(unique_attr)                                                                                                                #5
+                    # info.append(data[end].unique())                                                                                                         #6
+                    # print(info)
                     return render(request, 'classifier/data.html', {'classifier':classifier,"end":end,"attr":attr,"train":train,"test":test,"file":file, "info":info })
                 elif redirect == "results_page":
                     classification_report = train_model(end, attr, classifier, float(train)/100, float(test)/100, data)
+                    # request.session['report'] = classification_report
                     acc = []
                     pre = []
                     rec = []
@@ -230,5 +261,18 @@ def result(request):
                     max_time = max(max(time_tr),max(time_te))
                     time_graph = [time_tr,time_te,max_time]
                     return render(request, 'classifier/result.html', {'classification_report':classification_report,'graphs':graphs,"time_graph":time_graph,"name":name,"file":file})
+                elif start == "predict":
+                    return render(request, 'classifier/predict.html', {"file":file})
+            if PF.is_valid():
+                # report = request.session['report']
+                data = PF.cleaned_data['data']
+                print("hi")
+                for i in classification_report:
+                    print(i)
+                print("dhfj")
+                # print(report, data)
+
+                return render(request, 'classifier/predict.html', {"file":file})
+
     return render(request,'classifier/index.html')
 # Create your views here.
