@@ -188,6 +188,18 @@ body{
   cursor: pointer;
 }
 
+.data-show{
+  font-size:60px;
+  line-height:1;
+  color:#00a8a6;
+}
+.attr-show{
+  font-size:30px;
+  line-height:1;
+  color:#00a8a6;
+  text-transform: uppercase;
+}
+
 /* SCROLL */
 
 /* width */
