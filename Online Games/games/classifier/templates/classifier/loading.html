@@ -46,10 +46,21 @@
                 <div class="mt-3 mb-3">
                   <center>
                   <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
-                  <h1 class="text-white">T R A I N I N G</h1>
+                  <div class="mt-3">
+                    {% if redirect == 'results_page' %}
+                    <h1 class="text-white">T R A I N I N G</h1>
+                    {% elif redirect == 'data_page'%}
+                    <h1 class="text-white">A N A L I Z I N G</h1>
+                    {% endif %}
+                  </div>
                   <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
                   </center>
-                  <center><span class="text-white">Please Wait for the classifier to train ... </span></center>
+                  {% if redirect == 'results_page' %}
+                  <center><span class="text-white text-uppercase">Waiting for the classifier/s to train . . . </span></center>
+                  {% elif redirect == 'data_page'%}
+                  <center><span class="text-white text-uppercase">Waiting for analysis to complete . . . </span></center>
+                  {% endif %}
+                  
                 </div>
                 <div id="main" style="display:none;">
                   <form action="/classifier/result/?file={{file}}" method="POST" enctype="multipart/form-data">

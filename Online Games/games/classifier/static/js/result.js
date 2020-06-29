@@ -151,13 +151,11 @@ $(document).ready(function() {
          var id = $(this).attr("id");
          var inst = $(this).attr("id").split("_");
          var idnum = "#" + inst[0][inst[0].length -2]+inst[0][inst[0].length -1];
-         console.log(idnum);
          if(!$(this).is(":visible")){
            open = open + 1;
            $(idnum).click();
          }
        });
-       console.log(open);
        if (open == 0){
          $(".graph-card").each(function(){
            var id = "#graph"+$(this).attr("id");
@@ -182,7 +180,6 @@ $(document).ready(function() {
        });
 
        $("#scroll_button2").click(function() {
-         console.log("@22");
          $("html, body").animate({
              scrollTop: 5 * $("#open")[0].scrollHeight
          }, 500);

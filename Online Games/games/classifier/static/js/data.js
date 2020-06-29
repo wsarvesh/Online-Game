@@ -52,10 +52,6 @@ $(document).ready(function() {
                $(this).animate({width:'70%'}, 'slow');
                $("#graphshow").html("0");
              });
-             // $(".show-img-graph").each(function(){
-             //   $(this).animate({width:'70%'}, 'slow');
-             //   $("#graphshow").html("0");
-             // });
            });
          });
        
