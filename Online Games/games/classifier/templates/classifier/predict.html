@@ -1,19 +1,147 @@
 {% load static %}
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
+
+<html lang="en">
   <head>
+    <!-- Required meta tags -->
     <meta charset="utf-8">
-    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    <title>Classifier</title>
+
+    <link rel="stylesheet" href="{% static 'classify.css' %}">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+      <script>
+
+     $(document).ready(function() {
+
+        $("#main1").fadeIn(1500,function(){
+          $(".start-slide").each(function(){
+            var sl_id = "#next_"+$(this).attr("id");
+            $(this).slideDown('slow',function(){
+              $(sl_id).slideDown('slow');
+            });
+          });
+          $(".hr-line").slideDown('slow');
+        });
+
+        $("#load").click(function(){
+          $("#loading").html("L O A D I N G . . .");
+          $("#load").removeClass("hover-btn");
+          $("#load").addClass("loading-btn");
+          $("#load-btn").click();
+
+        });
+        
+        
+
+     });
+
+</script>
+
   </head>
-  <body>
-    Predict
-    <form action="/classifier/result/?file={{file}}" method="POST">
-      {% csrf_token %}
+  <body class="dark">
 
-      <input type="text" name="data">
-      <button type="submit" name="button"> Predict </button>
+    <div class="d-flex justify-content-center align-items-center screen-size">
+      <div class="container">
+        <div class="row">
+
+          <div class="col-12">
+            <div class="card dark-card module border-color" id="main1" style="--notchSize: 80px;--bcolor:#008e8c;display:none;">
+                <div class="mt-3 mb-3">
+                  <center>
+                  <h1 class="text-white">PREDICT</h1>
+                  <span class="text-white text-uppercase">make Predictions from trained models</span>
+                  <div class="hr-line" style="display:none">
+                    <center><hr style="background:white;width:80%"></center>
+                  </div>
+                </center>
+                </div>
+                <div id="main">
+
+                  <form action="/classifier/result/?file={{file}}" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    
+                    <div class="container">
+                      <div class="row">
+                        <div class="col-4 start-slide mb-3" id="sl1" style="display:none">
+                          <center>
+                            <span class="attr-show text-white"> HELLO </span><br>
+                            <div class="mt-2">
+                              <div class="mx-auto" id="next_sl1" style="display:none">
+                                <div class="pt-1 pb-1 module border-color" style="--notchSize:25px;--bcolor:#014143;width:80%;">
+                                  <input type="text" class="predict_ip px-2" name="" value="">
+                                </div>
+                              </div>
+                              <div class="mt-0">
+                                <span style="color:red;font-size:14px;display:none;"> ERROR </span>
+                              </div>
+                              <div class="mt-1">
+                                <span style="color:#008e8c"> Range </span>
+                              </div>
+                            </div>
+                          </center>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div style="width:95%">
+                        <div class="d-flex justify-content-end align-items-center">
+                            <div class="mt-3 mb-3 pt-2 pb-2 module border-color light-card hover-btn" id="load" style="--notchSize:15px;--bcolor:#014143;--btn:25%">
+                              <center>
+                                <span id="loading"> P R E D I C T </span>
+                              </center>
+                            </div>
+                            <div style="display:none">
+                            <input type="file" name="file" class="input" />
+                            <button type="submit" name="button" id="load-btn"></button>
+                          </div>
+                        </div>
+                  </div>
+                  </form>
+                  <div class="hr-line" style="display:none">
+                    <center><hr style="background:white;width:60%"></center>
+                  </div>
+                  
+                  
+                  <div class="container">
+                    <div class="row d-flex justify-content-around">
+                      <div class="col-4 mb-4 start-slide" id="ans1" style="display:none">
+                        <div class="module pt-2 pb-2 border-color h-fill instruct classify-card" style="--notchSize: 30px;--bcolor:#3f4569;width:80%;">
+                          <div class="class-card" style="width:100%">
+                            <center>
+                              <span class="text-white text-uppercase" style="letter-spacing: 2px;">MODEL</span><br>
+                            </center>
+                          </div>
+
+                          <div class="mt-3 mb-3 text-white result_inside" style="display:none" id="next_ans1">
+                            <center><span class="attr-show text-white">IRISIS</span></center>
+                          </div>
+                        </div>
+                      </div>
+                    </div>  
+                  </div>
+
+              
+              
+              
+            </div>
+              </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
 
 
-    </form>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
   </body>
 </html>

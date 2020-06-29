@@ -22,7 +22,9 @@
      $(document).ready(function() {
 
         $("#main1").fadeIn(800, function(){
-          $("#main").slideDown(1000);
+          $("#main").slideDown(1000,function(){
+            $("#open").click();
+          });
         });
 
 

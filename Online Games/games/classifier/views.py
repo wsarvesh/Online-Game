@@ -56,7 +56,7 @@ def clean_report(cl):
 def training(clf,xtrain, xtest, ytrain, ytest,name,name2):
     t0 = time.clock()
     cl = clf.fit(xtrain,ytrain)
-    model = cl.tolist()
+    model = cl
     t1 = time.clock()
     yp = clf.predict(xtest)
     t2 = time.clock()
@@ -275,4 +275,7 @@ def result(request):
                 return render(request, 'classifier/predict.html', {"file":file})
 
     return render(request,'classifier/index.html')
+    
+def predict(request):
+    return render(request,'classifier/predict.html')
 # Create your views here.

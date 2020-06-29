@@ -200,6 +200,15 @@ body{
   text-transform: uppercase;
 }
 
+.predict_ip{
+  background: transparent;
+  color: white;
+  border:none;
+  text-align: center;
+}
+.predict_ip:focus{
+  outline: none;
+}
 /* SCROLL */
 
 /* width */
@@ -247,6 +256,19 @@ body{
 @media (min-width: 768px) {
   .chart-bar {
     height: 15rem;
+    width: 100%;
+  }
+}
+
+.chart-bar-small {
+  position: relative;
+  /* height: 10rem; */
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .chart-bar-small {
+    /* height: 15rem; */
     width: 100%;
   }
 }
