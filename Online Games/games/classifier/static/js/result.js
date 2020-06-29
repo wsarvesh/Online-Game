@@ -6,6 +6,15 @@ $(document).ready(function() {
      });
    });
 
+   $("#pred").click(function(){
+     console.log("HELLO");
+     $("#pred-btn").click();
+   });
+
+   $("#down").click(function(){
+     $("#down-btn").click();
+   });
+
 
    $(".class-card").each(function(){
      var id = "#"+$(this).attr("id");

@@ -213,32 +213,37 @@ def result(request):
                     info.append(testl)                                                                                                                      #3
                     info.append(len(attr))                                                                                                                  #4
                     dataf = pd.DataFrame(data, columns=attr)
-                    min_data = dataf.min()
-                    max_data = dataf.max()
                     unique_freq = []
+                    mmm  = []
                     for i in attr:
                         temp = []
                         temp.append(i)
                         temp.append(dataf[i].min())
                         temp.append(dataf[i].max())
+                        temp.append(data[i].mean().round(2))
+                        mmm.append(temp)
                         count  = dataf[i].value_counts()
-                        ufreq = []
-                        # print(count)
+                        unique = []
+                        freq = []
                         for j,k in zip(count, count.index):
-                            freq = []
-                            freq.append(k)
                             freq.append(j)
-                            ufreq.append(freq)
-                        temp.append(ufreq)
-                        # print(temp)
-                        unique_freq.append(temp)
-                    print(unique_freq,"\n")
-                    # info.append(unique_attr)                                                                                                                #5
-                    # info.append(data[end].unique())                                                                                                         #6
-                    # print(info)
+                            unique.append(k)
+                        unique_freq.append([i, unique, freq])
+                    mmm_t = [end, data[end].min(), data[end].max(), data[end].mean().round(2)]
+                    count = data[end].value_counts()
+                    unique_freq_t = [end, [count.index.tolist()], [count.values.tolist()]]
+                    all_attr = [i for i in attr]
+                    all_attr.append(end)
+                    u_data = pd.DataFrame(data, columns=all_attr)
+                    corr = u_data.corr(method='pearson')
+                    print(corr,"\n")
+                    skew = u_data.skew()
+                    print(skew)
+
                     return render(request, 'classifier/data.html', {'classifier':classifier,"end":end,"attr":attr,"train":train,"test":test,"file":file, "info":info })
                 elif redirect == "results_page":
                     classification_report = train_model(end, attr, classifier, float(train)/100, float(test)/100, data)
+                    # print(classification_report)
                     # request.session['report'] = classification_report
                     acc = []
                     pre = []
@@ -261,21 +266,26 @@ def result(request):
                     max_time = max(max(time_tr),max(time_te))
                     time_graph = [time_tr,time_te,max_time]
                     return render(request, 'classifier/result.html', {'classification_report':classification_report,'graphs':graphs,"time_graph":time_graph,"name":name,"file":file})
-                elif start == "predict":
-                    return render(request, 'classifier/predict.html', {"file":file})
+                # elif start == "predict":
+                #     model == SF.cleaned_data['model']
+                #     print(model)
+                #     return render(request, 'classifier/predict.html', {"file":file, "model":model})
             if PF.is_valid():
                 # report = request.session['report']
                 data = PF.cleaned_data['data']
+                model = PF.cleaned_data['model']
                 print("hi")
+                # print(model)
                 for i in classification_report:
                     print(i)
                 print("dhfj")
                 # print(report, data)
 
-                return render(request, 'classifier/predict.html', {"file":file})
+                return HttpResponseRedirect("/classifier/predict/?="+file, "hello")
 
     return render(request,'classifier/index.html')
-    
-def predict(request):
+
+def predict(request,x):
+    print(x)
     return render(request,'classifier/predict.html')
 # Create your views here.

@@ -16,6 +16,11 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <script src="{% static 'js/result.js' %}"></script>
+    <script type="text/javascript">
+
+
+
+    </script>
 
   </head>
   <body class="dark">
@@ -123,26 +128,18 @@
 
                 <form action="/classifier/result/?file={{file}}" method="POST">
                   {% csrf_token %}
-                  
+                  <button type="submit" name="start" id="pred-btn" value="predict" hidden></button>
+                  <input type="text" name="model" value="{{classification_report}}" hidden></button>
+
                   <div class="container-fluid mt-4 mb-0">
                     <div class="row mx-3 d-flex justify-content-around">
-                      <div class="mt-3 mb-3 pt-2 pb-2 module border-color light-card hover-btn" id="load" style="--notchSize:15px;--bcolor:#008e8c;--btn:25%">
+                      <div class="mt-3 mb-3 pt-2 pb-2 module border-color light-card hover-btn" id="pred" style="--notchSize:15px;--bcolor:#008e8c;--btn:25%">
                         <center>
                           <span class="text-white">P R E D I C T &nbsp;&nbsp; F R O M &nbsp;&nbsp; C L A S S I F I E R S</span>
                         </center>
                       </div>
-                      <!-- <div class="mt-3 mb-5 pt-2 pb-2 module border-color light-card hover-btn" id="load" style="--notchSize:15px;--bcolor:#008e8c;--btn:25%">
-                        <center>
-                          <span class="text-white">D O W N L O A D &nbsp;&nbsp; C L A S S I F I E R S</span>
-                        </center>
-                      </div> -->
                     </div>
                   </div>
-
-                  <!-- <button type="submit" name="start" value="predict">predict</button> -->
-
-
-                <!-- </form> -->
 
                 <div class="container-fluid mt-0 mb-4" id="graph_scroll">
                   <div class="row mx-3 d-flex justify-content-center">
@@ -151,7 +148,7 @@
                     </div>
                   </div>
 
-                  
+
 
                   <div class="row d-flex justify-content-around mb-3">
 
@@ -191,13 +188,14 @@
                   </div>
                 </div>
                 </center>
-                
+
                 <div class="container-fluid mt-2 mb-2">
                   <div class="row mx-3 d-flex justify-content-around">
-                    <div class="mt-3 mb-5 pt-2 pb-2 module border-color light-card hover-btn" id="load" style="--notchSize:15px;--bcolor:#008e8c;--btn:25%">
+                    <div class="mt-3 mb-5 pt-2 pb-2 module border-color light-card hover-btn" id="down" style="--notchSize:15px;--bcolor:#008e8c;--btn:25%">
                       <center>
                         <span class="text-white">D O W N L O A D &nbsp;&nbsp; C L A S S I F I E R S</span>
                       </center>
+                      <button type="submit" name="button" id="down-btn" hidden></button>
                     </div>
                   </div>
                 </div>
