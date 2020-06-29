@@ -14,61 +14,8 @@
     <link rel="stylesheet" href="{% static 'classify.css' %}">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-      <script>
-
-     $(document).ready(function() {
-
-        $("#main1").fadeIn(1500,function(){
-          $(".start-slide").each(function(){
-            var sl_id = "#next_"+$(this).attr("id");
-            $(this).slideDown('slow',function(){
-              $(sl_id).slideDown('slow');
-            });
-          });
-          $(".hr-line").slideDown('slow');
-        });
-
-        $("#predict-btn").click(function(){
-          $(".errors").slideUp();
-          $("#pred").html("P R E D I C T I N G . . .");
-          $("#predict-btn").removeClass("hover-btn");
-          $("#predict-btn").addClass("loading-btn");
-          var inputs = [];
-          $(".p_input").each(function(){
-            inputs.push($(this).val());
-          });
-          var i;
-          var error = [];
-          for(i=0;i<inputs.length;i++){
-            if (inputs[i] == ""){
-              error.push(i);
-            }
-          }
-          for(i=0;i<error.length;i++){
-            eid = "#err_"+error[i];
-            $(eid).slideDown('slow');
-          }
-          if(error.length>0){
-          }
-          else{
-            var ip_str = "";
-            for(i=0;i<inputs.length;i++){
-              ip_str = ip_str+";"+inputs[i];
-            }
-            $('#predict_input').prop("value",ip_str);
-            
-              $("#submit-btn").click();
-          }
-        
-
-        });
-        
-        
-
-     });
-
-</script>
+    
+    <script src="{% static 'js/predict.js' %}"></script>
 
   </head>
   <body class="dark">
@@ -83,9 +30,6 @@
                   <center>
                   <h1 class="text-white">PREDICT</h1>
                   <span class="text-white text-uppercase">make Predictions from trained models</span>
-                  <!-- <div class="hr-line" style="display:none">
-                    <center><hr style="background:white;width:80%"></center>
-                  </div> -->
                 </center>
                 </div>
                 <div id="main">
@@ -225,34 +169,6 @@
                         </div>
                   </div>
                   </form>
-                  
-                  
-                  
-                  <!-- <div class="container">
-                    <div class="row">
-                      <div class="col-12 start-slide mb-4" style="display:none">
-                        <center>
-                        <span class="attr-show text-white">LABELED CLASS: </span>
-                        <span class="attr-show text-white">HEART</span>
-                      </center>
-                      </div>
-                    </div>
-                    <div class="row d-flex justify-content-around">
-                      <div class="col-4 mb-4 start-slide" id="ans1" style="display:none">
-                        <div class="module pt-2 pb-2 border-color h-fill instruct classify-card" style="--notchSize: 30px;--bcolor:#3f4569;width:80%;">
-                          <div class="class-card" style="width:100%">
-                            <center>
-                              <span class="text-white text-uppercase" style="letter-spacing: 2px;">MODEL</span><br>
-                            </center>
-                          </div>
-
-                          <div class="mt-3 mb-3 text-white result_inside" style="display:none" id="next_ans1">
-                            <center><span class="attr-show text-white">IRISIS</span></center>
-                          </div>
-                        </div>
-                      </div>
-                    </div>  
-                  </div> -->
 
               
               
