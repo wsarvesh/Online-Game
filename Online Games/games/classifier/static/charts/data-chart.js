@@ -206,7 +206,7 @@ function bar_graph(id,labels,lbl1,vals1,lbl2,vals2){
         }],
         yAxes: [{
           ticks: {
-            min: 0,
+            min: -1,
             max: 1,
             maxTicksLimit: 5,
             padding: 10,

@@ -135,7 +135,7 @@
                                 <center> <div class="mt-2">C L A S S &nbsp;&nbsp; N A M E</div> </center>
                               </div>
                               <div class="col-6 text-white">
-                                <center><span class="counter data-show" id="count_4" data-count="100">0</span></center>
+                                <center><span class="counter data-show" id="count_4" data-count="{{info.6}}">0</span></center>
                                 <center> <div class="mt-2">U N I Q U E &nbsp;&nbsp; L A B E L S</div> </center>
                               </div>
                             </div>
@@ -180,7 +180,7 @@
                               <div class="row start-slide mt-0" style="display:none;">
                                 <div class="col-5 text-white">
                                   <center>
-                                    <span class="counter data-show" id="count_51" data-count="{{train}}">0</span>
+                                    <span class="counter data-show" id="count_51" data-count="{{info.8}}">0</span>
                                     <span class="data-show">%</span>
                                     <center> <div class="mt-2">T R A I N</div> </center>
                                   </center>
@@ -190,7 +190,7 @@
                                 </div>
                                 <div class="col-5 text-white">
                                   <center>
-                                    <span class="counter data-show" id="count_52" data-count="{{test}}">0</span>
+                                    <span class="counter data-show" id="count_52" data-count="{{info.9}}">0</span>
                                     <span class="data-show">%</span>
                                     <center> <div class="mt-2">T E S T</div> </center>
                                   </center>
@@ -239,10 +239,10 @@
                             <div class="col-12">
                               <div class="container-fluid">
                                 <div class="row d-flex justify-content-around">
-                                  {% for i in attr %}
+                                  {% for i in info.5 %}
                                   <div class="col-3 mb-3">
                                     <center>
-                                      <span class="attr-show">{{i}}</span><br>
+                                      <span class="attr-show">{{i.0}}</span><br>
                                       <hr class="mt-0" style="background:white;width:60%;">
                                       <div class="container-fluid">
                                         <div class="row text-white">
@@ -250,7 +250,7 @@
                                             RANGE
                                           </div>
                                           <div class="col-6" style="color:#00d9d6">
-                                            [ 1 - 100 ]
+                                            [ {{i.1}} - {{i.2}} ]
                                           </div>
                                         </div>
                                         <div class="row text-white">
@@ -258,12 +258,10 @@
                                             MEAN
                                           </div>
                                           <div class="col-6" style="color:#00d9d6">
-                                            55.5
+                                            {{i.3}}
                                           </div>
                                         </div>
                                       </div>
-                                      <!-- <span class="text-white text-uppercase">RANGE: [ 1 - 100 ]</span><br>
-                                      <span class="text-white text-uppercase">MEAN: 50</span> -->
                                     </center>
                                   </div>
                                   {% endfor %}
@@ -330,9 +328,9 @@
                     </div>
                     
                     <div class="row">
-                      <div class="col-6 d-flex justify-content-end">
+                      <div class="col-10 d-flex justify-content-end">
                         <!-- <center> -->
-                        <div class="mt-3 mb-1 pt-2 pb-2 module border-color h-fill" style="--notchSize:30px;--bcolor:#014143;width:95%;">
+                        <div class="mt-3 mb-1 pt-2 pb-2 module border-color h-fill" style="--notchSize:30px;--bcolor:#014143;width:100%;">
                             <div class="container">
                               <div class="row">
                                 <div class="col-12">
@@ -340,22 +338,41 @@
                                   <hr class="mt-0 seperator" style="background:white;width:60%;display:none;">
                                 </div>
                               </div>
-                              <div class="row start-slide mt-0" style="display:none;">
-                                <!-- <hr style="background:white;width:80%"> -->
+                              <div class="row start-slide mt-4" style="display:none;">
                                 <div class="col-12 text-white">
-                                  <center><span class="counter data-show" id="count_1" data-count="{{info.0}}">0</span></center>
-                                </div>
-                                <div class="col-12 mt-2 text-white">
-                                  <center><span>R E C O R D S</span></center>
+                                  <div class="container-fluid">
+                                    <div class="row d-flex justify-content-around">
+                                      <div class="col-1">
+                                        --
+                                      </div>
+                                      {% for x in corr_head %}
+                                      <div class="col text-uppercase" style="color:#00a8a6">
+                                        {{x}}
+                                      </div>
+                                      {% endfor %}
+                                    </div>
+                                    
+                                    {% for i,j,l in corelation %}
+                                    <div class="row d-flex justify-content-around">
+                                      <div class="col-1 text-uppercase" style="color:#00a8a6">
+                                        <abbr title="{{i}}">{{l}}</abbr>
+                                        <!-- {{i}} -->
+                                      </div>
+                                      {% for x in j %}
+                                      <div class="col text-white text-uppercase" style="font-size:12px;">
+                                        {{x}}
+                                      </div>
+                                      {% endfor %}
+                                    </div>
+                                    {% endfor %}
+                                  </div>
                                 </div>
                               </div>
                             </div>
                         </div>
-                      <!-- </center> -->
                       </div>
-                      <div class="col-6 d-flex justify-content-start">
-                        <!-- <center> -->
-                        <div class="mt-3 mb-1 pt-2 pb-2 module border-color h-fill" style="--notchSize:30px;--bcolor:#014143;width:95%;" >
+                      <div class="col-2 d-flex justify-content-start">
+                        <div class="mt-3 mb-1 pt-2 pb-2 module border-color h-fill" style="--notchSize:30px;--bcolor:#014143;width:100%;" >
                             <div class="container">
                               <div class="row">
                                 <div class="col-12">
@@ -364,16 +381,26 @@
                                 </div>
                               </div>
                               <div class="row start-slide mt-0" style="display:none;">
-                                <div class="col-12 text-white">
-                                  <center><span class="counter data-show" id="count_2" data-count="{{info.1}}">0</span></center>
+                                <!-- <div class="col-12 mt-2 text-white">
+                                  <center>
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididun
+                                    t ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation 
+                                    ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit ess
+                                    e cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, su
+                                    nt in culpa qui officia deserunt mollit anim id est laborum.
+                                  </center>
+                                </div> -->
+                                {% for i,j,k in skew %}
+                                <div class="col-6 text-uppercase" style="color:#00a8a6">
+                                  <center><abbr title="{{j}}">{{i}}</abbr></center>
                                 </div>
-                                <div class="col-12 mt-2 text-white">
-                                  <center><span>A T T R I B U T E S</span></center>
+                                <div class="col-6 text-white">
+                                  {{k}}
                                 </div>
+                                {% endfor %}
                               </div>
                             </div>
                         </div>
-                      <!-- </center> -->
                       </div>
                     </div>
                     
@@ -402,9 +429,9 @@
                             <div class="chart-bar mt-3 mb-3" style="width:100%" id="div_graph_1">
                               <!-- <canvas id="canvas_graph_1"></canvas> -->
                             </div>
-                            <button id="btn_graph_1" type="button" name="button" onclick="pie_graph('graph_1',['Training','Testing'],[{{train}},{{test}}]);" hidden></button>
+                            <button id="btn_graph_1" type="button" name="button" onclick="pie_graph('graph_1',['Training','Testing'],['{{info.2}}','{{info.3}}']);" hidden></button>
                             <div class="mt-2">
-                              <center><span class="text-white"> CONTENT</span></center>
+                              <center><span class="text-white text-white">{{info.8}}% - {{info.9}}%</span></center>
                             </div>
                           </div>
                         </div>
@@ -423,9 +450,9 @@
                             <div class="chart-bar mt-3 mb-3" style="width:100%" id="div_graph_2">
                               <!-- <canvas id="canvas_graph_2"></canvas> -->
                             </div>
-                            <button id="btn_graph_2" type="button" name="button" onclick="attribute_graph('graph_2',['a','b','c','d'],[15,10,10,10,10,10,10,5]);" hidden></button>
+                            <button id="btn_graph_2" type="button" name="button" onclick="attribute_graph('graph_2',{{info.7.1}},{{info.7.2}});" hidden></button>
                             <div class="mt-2">
-                              <center><span class="text-white"> CONTENT 2 </span></center>
+                              <center><span class="text-white text-uppercase"> {{info.7.0}} </span></center>
                             </div>
                           </div>
                         </div>
@@ -472,7 +499,7 @@
                                     <div class="chart-bar-small mt-3 mb-3" style="width:100%" id="div_graph_a{{forloop.counter}}">
                                       <!-- <canvas id="canvas_graph_1"></canvas> -->
                                     </div>
-                                    <button id="btn_graph_a{{forloop.counter}}" type="button" name="button" onclick="doughnut_graph('graph_a{{forloop.counter}}',['Training','Testing'],[{{train}},{{test}}]);" hidden></button>
+                                    <button id="btn_graph_a{{forloop.counter}}" type="button" name="button" onclick="doughnut_graph('graph_a{{forloop.counter}}',['Training','Testing'],[{{info.8}},{{info.9}}]);" hidden></button>
                                     <div class="mt-2">
                                       <center><span class="text-white"> CONTENT</span></center>
                                     </div>

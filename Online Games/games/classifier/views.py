@@ -52,6 +52,41 @@ def clean_report(cl):
         else:
             c4.append(x)
     return c4
+    
+def clean_corr(corr):
+    val = corr.values.tolist()
+    head = list(corr.columns)
+    # head_b = [""]+head
+    h_small = [i[:2] for i in head]
+    fin = []
+    for i in val:
+        x = []
+        for j in i:
+            k = "{:.2f}".format(j)
+            if j > 0:
+                k = "+"+k
+            x.append(k)
+        # l = [h]+x
+        fin.append(x)
+    
+    # for i in fin:
+    #     print(i)
+    # print()
+    return h_small,head,fin
+    
+def clean_skew(sk,head):
+    h_small = [i[:2] for i in head]
+    s = sk.values.tolist()
+    skw = []
+    for i in s:
+        k = "{:.2f}".format(i)
+        if i > 0:
+            k = "+"+k
+        skw.append(k)
+    # print(h_small)
+    # print()
+    # print(skw)
+    return zip(h_small,head,skw)
 
 def training(clf,xtrain, xtest, ytrain, ytest,name,name2):
     t0 = time.clock()
@@ -231,16 +266,25 @@ def result(request):
                         unique_freq.append([i, unique, freq])
                     mmm_t = [end, data[end].min(), data[end].max(), data[end].mean().round(2)]
                     count = data[end].value_counts()
-                    unique_freq_t = [end, [count.index.tolist()], [count.values.tolist()]]
+                    unique_freq_t = [end, count.index.tolist(), count.values.tolist()]
+                    ut = len(unique_freq_t[1])
+                    info.append(mmm)                                                                                                    #5
+                    info.append(ut)                                                                                                     #6
+                    info.append(unique_freq_t)                                                                                          #7
+                    info.append(train)                                                                                                  #8
+                    info.append(test)                                                                                                   #9
                     all_attr = [i for i in attr]
                     all_attr.append(end)
                     u_data = pd.DataFrame(data, columns=all_attr)
                     corr = u_data.corr(method='pearson')
-                    print(corr,"\n")
-                    skew = u_data.skew()
-                    print(skew)
-
-                    return render(request, 'classifier/data.html', {'classifier':classifier,"end":end,"attr":attr,"train":train,"test":test,"file":file, "info":info })
+                    # print(corr)
+                    sk= u_data.skew()
+                    corr_head,chead,corel = clean_corr(corr) 
+                    corelation = zip(chead,corel,corr_head)
+                    freqs = unique_freq
+                    skew = clean_skew(sk,chead)
+                    d =  {'classifier':classifier,"end":end,"attr":attr,"file":file, "info":info,'freqs':freqs,'corelation':corelation,'corr_head':corr_head,'skew':skew}
+                    return render(request, 'classifier/data.html',d)
                 elif redirect == "results_page":
                     classification_report = train_model(end, attr, classifier, float(train)/100, float(test)/100, data)
                     # print(classification_report)
