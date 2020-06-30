@@ -52,7 +52,7 @@ def clean_report(cl):
         else:
             c4.append(x)
     return c4
-    
+
 def clean_corr(corr):
     val = corr.values.tolist()
     head = list(corr.columns)
@@ -68,12 +68,12 @@ def clean_corr(corr):
             x.append(k)
         # l = [h]+x
         fin.append(x)
-    
+
     # for i in fin:
     #     print(i)
     # print()
     return h_small,head,fin
-    
+
 def clean_skew(sk,head):
     h_small = [i[:2] for i in head]
     s = sk.values.tolist()
@@ -92,8 +92,8 @@ def graph_range(x):
     k = x//0.25
     val = 0.25 * (k+1)
     return val
-    
-        
+
+
 
 def training(clf,xtrain, xtest, ytrain, ytest,name,name2):
     t0 = time.clock()
@@ -194,8 +194,12 @@ def select(request):
             SF = SelectForm(request.POST)
             if SF.is_valid():
                 end = SF.cleaned_data['end']
+                request.session['end'] = end
                 attr= SF.cleaned_data['attr']
+                attrs = re.findall(r"\'(.+?)\'", attr)
+                request.session['attribute'] = attr
                 classifier = SF.cleaned_data['classifier']
+                request.session['classifier'] = classifier
                 train = SF.cleaned_data['train']
                 test = SF.cleaned_data['test']
                 file = request.GET['file']
@@ -256,7 +260,6 @@ def result(request):
                     info.append(len(attr))                                                                                                                  #4
                     dataf = pd.DataFrame(data, columns=attr)
                     unique_freq = []
-                    mmm  = []
                     for i in attr:
                         temp = []
                         temp.append(i)
@@ -286,7 +289,7 @@ def result(request):
                     corr = u_data.corr(method='pearson')
                     # print(corr)
                     sk= u_data.skew()
-                    corr_head,chead,corel = clean_corr(corr) 
+                    corr_head,chead,corel = clean_corr(corr)
                     corelation = zip(chead,corel,corr_head)
                     freqs = unique_freq
                     skew,skw_graph = clean_skew(sk,chead)
@@ -313,7 +316,7 @@ def result(request):
                         skw_minmax = [round((m),1)*(-1) - 0.10,round(max(mx),1)*(-1) + 0.10]
                     else:
                         skw_minmax = [round(min(skw_num),1) - 0.10,round(max(skw_num),1) + 0.10]
-                    
+
                     bar_graph = [corr_head,corel[-1],corel_minmax,skw_graph,skw_minmax]
                     attr_dist = []
                     # print(unique_freq)
@@ -353,16 +356,23 @@ def result(request):
                 #     return render(request, 'classifier/predict.html', {"file":file, "model":model})
             if PF.is_valid():
                 # report = request.session['report']
-                data = PF.cleaned_data['data']
-                model = PF.cleaned_data['model']
-                print("hi")
-                # print(model)
-                for i in classification_report:
-                    print(i)
-                print("dhfj")
-                # print(report, data)
+                attr = request.session['attribute']
+                attr = re.findall(r"\'(.+?)\'", attr)
+                end = request.session['end']
+                classifier = request.session['classifier']
+                classifier = re.findall(r"\'(.+?)\'", classifier)
+                mmm  = []
+                for i in attr:
+                    temp = []
+                    temp.append(i)
+                    temp.append(data[i].min())
+                    temp.append(data[i].max())
+                    temp.append(data[i].mean().round(2))
+                    mmm.append(temp)
+                pred_data = PF.cleaned_data['data'].split(";")[:-1]
+                print(pred_data)
 
-                return HttpResponseRedirect("/classifier/predict/?="+file, "hello")
+                return render(request, 'classifier/predict.html', {'attr':zip(attr, mmm), 'end':end, 'classifier':classifier, 'file':file})
 
     return render(request,'classifier/index.html')
 

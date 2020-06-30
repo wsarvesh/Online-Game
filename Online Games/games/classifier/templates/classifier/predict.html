@@ -14,147 +14,97 @@
     <link rel="stylesheet" href="{% static 'classify.css' %}">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    
+
     <script src="{% static 'js/predict.js' %}"></script>
 
   </head>
   <body class="dark">
 
     <div class="d-flex justify-content-center align-items-center screen-size">
-      <div class="container">
+      <div class="container-fluid" style="width:80%;">
         <div class="row">
 
-          <div class="col-12">
+          <div class="col-12 mt-4">
             <div class="card dark-card module border-color" id="main1" style="--notchSize: 80px;--bcolor:#008e8c;display:none;">
                 <div class="mt-3 mb-3">
                   <center>
-                  <h1 class="text-white">PREDICT</h1>
+                  <h1 class="text-white text-uppercase">{{file}}</h1>
                   <span class="text-white text-uppercase">make Predictions from trained models</span>
                 </center>
                 </div>
                 <div id="main">
-                  
-                  <div class="container">
+
+                  <div class="container-fluid">
                     <div class="row">
                       <div class="col-12 start-slide mb-4" style="display:none">
                         <center>
                         <span class="attr-show text-white">LABELED CLASS: </span>
-                        <span class="attr-show text-white">HEART</span>
+                        <span class="attr-show text-white">{{end}}</span>
                       </center>
                       </div>
                     </div>
                     <div class="row d-flex justify-content-around">
-                      <div class="col-4 mb-4 start-slide" id="ans1" style="display:none">
+                      {% for i in classifier %}
+                      <div class="col-4 mb-4 start-slide" id="ans{{forloop.counter}}" style="display:none">
                         <center>
                         <div class="module pt-2 pb-2 border-color h-fill instruct classify-card" style="--notchSize: 30px;--bcolor:#3f4569;width:80%;">
                           <div class="class-card" style="width:100%">
                             <center>
-                              <span class="text-white text-uppercase" style="letter-spacing: 2px;">MODEL</span><br>
+                              <span class="text-white text-uppercase" style="letter-spacing: 2px;">{{i}}</span><br>
                             </center>
                           </div>
 
-                          <div class="mt-3 mb-3 text-white result_inside" style="display:none" id="next_ans1">
+                          <div class="mt-3 mb-3 text-white result_inside" style="display:none" id="next_ans{{forloop.counter}}">
                             <center><span class="attr-show text-white">IRISIS</span></center>
                           </div>
                         </div>
                       </center>
                       </div>
-                    </div>  
+                      {% endfor %}
+                    </div>
                   </div>
-                  
+
                   <div class="hr-line mb-5" style="display:none">
                     <center>
                       <hr style="background:white;width:30%">
                       <span class="text-white">I N P U T &nbsp;&nbsp; A T T R I B U T E &nbsp;&nbsp; V A L U E S</span>
                       <hr style="background:white;width:30%">
                     </center>
-                    
+
                   </div>
 
-                  <form enctype="multipart/form-data">
+                  <form action="/classifier/result/?file={{file}}" enctype="multipart/form-data" method="POST">
                     {% csrf_token %}
-                    
-                    <div class="container mt-4">
+
+                    <div class="container-fluid mt-4">
                       <div class="row">
-                        <div class="col-4 start-slide mb-3" id="sl0" style="display:none">
+                        {% for i,j in attr %}
+                        <div class="col-4 start-slide mb-3" id="sl{{forloop.counter}}" style="display:none">
                           <center>
-                            <span class="attr-show text-white"> HELLO </span><br>
+                            <span class="attr-show text-white"> {{i}} </span><br>
                             <div class="mt-2">
-                              <div class="mx-auto" id="next_sl0" style="display:none">
+                              <div class="mx-auto" id="next_sl{{forloop.counter}}" style="display:none">
                                 <div class="pt-1 pb-1 module border-color" style="--notchSize:25px;--bcolor:#014143;width:80%;">
-                                  <input type="text" class="predict_ip px-2 p_input" name="" value="">
+                                  <input type="text" class="predict_ip px-2 p_input" name="" value="{{forloop.counter}}">
                                 </div>
                               </div>
-                              <div class="mt-0 errors" style="display:none;" id="err_0">
+                              <div class="mt-0 errors" style="display:none;" id="err_{{forloop.counter}}">
                                 <span style="color:red;font-size:14px;"> ERROR </span>
                               </div>
                               <div class="mt-1">
-                                <span style="color:#008e8c"> Range </span>
+                                <span style="color:#008e8c"> [ {{j.1}} - {{j.2}} ] </span>
                               </div>
                             </div>
                           </center>
                         </div>
-                        <div class="col-4 start-slide mb-3" id="sl1" style="display:none">
-                          <center>
-                            <span class="attr-show text-white"> HELLO2</span><br>
-                            <div class="mt-2">
-                              <div class="mx-auto" id="next_sl1" style="display:none">
-                                <div class="pt-1 pb-1 module border-color" style="--notchSize:25px;--bcolor:#014143;width:80%;">
-                                  <input type="text" class="predict_ip px-2 p_input" name="" value="">
-                                </div>
-                              </div>
-                              <div class="mt-0 errors" style="display:none;" id="err_1">
-                                <span style="color:red;font-size:14px;"> ERROR </span>
-                              </div>
-                              <div class="mt-1">
-                                <span style="color:#008e8c"> Range </span>
-                              </div>
-                            </div>
-                          </center>
-                        </div>
-                        <div class="col-4 start-slide mb-3" id="sl2" style="display:none">
-                          <center>
-                            <span class="attr-show text-white"> HELLO3</span><br>
-                            <div class="mt-2">
-                              <div class="mx-auto" id="next_sl2" style="display:none">
-                                <div class="pt-1 pb-1 module border-color" style="--notchSize:25px;--bcolor:#014143;width:80%;">
-                                  <input type="text" class="predict_ip px-2 p_input" name="" value="">
-                                </div>
-                              </div>
-                              <div class="mt-0 errors" style="display:none;" id="err_2">
-                                <span style="color:red;font-size:14px;"> ERROR </span>
-                              </div>
-                              <div class="mt-1">
-                                <span style="color:#008e8c"> Range </span>
-                              </div>
-                            </div>
-                          </center>
-                        </div>
-                        <div class="col-4 start-slide mb-3" id="sl3" style="display:none">
-                          <center>
-                            <span class="attr-show text-white"> HELLO 4</span><br>
-                            <div class="mt-2">
-                              <div class="mx-auto" id="next_sl3" style="display:none">
-                                <div class="pt-1 pb-1 module border-color" style="--notchSize:25px;--bcolor:#014143;width:80%;">
-                                  <input type="text" class="predict_ip px-2 p_input" name="" value="">
-                                </div>
-                              </div>
-                              <div class="mt-0 errors" style="display:none;" id="err_3">
-                                <span style="color:red;font-size:14px;"> ERROR </span>
-                              </div>
-                              <div class="mt-1">
-                                <span style="color:#008e8c"> Range </span>
-                              </div>
-                            </div>
-                          </center>
-                        </div>
+                        {% endfor %}
                       </div>
                     </div>
-                    
+
                     <!-- <div style="width:100%">
                       <center><span class="text-uppercase" style="color:red;letter-spacing:2px">SOME ERROR HAS OCCURED</span></center>
                     </div> -->
-                    
+
                     <div style="width:95%">
                         <div class="d-flex justify-content-end align-items-center">
                             <div class="mt-3 mb-3 pt-2 pb-2 module border-color light-card hover-btn" id="predict-btn" style="--notchSize:15px;--bcolor:#014143;--btn:25%">
@@ -163,16 +113,16 @@
                               </center>
                             </div>
                             <div style="display:none">
-                            <input type="text" name="predict" id="predict_input" class="input" />
+                            <input type="text" name="data" id="predict_input" class="input" />
                             <button type="submit" name="button" id="submit-btn"></button>
                           </div>
                         </div>
                   </div>
                   </form>
 
-              
-              
-              
+
+
+
             </div>
               </div>
           </div>

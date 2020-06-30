@@ -35,16 +35,16 @@ $(document).ready(function() {
      else{
        var ip_str = "";
        for(i=0;i<inputs.length;i++){
-         ip_str = ip_str+";"+inputs[i];
+         ip_str = ip_str+inputs[i]+";";
        }
        $('#predict_input').prop("value",ip_str);
-       
+
          $("#submit-btn").click();
      }
-   
+
 
    });
-   
-   
+
+
 
 });
