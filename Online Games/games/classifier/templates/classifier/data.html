@@ -240,24 +240,24 @@
                               <div class="container-fluid">
                                 <div class="row d-flex justify-content-around">
                                   {% for i in info.5 %}
-                                  <div class="col-3 mb-3">
+                                  <div class="col-4 mb-3">
                                     <center>
                                       <span class="attr-show">{{i.0}}</span><br>
                                       <hr class="mt-0" style="background:white;width:60%;">
-                                      <div class="container-fluid">
+                                      <div class="container">
                                         <div class="row text-white">
-                                          <div class="col-6">
+                                          <div class="col-3">
                                             RANGE
                                           </div>
-                                          <div class="col-6" style="color:#00d9d6">
+                                          <div class="col-9 d-flex justify-content-end" style="color:#00d9d6">
                                             [ {{i.1}} - {{i.2}} ]
                                           </div>
                                         </div>
                                         <div class="row text-white">
-                                          <div class="col-6">
+                                          <div class="col-3">
                                             MEAN
                                           </div>
-                                          <div class="col-6" style="color:#00d9d6">
+                                          <div class="col-9 d-flex justify-content-end" style="color:#00d9d6">
                                             {{i.3}}
                                           </div>
                                         </div>
@@ -347,7 +347,7 @@
                                       </div>
                                       {% for x in corr_head %}
                                       <div class="col text-uppercase" style="color:#00a8a6">
-                                        {{x}}
+                                        <center>{{x}}</center>  
                                       </div>
                                       {% endfor %}
                                     </div>
@@ -360,7 +360,7 @@
                                       </div>
                                       {% for x in j %}
                                       <div class="col text-white text-uppercase" style="font-size:12px;">
-                                        {{x}}
+                                        <center>{{x}}</center>  
                                       </div>
                                       {% endfor %}
                                     </div>
@@ -460,18 +460,18 @@
                     </div>
                     <div class="col-12 mt-2 mb-2">
                       <center>
-                        <div class="module pt-2 pb-2 border-color h-fill instruct classify-card show-graph" id="3" style="--notchSize: 30px;--bcolor:#3f4569;width:70%;">
+                        <div class="module pt-2 pb-2 border-color h-fill instruct classify-card show-graph" id="31" style="--notchSize: 30px;--bcolor:#3f4569;width:70%;">
                           <div class="graph-card" style="width:100%">
                             <center>
                               <span class="text-white text-uppercase" style="letter-spacing: 2px;">Corelation Graph</span><br>
                             </center>
                           </div>
 
-                          <div class="mr-3 ml-3 text-white graphs" id="graph_3" style="display:none;">
-                            <div class="chart-bar mt-3 mb-3" style="width:100%" id="div_graph_3">
+                          <div class="mr-3 ml-3 text-white graphs" id="graph_31" style="display:none;">
+                            <div class="chart-bar mt-3 mb-3" style="width:100%" id="div_graph_31">
                               <!-- <canvas id="canvas_graph_2"></canvas> -->
                             </div>
-                            <button id="btn_graph_3" type="button" name="button" onclick="bar_graph('graph_3',['l1','l2','l3','label4'],'COREL',[0.25,0.25,0.25,0.25],'SKEW',[0.75,0.75,0.75,0.75]);" hidden></button>
+                            <button id="btn_graph_31" type="button" name="button" onclick="bar_graph('graph_31',{{bar_graph.0}},'Corelation',{{bar_graph.1}},{{bar_graph.2.0}},{{bar_graph.2.1}});" hidden></button>
                             <div class="mt-2">
                               <center><span class="text-white"> CONTENT 3 </span></center>
                             </div>
@@ -479,19 +479,46 @@
                         </div>
                       </center>
                     </div>
+                    <div class="col-12 mt-2 mb-2">
+                      <center>
+                        <div class="module pt-2 pb-2 border-color h-fill instruct classify-card show-graph" id="32" style="--notchSize: 30px;--bcolor:#3f4569;width:70%;">
+                          <div class="graph-card" style="width:100%">
+                            <center>
+                              <span class="text-white text-uppercase" style="letter-spacing: 2px;">Skew Distribution Graph</span><br>
+                            </center>
+                          </div>
+
+                          <div class="mr-3 ml-3 text-white graphs" id="graph_32" style="display:none;">
+                            <div class="chart-bar mt-3 mb-3" style="width:100%" id="div_graph_32">
+                              <!-- <canvas id="canvas_graph_2"></canvas> -->
+                            </div>
+                            <button id="btn_graph_32" type="button" name="button" onclick="bar_graph('graph_32',{{bar_graph.0}},'Skew Dist',{{bar_graph.3}},{{bar_graph.4.0}},{{bar_graph.4.1}});" hidden></button>
+                            <div class="mt-2">
+                              <center><span class="text-white"> CONTENT 32 </span></center>
+                            </div>
+                          </div>
+                        </div>
+                      </center>
+                    </div>
                     </div>
                     <div class="row visual" style="display:none;">
+                      <div class="col-12 text-white" style="letter-spacing:2px">
+                        <center>ATRRIBUTE DISTRIBUTION</center>
+                        
+                      </div>
                       <div class="col-12">
                         <div class="container-fluid">
                           <div class="row d-flex justify-content-around">
-                            {% for i in attr %}
+                            {% for i in attr_dist %}
                             
                             <div class="col-3 mt-2 mb-2">
                               <center>
                                 <div class="module pt-2 pb-2 border-color h-fill instruct classify-card show-graph" id="a{{forloop.counter}}" style="--notchSize: 30px;--bcolor:#3f4569;width:70%;">
                                   <div class="graph-card" style="width:100%">
                                     <center>
-                                      <span class="text-white text-uppercase" style="letter-spacing: 2px;">{{i}}</span><br>
+                                      <span class="text-white text-uppercase" style="letter-spacing: 2px;">{{i.0}}</span><br>
+                                      <!-- <span class="text-white text-uppercase" style="letter-spacing: 2px;">{{i.1}}</span><br>
+                                      <span class="text-white text-uppercase" style="letter-spacing: 2px;">{{i.2}}</span><br> -->
                                     </center>
                                   </div>
         
@@ -499,9 +526,11 @@
                                     <div class="chart-bar-small mt-3 mb-3" style="width:100%" id="div_graph_a{{forloop.counter}}">
                                       <!-- <canvas id="canvas_graph_1"></canvas> -->
                                     </div>
-                                    <button id="btn_graph_a{{forloop.counter}}" type="button" name="button" onclick="doughnut_graph('graph_a{{forloop.counter}}',['Training','Testing'],[{{info.8}},{{info.9}}]);" hidden></button>
+                                    <button id="btn_graph_a{{forloop.counter}}" type="button" name="button" onclick="doughnut_graph('graph_a{{forloop.counter}}',{{i.1}},{{i.2}});" hidden></button>
                                     <div class="mt-2">
-                                      <center><span class="text-white"> CONTENT</span></center>
+                                      <center>
+                                        <span class="text-white"> UNIQUE VALUES -</span><span class="text-white"> {{i.1|length}} </span>
+                                      </center>
                                     </div>
                                   </div>
                                 </div>

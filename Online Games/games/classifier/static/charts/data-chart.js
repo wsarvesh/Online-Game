@@ -27,6 +27,13 @@ function pie_graph(id,lbl,vals){
         yPadding: 15,
         displayColors: false,
         caretPadding: 10,
+        callbacks: {
+            label: (tooltipItems, data) => {
+              // var datasetLabel = data.datasets[tooltipItem.datasetIndex].label || '';
+              var label_show = data.labels[tooltipItems.index];
+              return label_show +' : '+ data.datasets[tooltipItems.datasetIndex].data[tooltipItems.index] + ' RECORDS';
+            }
+        }
       },
       legend: {
         display: false
@@ -59,7 +66,7 @@ function doughnut_graph(id,lbl,vals){
         backgroundColor: "rgb(255,255,255)",
         bodyFontColor: "#858796",
         borderColor: '#dddfeb',
-        borderWidth: 3,
+        borderWidth: 0.25,
         xPadding: 15,
         yPadding: 15,
         displayColors: false,
@@ -149,13 +156,11 @@ function number_format(number, decimals, dec_point, thousands_sep) {
   return s.join(dec);
 }
 
-function bar_graph(id,labels,lbl1,vals1,lbl2,vals2){
+function bar_graph(id,labels,lbl1,vals1,minval,maxval){
   var canv_id = "canvas_"+id;
   var ctx = document.getElementById(canv_id);
-  var bg1 = new Array(vals1.length).fill(['#646da3']).flat();
-  var hbg1 = new Array(vals1.length).fill(['#484e73']).flat();
-  var bg2 = new Array(vals1.length).fill(['#008e8c']).flat();
-  var hbg2 = new Array(vals1.length).fill(['#006665']).flat();
+  var bg1 = new Array(vals1.length).fill(['#646da3','#008e8c']).flat();
+  var hbg1 = new Array(vals1.length).fill(['#484e73','#006665']).flat();
   var myBarChart = new Chart(ctx, {
     type: 'bar',
     data: {
@@ -168,16 +173,16 @@ function bar_graph(id,labels,lbl1,vals1,lbl2,vals2){
         borderColor: "#ffffff",
         borderWidth: 2,
         data: vals1,
-      },
-      {
-        label: lbl2,
-        backgroundColor: bg2,
-        hoverBackgroundColor: hbg2,
-        hoverBorderColor: "#ffffff",
-        borderColor: "#ffffff",
-        borderWidth: 2,
-        data: vals2,
       }
+      // {
+      //   label: lbl2,
+      //   backgroundColor: bg2,
+      //   hoverBackgroundColor: hbg2,
+      //   hoverBorderColor: "#ffffff",
+      //   borderColor: "#ffffff",
+      //   borderWidth: 2,
+      //   data: vals2,
+      // }
       ],
     },
     options: {
@@ -192,6 +197,9 @@ function bar_graph(id,labels,lbl1,vals1,lbl2,vals2){
       },
       scales: {
         xAxes: [{
+          ticks: {
+         autoSkip: false
+      },
           time: {
             unit: 'month'
           },
@@ -200,15 +208,15 @@ function bar_graph(id,labels,lbl1,vals1,lbl2,vals2){
             drawBorder: false
           },
           ticks: {
-            maxTicksLimit: 6
+            maxTicksLimit: 100
           },
           maxBarThickness: 25,
         }],
         yAxes: [{
           ticks: {
-            min: -1,
-            max: 1,
-            maxTicksLimit: 5,
+            min: minval,
+            max: maxval,
+            maxTicksLimit: 20,
             padding: 10,
             // Include a dollar sign in the ticks
             callback: function(value, index, values) {

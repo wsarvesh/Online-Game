@@ -86,7 +86,14 @@ def clean_skew(sk,head):
     # print(h_small)
     # print()
     # print(skw)
-    return zip(h_small,head,skw)
+    return zip(h_small,head,skw),skw
+
+def graph_range(x):
+    k = x//0.25
+    val = 0.25 * (k+1)
+    return val
+    
+        
 
 def training(clf,xtrain, xtest, ytrain, ytest,name,name2):
     t0 = time.clock()
@@ -264,7 +271,7 @@ def result(request):
                             freq.append(j)
                             unique.append(k)
                         unique_freq.append([i, unique, freq])
-                    mmm_t = [end, data[end].min(), data[end].max(), data[end].mean().round(2)]
+                    # mmm_t = [end, data[end].min(), data[end].max(), data[end].mean().round(2)]
                     count = data[end].value_counts()
                     unique_freq_t = [end, count.index.tolist(), count.values.tolist()]
                     ut = len(unique_freq_t[1])
@@ -282,8 +289,38 @@ def result(request):
                     corr_head,chead,corel = clean_corr(corr) 
                     corelation = zip(chead,corel,corr_head)
                     freqs = unique_freq
-                    skew = clean_skew(sk,chead)
+                    skew,skw_graph = clean_skew(sk,chead)
+
+                    corel_num1 = [float(i) for i in corel[-1]]
+                    corel_num = corel_num1[:-1]
+                    if min(corel_num) < 0:
+                        m = (-1)*min(corel_num)
+                        corel_minmax = [round((m),1)*(-1) - 0.10,round(max(corel_num),1) + 0.10]
+                    elif max(corel_num) < 0:
+                        m = (-1)*min(corel_num)
+                        mx = (-1)*min(corel_num)
+                        corel_minmax = [round((m),1)*(-1) - 0.10,round(max(mx),1)*(-1) + 0.10]
+                    else:
+                        corel_minmax = [round(min(corel_num),1) - 0.10,round(max(corel_num),1) + 0.10]
+                    skw_num1 = [float(i) for i in skw_graph]
+                    skw_num = skw_num1[:-1]
+                    if min(skw_num) < 0:
+                        m = (-1)*min(skw_num)
+                        skw_minmax = [round((m),1)*(-1) - 0.10,round(max(skw_num),1) + 0.10]
+                    elif max(skw_num) < 0:
+                        m = (-1)*min(skw_num)
+                        mx = (-1)*min(skw_num)
+                        skw_minmax = [round((m),1)*(-1) - 0.10,round(max(mx),1)*(-1) + 0.10]
+                    else:
+                        skw_minmax = [round(min(skw_num),1) - 0.10,round(max(skw_num),1) + 0.10]
+                    
+                    bar_graph = [corr_head,corel[-1],corel_minmax,skw_graph,skw_minmax]
+                    attr_dist = []
+                    # print(unique_freq)
+                    print(bar_graph)
                     d =  {'classifier':classifier,"end":end,"attr":attr,"file":file, "info":info,'freqs':freqs,'corelation':corelation,'corr_head':corr_head,'skew':skew}
+                    d['bar_graph'] = bar_graph
+                    d['attr_dist'] = unique_freq
                     return render(request, 'classifier/data.html',d)
                 elif redirect == "results_page":
                     classification_report = train_model(end, attr, classifier, float(train)/100, float(test)/100, data)
