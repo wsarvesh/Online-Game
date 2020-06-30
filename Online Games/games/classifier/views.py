@@ -18,8 +18,11 @@ from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 from pandas.io.json import json_normalize
+from pandas.plotting import scatter_matrix
 import pandas as pd
 import numpy as np
+import matplotlib
+from matplotlib import pyplot
 import time
 import json
 import re
@@ -260,6 +263,7 @@ def result(request):
                     info.append(len(attr))                                                                                                                  #4
                     dataf = pd.DataFrame(data, columns=attr)
                     unique_freq = []
+                    mmm = []
                     for i in attr:
                         temp = []
                         temp.append(i)
@@ -318,9 +322,24 @@ def result(request):
                         skw_minmax = [round(min(skw_num),1) - 0.10,round(max(skw_num),1) + 0.10]
 
                     bar_graph = [corr_head,corel[-1],corel_minmax,skw_graph,skw_minmax]
-                    attr_dist = []
-                    # print(unique_freq)
-                    print(bar_graph)
+
+                    # y = u_data.index.tolist()
+                    # x = u_data.columns.tolist()
+                    corr_np = corr.to_numpy()
+
+                    fig = pyplot.figure()
+                    ax = fig.add_subplot(111)
+                    cax = ax.matshow(corr_np, vmin=-1, vmax=1)
+                    fig.colorbar(cax)
+                    ticks = np.arange(0,len(corr_head),1)
+                    ax.set_xticks(ticks)
+                    ax.set_yticks(ticks)
+                    ax.set_xticklabels(corr_head)
+                    ax.set_yticklabels(corr_head)
+                    pyplot.show()
+
+                    graph_div = plotly.offline.plot(fig, auto_open = False, output_type="div")
+
                     d =  {'classifier':classifier,"end":end,"attr":attr,"file":file, "info":info,'freqs':freqs,'corelation':corelation,'corr_head':corr_head,'skew':skew}
                     d['bar_graph'] = bar_graph
                     d['attr_dist'] = unique_freq
