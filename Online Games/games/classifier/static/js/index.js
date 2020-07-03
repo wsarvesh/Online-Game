@@ -2,7 +2,16 @@ $(document).ready(function() {
 
    $("#main1").fadeIn(800, function(){
      $("#main").slideDown(1000);
-   })
+   });
+
+   // $("#yes").click(funtion(){
+   //   console.log("HELLO YES");
+   //   $("#yes-btn").click();
+   // });
+   // $("#no").click(funtion(){
+   //   console.log("HELLO NO");
+   //   $("#no-btn").click();
+   // });
 
    $("#instruct").click(function(){
 
@@ -34,7 +43,7 @@ $(document).ready(function() {
        }
      });
    });
-   
+
    $("#demo").click(function(){
      $("#demo").toggleClass("hover-btn");
      $("#demo").toggleClass("hover-btn-fin");

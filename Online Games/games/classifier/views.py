@@ -25,11 +25,17 @@ import matplotlib
 from matplotlib import pyplot
 import time
 import json
+import pickle
+from pickle import dump
+from pickle import load
 import re
+from django.contrib.auth.models import User
+from django.contrib.sessions.models import Session
+from django.utils import timezone
 
 clfa = LogisticRegression(random_state = 42)
 clfb = SVC(random_state = 912, kernel = 'rbf')
-clfc = xgb.XGBClassifier(seed = 2, objective = "binary:logistic")
+clfc = xgb.XGBClassifier(seed = 2)
 clfd = DecisionTreeClassifier()
 clff = RandomForestClassifier()
 clf = LogisticRegression(random_state = 42)
@@ -98,10 +104,13 @@ def graph_range(x):
 
 
 
-def training(clf,xtrain, xtest, ytrain, ytest,name,name2):
+def training(clf,xtrain, xtest, ytrain, ytest,name,name2,sk):
     t0 = time.clock()
     cl = clf.fit(xtrain,ytrain)
     model = cl
+    path = 'classifier/media/models/'
+    filename = path + name + "_" + sk + "_" +'model.sav'
+    pickle.dump(model, open(filename, 'wb'))
     t1 = time.clock()
     yp = clf.predict(xtest)
     t2 = time.clock()
@@ -120,10 +129,10 @@ def training(clf,xtrain, xtest, ytrain, ytest,name,name2):
     # print(prf_score)
     prfs = ["{:.2f}".format(float(i)*100) for i in prf_score[:3]]
     # print(prfs)
-    report = [name,model,acc,d_acc,tr_time,te_time,cl_report,prfs,name2]
+    report = [name,cl,acc,d_acc,tr_time,te_time,cl_report,prfs,name2]
     return report
 
-def train_model(end, attr, classifier, train, test, data):
+def train_model(end, attr, classifier, train, test, data, sk):
     x = data[attr]
     y = data[end]
     str_feat = []
@@ -145,31 +154,80 @@ def train_model(end, attr, classifier, train, test, data):
     for c in str_feat:
         x[c] = x[c].map(str_dict[c])
     xtrain, xtest, ytrain, ytest = train_test_split(x, y, test_size=test, random_state=0)
-    print(len(xtrain), len(xtest), len(ytrain), len(ytest), xtrain)
+    # print(len(xtrain), len(xtest), len(ytrain), len(ytest), xtrain)
     xtrain[int_feat] = scaler.fit_transform(xtrain[int_feat])
     xtest[int_feat] = scaler.transform(xtest[int_feat])
     classification_report = []
     for i in classifier:
         if i == 'Logistic Regression':
-            report = training(clfa,xtrain, xtest, ytrain, ytest,i,"Log Reg")
+            report = training(clfa,xtrain, xtest, ytrain, ytest,i,"Log Reg", sk)
             classification_report.append(report)
         elif i == 'Decision Tree':
-            report = training(clfd,xtrain, xtest, ytrain, ytest,i,"D Tree")
+            report = training(clfd,xtrain, xtest, ytrain, ytest,i,"D Tree", sk)
             classification_report.append(report)
         elif i == 'Support Vector Machine':
-            report = training(clfb,xtrain, xtest, ytrain, ytest,i,"SVM")
+            report = training(clfb,xtrain, xtest, ytrain, ytest,i,"SVM", sk)
             classification_report.append(report)
         elif i == 'RandomForest':
-            report = training(clff,xtrain, xtest, ytrain, ytest,i,"RF")
+            report = training(clff,xtrain, xtest, ytrain, ytest,i,"RF", sk)
             classification_report.append(report)
         elif i == 'XGBoost':
-            report = training(clfc,xtrain, xtest, ytrain, ytest,i,"XGB")
+            report = training(clfc,xtrain, xtest, ytrain, ytest,i,"XGB", sk)
             classification_report.append(report)
-    return classification_report
+    path = 'classifier/media/models/'
+    filename = path + sk + "_" +'scaler.pkl'
+    dump(scaler, open(filename, 'wb'))
+    pred_req = []
+    pred_req.append(int_feat)
+    pred_req.append(str_dict)
+    return classification_report, pred_req
+
+def load_model(sk, name):
+    models = []
+    path = 'classifier/media/models/'
+    filename = path + sk + "_" +'scaler.pkl'
+    scaler = load(open(filename, 'rb'))
+    for i in name:
+        path = 'classifier/media/models/'
+        filename = path + i + "_" + sk + "_" +'model.sav'
+        print(filename)
+        loaded_model = pickle.load(open(filename, 'rb'))
+        models.append(loaded_model)
+    return models, scaler
+
+def pred_model(data,models,int_feat, str_dict, attr, scaler):
+    pred = data.split(";")[:-1]
+    predi = [float(i) if i.replace('.','').isdigit() else i for i in pred]
+    predict = {}
+    for i in range(len(predi)):
+        print(attr[i])
+        if attr[i] in  int_feat:
+            predict[attr[i]] = predi[i]
+        else:
+            print(str_dict[attr[i]])
+            print(str_dict[attr[i]][predi[i]])
+            predict[attr[i]] = str_dict[attr[i]][predi[i]]
+    pre = pd.DataFrame(predict,index = [0])
+    pre[int_feat] = scaler.transform(pre[int_feat])
+    p = []
+    for i in models:
+        p.append(i.predict(pre))
+    return p
+
 
 def home(request):
+    print(request.session.session_key)
     if request.method == "POST":
         IP = InputForm(request.POST)
+        SP = SessionForm(request.POST)
+        print(SP)
+        if SP.is_valid():
+            session = SP.cleaned_data['session']
+            if session == "no":
+                return render(request,'classifier/index.html', {'error':1})
+            elif session == "yes":
+                del request.session['data']
+                return render(request,'classifier/index.html', {'error':0})
         if IP.is_valid():
             demo = IP.cleaned_data['demo']
             if demo != "" :
@@ -188,11 +246,15 @@ def home(request):
             data = pd.read_csv("classifier/media/user_data/"+filename, encoding='latin1')
             request.session['data'] = data.to_json()
             return HttpResponseRedirect("select/?file="+og_name)
+    if 'data' in request.session:
+        return render(request,'classifier/index.html', {'error':1})
     IP = InputForm()
+    SP = SessionForm()
     return render(request,'classifier/index.html')
 
 def select(request):
     if 'data' in request.session:
+        print(request.session.session_key)
         if request.method == "POST":
             SF = SelectForm(request.POST)
             if SF.is_valid():
@@ -269,7 +331,7 @@ def result(request):
                         temp.append(i)
                         temp.append(dataf[i].min())
                         temp.append(dataf[i].max())
-                        temp.append(data[i].mean().round(2))
+                        temp.append(dataf[i].mean().round(2))
                         mmm.append(temp)
                         count  = dataf[i].value_counts()
                         unique = []
@@ -323,31 +385,16 @@ def result(request):
 
                     bar_graph = [corr_head,corel[-1],corel_minmax,skw_graph,skw_minmax]
 
-                    # y = u_data.index.tolist()
-                    # x = u_data.columns.tolist()
-                    corr_np = corr.to_numpy()
-
-                    fig = pyplot.figure()
-                    ax = fig.add_subplot(111)
-                    cax = ax.matshow(corr_np, vmin=-1, vmax=1)
-                    fig.colorbar(cax)
-                    ticks = np.arange(0,len(corr_head),1)
-                    ax.set_xticks(ticks)
-                    ax.set_yticks(ticks)
-                    ax.set_xticklabels(corr_head)
-                    ax.set_yticklabels(corr_head)
-                    pyplot.show()
-
-                    graph_div = plotly.offline.plot(fig, auto_open = False, output_type="div")
 
                     d =  {'classifier':classifier,"end":end,"attr":attr,"file":file, "info":info,'freqs':freqs,'corelation':corelation,'corr_head':corr_head,'skew':skew}
                     d['bar_graph'] = bar_graph
                     d['attr_dist'] = unique_freq
                     return render(request, 'classifier/data.html',d)
                 elif redirect == "results_page":
-                    classification_report = train_model(end, attr, classifier, float(train)/100, float(test)/100, data)
+                    sk = str(request.session.session_key)
+                    classification_report, pred_req = train_model(end, attr, classifier, float(train)/100, float(test)/100, data, sk)
                     # print(classification_report)
-                    # request.session['report'] = classification_report
+                    request.session['report'] = pred_req
                     acc = []
                     pre = []
                     rec = []
@@ -390,12 +437,23 @@ def result(request):
                     mmm.append(temp)
                 pred_data = PF.cleaned_data['data'].split(";")[:-1]
                 print(pred_data)
-
-                return render(request, 'classifier/predict.html', {'attr':zip(attr, mmm), 'end':end, 'classifier':classifier, 'file':file})
+                prediction = [" " for i in classifier]
+                if len(pred_data) != 0:
+                    report = request.session['report']
+                    print(report)
+                    int_feat = report[-2]
+                    str_dict = report[-1]
+                    sk = str(request.session.session_key)
+                    models, scaler = load_model(sk, classifier)
+                    pred = pred_model(PF.cleaned_data['data'], models, int_feat, str_dict, attr, scaler)
+                    prediction = [i[0] for i in pred]
+                    print(prediction)
+                    # return render(request, 'classifier/predict.html', {'attr':zip(attr, mmm), 'end':end, 'classifier':zip(classifier,prediction), 'file':file})
+                # return render(request, 'classifier/predict.html', {'attr':zip(attr, mmm), 'end':end, 'classifier':classifier, 'file':file})
+                return render(request, 'classifier/predict.html', {'attr':zip(attr, mmm), 'end':end, 'classifier':zip(classifier,prediction), 'file':file})
 
     return render(request,'classifier/index.html')
 
 def predict(request,x):
-    print(x)
     return render(request,'classifier/predict.html')
 # Create your views here.
