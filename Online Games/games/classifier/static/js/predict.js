@@ -12,9 +12,7 @@ $(document).ready(function() {
 
    $("#predict-btn").click(function(){
      $(".errors").slideUp();
-     $("#pred").html("P R E D I C T I N G . . .");
-     $("#predict-btn").removeClass("hover-btn");
-     $("#predict-btn").addClass("loading-btn");
+     
      var inputs = [];
      $(".p_input").each(function(){
        inputs.push($(this).val());
@@ -33,6 +31,9 @@ $(document).ready(function() {
      if(error.length>0){
      }
      else{
+       $("#pred").html("P R E D I C T I N G . . .");
+       $("#predict-btn").removeClass("hover-btn");
+       $("#predict-btn").addClass("loading-btn");
        var ip_str = "";
        for(i=0;i<inputs.length;i++){
          ip_str = ip_str+inputs[i]+";";

@@ -4,19 +4,10 @@ $(document).ready(function() {
      $("#main").slideDown(1000);
    });
 
-   // $("#yes").click(funtion(){
-   //   console.log("HELLO YES");
-   //   $("#yes-btn").click();
-   // });
-   // $("#no").click(funtion(){
-   //   console.log("HELLO NO");
-   //   $("#no-btn").click();
-   // });
-
    $("#instruct").click(function(){
 
     if(!$("#instruct_inside").is(":visible")){
-      $('#instruct').animate({width:'75%'}, 'slow', function(){
+      $('#instruct').animate({width:'60%'}, 'slow', function(){
         $("#instruct_inside").slideDown("slow", function(){
           $('#instruct').removeClass('instruct-btn');
         });
