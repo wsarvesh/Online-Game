@@ -29,6 +29,9 @@ import pickle
 from pickle import dump
 from pickle import load
 import re
+import os
+import zipfile
+from io import StringIO, BytesIO
 from django.contrib.auth.models import User
 from django.contrib.sessions.models import Session
 from django.utils import timezone
@@ -185,7 +188,7 @@ def load_model(sk, name):
     for i in name:
         path = 'classifier/media/models/'
         filename = path + i + "_" + sk + "_" +'model.sav'
-        print(filename)
+        # print(filename)
         loaded_model = pickle.load(open(filename, 'rb'))
         models.append(loaded_model)
     return models, scaler
@@ -195,12 +198,12 @@ def pred_model(data,models,int_feat, str_dict, attr, scaler):
     predi = [float(i) if i.replace('.','').isdigit() else i for i in pred]
     predict = {}
     for i in range(len(predi)):
-        print(attr[i])
+        # print(attr[i])
         if attr[i] in  int_feat:
             predict[attr[i]] = predi[i]
         else:
-            print(str_dict[attr[i]])
-            print(str_dict[attr[i]][predi[i]])
+            # print(str_dict[attr[i]])
+            # print(str_dict[attr[i]][predi[i]])
             predict[attr[i]] = str_dict[attr[i]][predi[i]]
     pre = pd.DataFrame(predict,index = [0])
     pre[int_feat] = scaler.transform(pre[int_feat])
@@ -215,13 +218,13 @@ def home(request):
     if request.method == "POST":
         IP = InputForm(request.POST)
         SP = SessionForm(request.POST)
-        print(SP)
         if SP.is_valid():
             session = SP.cleaned_data['session']
             if session == "no":
                 return render(request,'classifier/index.html', {'error':1})
             elif session == "yes":
-                del request.session['data']
+                # del request.session['data']
+                request.session.flush()
                 return render(request,'classifier/index.html', {'error':0})
         if IP.is_valid():
             demo = IP.cleaned_data['demo']
@@ -417,46 +420,73 @@ def result(request):
                 #     return render(request, 'classifier/predict.html', {"file":file, "model":model})
             if PF.is_valid():
                 # report = request.session['report']
-                attr = request.session['attribute']
-                attr = re.findall(r"\'(.+?)\'", attr)
-                end = request.session['end']
-                classifier = request.session['classifier']
-                classifier = re.findall(r"\'(.+?)\'", classifier)
-                mmm  = []
-                for i in attr:
-                    temp = []
-                    temp.append(i)
-                    temp.append(data[i].min())
-                    temp.append(data[i].max())
-                    temp.append(data[i].mean().round(2))
-                    mmm.append(temp)
-                pred_data = PF.cleaned_data['data'].split(";")[:-1]
-                print(pred_data)
-                prediction = [" " for i in classifier]
-                if len(pred_data) != 0:
-                    report = request.session['report']
-                    print(report)
-                    int_feat = report[-2]
-                    str_dict = report[-1]
-                    sk = str(request.session.session_key)
-                    models, scaler = load_model(sk, classifier)
-                    pred = pred_model(PF.cleaned_data['data'], models, int_feat, str_dict, attr, scaler)
-                    prediction = [i[0] for i in pred]
-                    print(prediction)
-                    # return render(request, 'classifier/predict.html', {'attr':zip(attr, mmm), 'end':end, 'classifier':zip(classifier,prediction), 'file':file})
-                # return render(request, 'classifier/predict.html', {'attr':zip(attr, mmm), 'end':end, 'classifier':classifier, 'file':file})
-                return render(request, 'classifier/predict.html', {'attr':zip(attr, mmm), 'end':end, 'classifier':zip(classifier,prediction), 'file':file})
+                start = PF.cleaned_data['start']
+                if start == "down":
+                        path = 'classifier/media/models/'
+                        # filename = path + i + "_" + sk + "_" +'model.sav'
+                        classifier = request.session['classifier']
+                        classifier = re.findall(r"\'(.+?)\'", classifier)
+                        sk = str(request.session.session_key)
+                        filenames = [path + i + "_" + sk + "_" + 'model.sav' for i in classifier]
+                        print(filenames)
+
+                        zip_subdir = "Models"
+                        zip_filename = zip_subdir + ".zip"
+
+                        # Open StringIO to grab in-memory ZIP contents
+                        # s = StringIO()
+                        s = BytesIO()
+                        # The zip compressor
+                        zf = zipfile.ZipFile(s, "w")
+
+                        for fpath in filenames:
+                            # Calculate path for file in zip
+                            fdir, fname = os.path.split(fpath)
+                            zip_path = os.path.join(zip_subdir, fname)
+
+                            # Add file, at correct path
+                            zf.write(fpath, zip_path)
+
+                        # Must close zip for all contents to be written
+                        zf.close()
+
+
+                        response = HttpResponse(s.getvalue(), content_type='application/zip')
+                        response['Content-Disposition'] = 'attachment; filename=' + zip_filename
+                        return response
+
+                else:
+                    attr = request.session['attribute']
+                    attr = re.findall(r"\'(.+?)\'", attr)
+                    end = request.session['end']
+                    classifier = request.session['classifier']
+                    classifier = re.findall(r"\'(.+?)\'", classifier)
+                    mmm  = []
+                    for i in attr:
+                        temp = []
+                        temp.append(i)
+                        temp.append(data[i].min())
+                        temp.append(data[i].max())
+                        temp.append(data[i].mean().round(2))
+                        mmm.append(temp)
+                    pred_data = PF.cleaned_data['data'].split(";")[:-1]
+                    print(pred_data)
+                    prediction = [" " for i in classifier]
+                    if len(pred_data) != 0:
+                        report = request.session['report']
+                        print(report)
+                        int_feat = report[-2]
+                        str_dict = report[-1]
+                        sk = str(request.session.session_key)
+                        models, scaler = load_model(sk, classifier)
+                        pred = pred_model(PF.cleaned_data['data'], models, int_feat, str_dict, attr, scaler)
+                        prediction = [i[0] for i in pred]
+                        print(prediction)
+                        # return render(request, 'classifier/predict.html', {'attr':zip(attr, mmm), 'end':end, 'classifier':zip(classifier,prediction), 'file':file})
+                    # return render(request, 'classifier/predict.html', {'attr':zip(attr, mmm), 'end':end, 'classifier':classifier, 'file':file})
+                    return render(request, 'classifier/predict.html', {'attr':zip(attr, mmm), 'end':end, 'classifier':zip(classifier,prediction), 'file':file})
 
     return render(request,'classifier/index.html')
-    
-def download(request):
-    file_path = os.path.join(settings.MEDIA_ROOT,"classifier/media/download.txt")
-    if os.path.exists(file_path):
-        with open(file_path, 'rb') as fh:
-            response = HttpResponse(fh.read(), content_type="text/plain")
-            response['Content-Disposition'] = 'inline; filename=' + os.path.basename(file_path)
-            return response
-    raise Http404
 
 def predict(request,x):
     return render(request,'classifier/predict.html')

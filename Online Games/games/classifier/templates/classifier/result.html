@@ -129,8 +129,7 @@
                 <form action="/classifier/result/?file={{file}}" method="POST">
                   {% csrf_token %}
                   <button type="submit" name="start" id="pred-btn" value="predict" hidden></button>
-                  <input type="text" name="model" value="{{classification_report}}" hidden></button>
-
+                  <button type="submit" name="start" id="down-btn" value="down" hidden></button>
                   <div class="container-fluid mt-4 mb-0">
                     <div class="row mx-3 d-flex justify-content-around">
                       <div class="mt-3 mb-3 pt-2 pb-2 module border-color light-card hover-btn" id="pred" style="--notchSize:15px;--bcolor:#008e8c;--btn:25%">
@@ -188,27 +187,24 @@
                   </div>
                 </div>
                 </center>
-                </form>
                 <span class="text-white">
-                  {{download_link}}
                 </span>
                   <div class="container-fluid mt-2 mb-2">
                     <div class="row mx-3 d-flex justify-content-around">
                       <div class="mt-3 mb-5 pt-2 pb-2 module border-color light-card hover-btn" id="down" style="--notchSize:15px;--bcolor:#008e8c;--btn:25%">
                         <center>
                           <span class="text-white">D O W N L O A D &nbsp;&nbsp; C L A S S I F I E R S</span>
-                        </center>        
+                        </center>
                       </div>
                     </div>
                   </div>
-                  <!-- <button type="submit" name="button" value="download" id="down-btn" hidden></button> -->
                   <div class="mt-2" style="display:none">
-                    <!-- <a href="{% static 'models/download.txt' %}" id="download" download="modeltext" >DOWNLOAD3</a> -->
-                    
+
                   </div>
-                  
+                  </form>
+
             </div>
-            
+
               </div>
           </div>
         </div>

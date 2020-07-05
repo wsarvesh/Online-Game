@@ -16,6 +16,7 @@ class SelectForm(forms.Form):
 class PredictForm(forms.Form):
     data = forms.CharField(required=False)
     model = forms.CharField(required=False)
+    start = forms.CharField(required=False)
 
 class SessionForm(forms.Form):
     session = forms.CharField()
