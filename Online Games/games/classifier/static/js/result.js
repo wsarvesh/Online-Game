@@ -12,6 +12,7 @@ $(document).ready(function() {
    });
 
    $("#down").click(function(){
+     console.log("DOWNLOAD");
      $("#down-btn").click();
    });
 

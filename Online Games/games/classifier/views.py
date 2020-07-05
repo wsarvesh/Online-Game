@@ -32,6 +32,7 @@ import re
 from django.contrib.auth.models import User
 from django.contrib.sessions.models import Session
 from django.utils import timezone
+import os
 
 clfa = LogisticRegression(random_state = 42)
 clfb = SVC(random_state = 912, kernel = 'rbf')
@@ -78,9 +79,6 @@ def clean_corr(corr):
         # l = [h]+x
         fin.append(x)
 
-    # for i in fin:
-    #     print(i)
-    # print()
     return h_small,head,fin
 
 def clean_skew(sk,head):
@@ -92,9 +90,6 @@ def clean_skew(sk,head):
         if i > 0:
             k = "+"+k
         skw.append(k)
-    # print(h_small)
-    # print()
-    # print(skw)
     return zip(h_small,head,skw),skw
 
 def graph_range(x):
@@ -453,6 +448,15 @@ def result(request):
                 return render(request, 'classifier/predict.html', {'attr':zip(attr, mmm), 'end':end, 'classifier':zip(classifier,prediction), 'file':file})
 
     return render(request,'classifier/index.html')
+    
+def download(request):
+    file_path = os.path.join(settings.MEDIA_ROOT,"classifier/media/download.txt")
+    if os.path.exists(file_path):
+        with open(file_path, 'rb') as fh:
+            response = HttpResponse(fh.read(), content_type="text/plain")
+            response['Content-Disposition'] = 'inline; filename=' + os.path.basename(file_path)
+            return response
+    raise Http404
 
 def predict(request,x):
     return render(request,'classifier/predict.html')

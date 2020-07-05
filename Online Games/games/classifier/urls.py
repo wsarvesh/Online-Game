@@ -7,5 +7,6 @@ urlpatterns = [
     path('result/',views.result),
     # path('load/',views.load),
     path('predict/',views.predict),
+    path('download/',views.download),
     # path('about/',views.about)
 ]
