@@ -324,13 +324,23 @@ def result(request):
                     dataf = pd.DataFrame(data, columns=attr)
                     unique_freq = []
                     mmm = []
+                    mmu = []
                     for i in attr:
                         temp = []
-                        temp.append(i)
-                        temp.append(dataf[i].min())
-                        temp.append(dataf[i].max())
-                        temp.append(dataf[i].mean().round(2))
-                        mmm.append(temp)
+                        stemp = []
+                        try:
+                            dataf[i].mean().round(2)
+                            temp.append(i)
+                            temp.append(dataf[i].min())
+                            temp.append(dataf[i].max())
+                            temp.append(dataf[i].mean().round(2))
+                            mmm.append(temp)
+                        except:
+                            stemp.append(i)
+                            stemp.append(dataf[i].min())
+                            stemp.append(dataf[i].max())
+                            stemp.append(len(dataf[i].unique().tolist()))
+                            mmu.append(stemp)
                         count  = dataf[i].value_counts()
                         unique = []
                         freq = []
@@ -346,12 +356,13 @@ def result(request):
                     info.append(ut)                                                                                                     #6
                     info.append(unique_freq_t)                                                                                          #7
                     info.append(train)                                                                                                  #8
-                    info.append(test)                                                                                                   #9
+                    info.append(test)
+                    info.append(mmu)                                                                                                   #9
                     all_attr = [i for i in attr]
                     all_attr.append(end)
                     u_data = pd.DataFrame(data, columns=all_attr)
                     corr = u_data.corr(method='pearson')
-                    # print(corr)
+                    print(corr)
                     sk= u_data.skew()
                     corr_head,chead,corel = clean_corr(corr)
                     corelation = zip(chead,corel,corr_head)

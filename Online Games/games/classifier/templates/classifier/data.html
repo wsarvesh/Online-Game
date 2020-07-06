@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="{% static 'classify.css' %}">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    
+
     <script src="{% static 'js/data.js' %}"></script>
 
   </head>
@@ -36,7 +36,7 @@
                   <button type="button" id="scroll_button3" name="button" hidden>SCROLL3</button>
                 </center>
                 </div>
-                
+
                 <div id="main" style="display:none">
 
                 <div class="container mt-2 mb-1">
@@ -223,7 +223,7 @@
                       </center>
                       </div>
                     </div>
-                    
+
                     <div class="row">
                       <div class="col-12">
                         <div class="mt-3 mb-1 pt-2 pb-2 module border-color h-fill" style="--notchSize:30px;--bcolor:#014143;width:100%;" >
@@ -268,14 +268,14 @@
                                 </div>
                               </div>
                             </div>
-                            
-                          </div>  
-                        </center>  
-                        </div> 
-                      </div> 
+
+                          </div>
+                        </center>
+                        </div>
                       </div>
-                      
-                      <!-- <div class="col-12">
+                      </div>
+
+                      <div class="col-12">
                         <div class="mt-3 mb-1 pt-2 pb-2 module border-color h-fill" style="--notchSize:30px;--bcolor:#014143;width:100%;" >
                         <div class="container">
                           <div class="row">
@@ -289,26 +289,26 @@
                             <div class="col-12">
                               <div class="container-fluid">
                                 <div class="row d-flex justify-content-around">
-                                  {% for i in attr %}
+                                  {% for i in info.10 %}
                                   <div class="col-3 mb-3">
                                     <center>
-                                      <span class="attr-show">{{i}}</span><br>
+                                      <span class="attr-show">{{i.0}}</span><br>
                                       <hr class="mt-0" style="background:white;width:60%;">
-                                      <div class="container-fluid">
+                                      <div class="container">
                                         <div class="row text-white">
-                                          <div class="col-6">
-                                            UNIQUE
+                                          <div class="col-3">
+                                            RANGE
                                           </div>
-                                          <div class="col-6" style="color:#00d9d6">
-                                            22
+                                          <div class="col-9 d-flex justify-content-end" style="color:#00d9d6">
+                                            [ {{i.1}} - {{i.2}} ]
                                           </div>
                                         </div>
                                         <div class="row text-white">
-                                          <div class="col-12">
-                                            LIST
+                                          <div class="col-3">
+                                            UNIQUE
                                           </div>
-                                          <div class="col-12 text-uppercase" style="color:#00d9d6">
-                                            [ hello , hi, hello , hi,hello , hi]
+                                          <div class="col-9 d-flex justify-content-end" style="color:#00d9d6">
+                                            {{i.3}}
                                           </div>
                                         </div>
                                       </div>
@@ -318,15 +318,15 @@
                                 </div>
                               </div>
                             </div>
-                            
-                          </div>  
-                        </center>  
-                        </div> 
-                      </div> 
-                      </div> -->
-                      
+
+                          </div>
+                        </center>
+                        </div>
+                      </div>
+                      </div>
+
                     </div>
-                    
+
                     <div class="row">
                       <div class="col-10 d-flex justify-content-end">
                         <!-- <center> -->
@@ -347,11 +347,11 @@
                                       </div>
                                       {% for x in corr_head %}
                                       <div class="col text-uppercase" style="color:#00a8a6">
-                                        <center>{{x}}</center>  
+                                        <center>{{x}}</center>
                                       </div>
                                       {% endfor %}
                                     </div>
-                                    
+
                                     {% for i,j,l in corelation %}
                                     <div class="row d-flex justify-content-around">
                                       <div class="col-1 text-uppercase" style="color:#00a8a6">
@@ -360,7 +360,7 @@
                                       </div>
                                       {% for x in j %}
                                       <div class="col text-white text-uppercase" style="font-size:12px;">
-                                        <center>{{x}}</center>  
+                                        <center>{{x}}</center>
                                       </div>
                                       {% endfor %}
                                     </div>
@@ -384,7 +384,7 @@
                                 <!-- <div class="col-12 mt-2 text-white">
                                   <center>
                                     Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididun
-                                    t ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation 
+                                    t ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
                                     ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit ess
                                     e cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, su
                                     nt in culpa qui officia deserunt mollit anim id est laborum.
@@ -403,7 +403,7 @@
                         </div>
                       </div>
                     </div>
-                    
+
 
                   <div class="row mt-2 mb-4">
                     <div class="col-12">
@@ -504,13 +504,13 @@
                     <div class="row visual" style="display:none;">
                       <div class="col-12 text-white" style="letter-spacing:2px">
                         <center>ATRRIBUTE DISTRIBUTION</center>
-                        
+
                       </div>
                       <div class="col-12">
                         <div class="container-fluid">
                           <div class="row d-flex justify-content-around">
                             {% for i in attr_dist %}
-                            
+
                             <div class="col-3 mt-2 mb-2">
                               <center>
                                 <div class="module pt-2 pb-2 border-color h-fill instruct classify-card show-graph" id="a{{forloop.counter}}" style="--notchSize: 30px;--bcolor:#3f4569;width:70%;">
@@ -521,7 +521,7 @@
                                       <span class="text-white text-uppercase" style="letter-spacing: 2px;">{{i.2}}</span><br> -->
                                     </center>
                                   </div>
-        
+
                                   <div class="mr-3 ml-3 text-white graphs" id="graph_a{{forloop.counter}}" style="display:none;">
                                     <div class="chart-bar-small mt-3 mb-3" style="width:100%" id="div_graph_a{{forloop.counter}}">
                                       <!-- <canvas id="canvas_graph_1"></canvas> -->
@@ -536,14 +536,14 @@
                                 </div>
                               </center>
                             </div>
-                            
+
                             {% endfor %}
                           </div>
                         </div>
                       </div>
                     </div>
-                    
-                    
+
+
                     <div class="row visual" style="display:none;">
                       <div class="col-6 mt-2 mb-2">
                         <center>
@@ -553,7 +553,7 @@
                                 <span class="text-white text-uppercase" style="letter-spacing: 2px;">Image Graph</span><br>
                               </center>
                             </div>
-  
+
                             <div class="mr-3 ml-3 text-white graphs" id="graph_img_13" style="display:none;">
                               <img src="asd.jpg" alt="" style="width:90%;height:20vh">
                               <div class="mt-2">
@@ -571,7 +571,7 @@
                                 <span class="text-white text-uppercase" style="letter-spacing: 2px;">Image Graph</span><br>
                               </center>
                             </div>
-  
+
                             <div class="mr-3 ml-3 text-white graphs" id="graph_img_14" style="display:none;">
                               <img src="asd.jpg" alt="" style="width:90%;height:20vh">
                               <div class="mt-2">
@@ -586,16 +586,16 @@
 
                 <!-- </center> -->
             </div>
-            
+
               </div>
           </div>
-        
+
         </div>
-      
+
       </div>
-    
+
     </div>
-  
+
 
     <script src="{% static 'charts/Chart.min.js' %}"></script>
     <script src="{% static 'charts/data-chart.js' %}"></script>
