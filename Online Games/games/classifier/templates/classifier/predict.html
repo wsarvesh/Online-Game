@@ -79,9 +79,10 @@
                     <div class="container-fluid mt-4">
                       <div class="row">
                         {% for i,j in attr %}
+                        {% if j.2 != 'STR_ATTR' %}
                         <div class="col-4 start-slide mb-3" id="sl{{forloop.counter}}" style="display:none">
                           <center>
-                            <span class="attr-show text-white"> {{i}} </span><br>
+                            <span class="attr-show text-white"> {{i}}</span><br>
                             <div class="mt-2">
                               <div class="mx-auto" id="next_sl{{forloop.counter}}" style="display:none">
                                 <div class="pt-1 pb-1 module border-color" style="--notchSize:25px;--bcolor:#014143;width:80%;">
@@ -90,13 +91,36 @@
                               </div>
                               <div class="mt-0 errors" style="display:none;" id="err_{{forloop.counter}}">
                                 <span style="color:red;font-size:14px;"> ERROR </span>
-                              </div>
+                              </div>  
                               <div class="mt-1">
                                 <span style="color:#008e8c"> [ {{j.1}} - {{j.2}} ] </span>
                               </div>
                             </div>
                           </center>
                         </div>
+                        {% else %}
+                        <div class="col-4 start-slide mb-3" id="sl{{forloop.counter}}" style="display:none">
+                          <center>
+                            <span class="attr-show text-white"> {{i}}</span><br>
+                            <div class="mt-2">
+                              <div class="mx-auto" id="next_sl{{forloop.counter}}" style="display:none">
+                                <div class="pt-1 pb-1 module border-color" style="--notchSize:25px;--bcolor:#014143;width:80%;">
+                                  <select name="" class="predict_ip px-2 py-2 text-uppercase p_input" style="width:80%">
+                                    <option value="" selected disabled>Select Value</option>
+                                    {% for opt in j.1 %}
+                                    <option class="text-dark text-uppercase" value="{{opt}}">{{opt}}</option>
+                                    {% endfor %}
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="mt-0 errors" style="display:none;" id="err_{{forloop.counter}}">
+                                <span style="color:red;font-size:14px;"> ERROR </span>
+                              </div>
+                              
+                            </div>
+                          </center>
+                        </div>
+                        {% endif %}
                         {% endfor %}
                       </div>
                     </div>

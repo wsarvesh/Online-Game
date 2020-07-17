@@ -20,12 +20,13 @@ $(document).ready(function() {
      var i;
      var error = [];
      for(i=0;i<inputs.length;i++){
-       if (inputs[i] == ""){
+       if (inputs[i] == "" || inputs[i] == null ){
          error.push(i);
        }
      }
      for(i=0;i<error.length;i++){
-       eid = "#err_"+error[i];
+       var eno = error[i] + 1;
+       eid = "#err_"+ eno;
        $(eid).slideDown('slow');
      }
      if(error.length>0){

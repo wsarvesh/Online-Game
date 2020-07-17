@@ -39,7 +39,7 @@ import os
 
 clfa = LogisticRegression(random_state = 42)
 clfb = SVC(random_state = 912, kernel = 'rbf')
-clfc = xgb.XGBClassifier(seed = 2)
+clfc = xgb.XGBClassifier()
 clfd = DecisionTreeClassifier()
 clff = RandomForestClassifier()
 clf = LogisticRegression(random_state = 42)
@@ -528,7 +528,7 @@ def result(request):
                             min_max = count1.values.tolist()
                             min_max_a = count1.index.tolist()
                             temp.append(min_max_a)
-                            temp.append("hihihi")
+                            temp.append("STR_ATTR")
                             temp.append(len(data[i].unique().tolist()))
                             mmm.append(temp)
 
