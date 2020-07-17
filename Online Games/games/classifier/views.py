@@ -149,8 +149,10 @@ def train_model(end, attr, classifier, train, test, data, sk):
             str_dict[c] = di
         else:
             int_feat.append(c)
+    print(str_dict)
     for c in str_feat:
         x[c] = x[c].map(str_dict[c])
+    print(x)
     xtrain, xtest, ytrain, ytest = train_test_split(x, y, test_size=test, random_state=0)
     # print(len(xtrain), len(xtest), len(ytrain), len(ytest), xtrain)
     xtrain[int_feat] = scaler.fit_transform(xtrain[int_feat])
@@ -336,11 +338,16 @@ def result(request):
                             temp.append(dataf[i].mean().round(2))
                             mmm.append(temp)
                         except:
+                            # dataf[i].min()
                             stemp.append(i)
-                            stemp.append(dataf[i].min())
-                            stemp.append(dataf[i].max())
+                            count1 = dataf[i].value_counts()
+                            min_max = count1.values.tolist()
+                            min_max_a = count1.index.tolist()
+                            stemp.append(min_max_a[0])
+                            stemp.append(min_max_a[-1])
                             stemp.append(len(dataf[i].unique().tolist()))
                             mmu.append(stemp)
+
                         count  = dataf[i].value_counts()
                         unique = []
                         freq = []
@@ -361,9 +368,29 @@ def result(request):
                     all_attr = [i for i in attr]
                     all_attr.append(end)
                     u_data = pd.DataFrame(data, columns=all_attr)
-                    corr = u_data.corr(method='pearson')
+
+
+
+                    str_feat = []
+                    str_dict = {}
+                    int_feat = []
+                    x = pd.DataFrame(data, columns=all_attr)
+                    for c in all_attr:
+                        if type(x[c][0]) == str:
+                            str_feat.append(c)
+                            x1 = list(set(x[c]))
+                            di = {x1[i]:i for i in range(len(x1))}
+                            str_dict[c] = di
+                        else:
+                            int_feat.append(c)
+                    print(str_dict)
+                    for c in str_feat:
+                        x[c] = x[c].map(str_dict[c])
+
+
+                    corr = x.corr(method='pearson')
                     print(corr)
-                    sk= u_data.skew()
+                    sk= x.skew()
                     corr_head,chead,corel = clean_corr(corr)
                     corelation = zip(chead,corel,corr_head)
                     freqs = unique_freq
@@ -371,6 +398,7 @@ def result(request):
 
                     corel_num1 = [float(i) for i in corel[-1]]
                     corel_num = corel_num1[:-1]
+                    print("corl num", corel_num1, corel_num)
                     if min(corel_num) < 0:
                         m = (-1)*min(corel_num)
                         corel_minmax = [round((m),1)*(-1) - 0.10,round(max(corel_num),1) + 0.10]
@@ -382,6 +410,7 @@ def result(request):
                         corel_minmax = [round(min(corel_num),1) - 0.10,round(max(corel_num),1) + 0.10]
                     skw_num1 = [float(i) for i in skw_graph]
                     skw_num = skw_num1[:-1]
+                    print("skew", skw_num1, skw_num)
                     if min(skw_num) < 0:
                         m = (-1)*min(skw_num)
                         skw_minmax = [round((m),1)*(-1) - 0.10,round(max(skw_num),1) + 0.10]
@@ -475,11 +504,34 @@ def result(request):
                     mmm  = []
                     for i in attr:
                         temp = []
-                        temp.append(i)
-                        temp.append(data[i].min())
-                        temp.append(data[i].max())
-                        temp.append(data[i].mean().round(2))
-                        mmm.append(temp)
+                        # stemp = []
+                        # temp.append(i)
+                        # temp.append(data[i].min())
+                        # temp.append(data[i].max())
+                        # temp.append(data[i].mean().round(2))
+                        # temp.append("min")
+                        # temp.append("max")
+                        # temp.append("mean")
+                        # mmm.append(temp)
+
+
+                        try:
+                            data[i].mean().round(2)
+                            temp.append(i)
+                            temp.append(data[i].min())
+                            temp.append(data[i].max())
+                            temp.append(data[i].mean().round(2))
+                            mmm.append(temp)
+                        except:
+                            temp.append(i)
+                            count1 = data[i].value_counts()
+                            min_max = count1.values.tolist()
+                            min_max_a = count1.index.tolist()
+                            temp.append(min_max_a)
+                            temp.append("hihihi")
+                            temp.append(len(data[i].unique().tolist()))
+                            mmm.append(temp)
+
                     pred_data = PF.cleaned_data['data'].split(";")[:-1]
                     print(pred_data)
                     prediction = [" " for i in classifier]
