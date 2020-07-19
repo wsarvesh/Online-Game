@@ -1,56 +1,58 @@
 {% load static %}
 
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>Classifier</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="{% static 'classify.css' %}">
+  <title>Classifier</title>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    
-    <script src="{% static 'js/select.js' %}"></script>
-    
-    <script language="JavaScript">
-        window.onbeforeunload = confirmExit;
-        function confirmExit()
-        {
-            alert("HELLO");
-        }
-    </script>
+  <link rel="stylesheet" href="{% static 'classify.css' %}">
 
-  </head>
-  <body class="dark">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-    <div class="d-flex justify-content-center align-items-center screen-size">
-      <div class="container-fluid mt-4 mb-4" style="width:80vw;">
-        <div class="row">
-          <div class="col-12">
-            <div class="card dark-card module border-color" id="main1" style="--notchSize: 80px;--bcolor:#008e8c;display:none;">
-                <div class="mt-4 mb-4">
-                  <center>
-                  <h1 class="text-white text-uppercase ">{{file_name}}</h1>
-                  <span class="text-white">{{attr}} attributes in this file</span>
-                </center>
-                </div>
-                <form action="/classifier/select/?file={{file_name}}" method="POST" target="_blank">
-                  {% csrf_token %}
-                <div id="main" style="display:none">
-                  <center>
-                <div class="module pt-2 pb-2 border-color instruct-btn" id="opt" style="--notchSize: 20px;--bcolor:#3f4569;width:50%;">
-                  <center><span class="text-white">S E L E C T &nbsp;&nbsp;&nbsp; O P T I O N S </span></center>
-                </div>
+  <script src="{% static 'js/select.js' %}"></script>
 
-                <div class="container-fluid mt-4 mb-1">
-                  <div class="row">
-                    <div class="col-6">
-                      <div class="mt-3 mb-1 pt-2 pb-2 module border-color h-fill" id="ebox" style="--notchSize:50px;--bcolor:#014143;width:90%;" >
+  <script language="JavaScript">
+    window.onbeforeunload = confirmExit;
+
+    function confirmExit() {
+      alert("HELLO");
+    }
+  </script>
+
+</head>
+
+<body class="dark">
+
+  <div class="d-flex justify-content-center align-items-center screen-size">
+    <div class="container-fluid mt-4 mb-4" style="width:80vw;">
+      <div class="row">
+        <div class="col-12">
+          <div class="card dark-card module border-color" id="main1" style="--notchSize: 80px;--bcolor:#008e8c;display:none;">
+            <div class="mt-4 mb-4">
+              <center>
+                <h1 class="text-white text-uppercase ">{{file_name}}</h1>
+                <span class="text-white">{{attr}} attributes in this file</span>
+              </center>
+            </div>
+            <form action="/classifier/select/?file={{file_name}}" method="POST" target="_blank">
+              {% csrf_token %}
+              <div id="main" style="display:none">
+                <center>
+                  <div class="module pt-2 pb-2 border-color instruct-btn" id="opt" style="--notchSize: 20px;--bcolor:#3f4569;width:50%;">
+                    <center><span class="text-white">S E L E C T &nbsp;&nbsp;&nbsp; O P T I O N S </span></center>
+                  </div>
+
+                  <div class="container-fluid mt-4 mb-1">
+                    <div class="row">
+                      <div class="col-6">
+                        <div class="mt-3 mb-1 pt-2 pb-2 module border-color h-fill" id="ebox" style="--notchSize:50px;--bcolor:#014143;width:90%;">
                           <div class="container">
                             <div class="row">
                               <div class="col-12 mb-3">
@@ -61,8 +63,8 @@
                               {% for i in cols %}
                               <div class="col-4 mb-2 d-flex justify-content-start">
                                 <div class="ch-wrap end-wrap" id="{{forloop.counter}}">
-                                  <input type="radio" name="end" value="{{i}}" id="end-{{forloop.counter}}" class="attrs" hidden/>
-                                  <label for="end-{{forloop.counter}}"  class="mark"></label>
+                                  <input type="radio" name="end" value="{{i}}" id="end-{{forloop.counter}}" class="attrs" hidden />
+                                  <label for="end-{{forloop.counter}}" class="mark"></label>
                                 </div>
                                 &nbsp;&nbsp;
                                 <label for="end-{{forloop.counter}}" class="text-white text-uppercase"> {{i}} </label>
@@ -71,83 +73,83 @@
 
                             </div>
                           </div>
+                        </div>
+                        <div id="end-error" style="display:none">
+                          <span style="color:red">P L E A S E &nbsp; S E L E C T &nbsp; A &nbsp; F I E L D </span>
+                        </div>
                       </div>
-                      <div id="end-error" style="display:none">
-                        <span style="color:red">P L E A S E &nbsp; S E L E C T &nbsp; A &nbsp; F I E L D </span>
+                      <div class="col-6">
+                        <div class="mt-3 mb-1 pt-2 pb-2 module border-color h-fill" id="abox" style="--notchSize:50px;--bcolor:#014143;width:90%;">
+                          <div class="container">
+                            <div class="row">
+                              <div class="col-12 mb-3">
+                                <span class="text-white">S E L E C T &nbsp;&nbsp;&nbsp; A T T R I B U T E S</span>
+                              </div>
+                            </div>
+                            <div class="row ml-5 start-slide" style="display:none" id="attr-select">
+                              {% for i in cols %}
+                              <div class="col-4 mb-2 attr-wrap" id="attr-div-{{forloop.counter}}">
+                                <div class=" d-flex justify-content-start">
+                                  <div class="ch-wrap">
+                                    <input type="checkbox" name="attr" value="{{i}}" id="attr-{{forloop.counter}}" class="attrs attrall" hidden />
+                                    <label for="attr-{{forloop.counter}}" class="mark"></label>
+                                  </div>
+                                  &nbsp;&nbsp;
+                                  <label for="attr-{{forloop.counter}}" class="text-white text-uppercase"> {{i}} </label>
+                                </div>
+                              </div>
+                              {% endfor %}
+                              <div class="col-4 mb-2 attr-wrap">
+                                <div class=" d-flex justify-content-start">
+                                  <div class="ch-wrap">
+                                    <input type="checkbox" value="all" id="attr-all" class="attrs" hidden />
+                                    <label for="attr-all" class="mark"></label>
+                                  </div>
+                                  &nbsp;&nbsp;
+                                  <label for="attr-all" class="text-white text-uppercase"> ALL </label>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div id="attr-error" style="display:none">
+                          <span style="color:red">P L E A S E &nbsp; S E L E C T &nbsp; A &nbsp; F I E L D </span>
+                        </div>
                       </div>
-                    </div>
-                    <div class="col-6">
-                      <div class="mt-3 mb-1 pt-2 pb-2 module border-color h-fill" id="abox" style="--notchSize:50px;--bcolor:#014143;width:90%;">
-                        <div class="container">
-                          <div class="row">
-                            <div class="col-12 mb-3">
-                              <span class="text-white">S E L E C T &nbsp;&nbsp;&nbsp; A T T R I B U T E S</span>
-                            </div>
-                          </div>
-                          <div class="row ml-5 start-slide" style="display:none" id="attr-select">
-                            {% for i in cols %}
-                            <div class="col-4 mb-2 attr-wrap" id="attr-div-{{forloop.counter}}">
-                            <div class=" d-flex justify-content-start">
-                              <div class="ch-wrap">
-                                <input type="checkbox" name="attr" value="{{i}}" id="attr-{{forloop.counter}}" class="attrs attrall" hidden/>
-                                <label for="attr-{{forloop.counter}}"  class="mark"></label>
+                      <div class="col-12">
+                        <div class="mt-5 mb-1 pt-2 pb-2 module border-color h-fill" id="sbox" style="--notchSize:30px;--bcolor:#3f4569;width:90%;">
+                          <div class="container">
+                            <div class="row">
+                              <div class="col-12">
+                                <span class="text-white">T R A I N &nbsp;&nbsp; T E S T &nbsp;&nbsp; S P L I T</span>
+                                <div class="mb-3 d-flex justify-content-between" style="width:85%;">
+                                  <div class="text-white text-uppercase" style="font-size:25px"><span id="value">T r a i n : &nbsp; 80%</span></div>
+                                  <div class="text-white text-uppercase" style="font-size:25px"><span id="tvalue">T e s t : &nbsp; 20%</span></div>
+                                </div>
+                                <div class="mb-4">
+                                  <input type="range" class="slide" min="2" max="9" step="0.5" value="8">
+                                </div>
+
                               </div>
-                              &nbsp;&nbsp;
-                              <label for="attr-{{forloop.counter}}" class="text-white text-uppercase"> {{i}} </label>
                             </div>
-                          </div>
-                            {% endfor %}
-                            <div class="col-4 mb-2 attr-wrap">
-                            <div class=" d-flex justify-content-start">
-                              <div class="ch-wrap">
-                                <input type="checkbox" value="all" id="attr-all" class="attrs" hidden/>
-                                <label for="attr-all"  class="mark"></label>
-                              </div>
-                              &nbsp;&nbsp;
-                              <label for="attr-all" class="text-white text-uppercase"> ALL </label>
-                            </div>
-                          </div>
+
                           </div>
                         </div>
                       </div>
-                      <div id="attr-error" style="display:none">
-                        <span style="color:red">P L E A S E &nbsp; S E L E C T &nbsp; A &nbsp; F I E L D </span>
-                      </div>
-                    </div>
-                    <div class="col-12">
-                      <div class="mt-5 mb-1 pt-2 pb-2 module border-color h-fill" id="sbox" style="--notchSize:30px;--bcolor:#3f4569;width:90%;">
-                        <div class="container">
-                          <div class="row">
-                            <div class="col-12">
-                              <span class="text-white">T R A I N &nbsp;&nbsp; T E S T &nbsp;&nbsp; S P L I T</span>
-                              <div class="mb-3 d-flex justify-content-between" style="width:85%;">
-                                <div class="text-white text-uppercase" style="font-size:25px"><span id="value">T r a i n : &nbsp; 80%</span></div>
-                                <div class="text-white text-uppercase" style="font-size:25px"><span id="tvalue">T e s t : &nbsp; 20%</span></div>
+                      <div class="col-12">
+                        <div class="mt-5 mb-1 pt-2 pb-2 module border-color h-fill" id="cbox" style="--notchSize:60px;--bcolor:#3f4569;width:90%;height:25vh;">
+                          <div class="container-fluid">
+                            <div class="row">
+                              <div class="col-12">
+                                <span class="text-white">S E L E C T &nbsp;&nbsp;&nbsp; C L A S S I F I C A T I O N &nbsp;&nbsp;&nbsp; M E T H O D S</span>
                               </div>
-                              <div class="mb-4">
-                                <input type="range" class="slide" min="2" max="9" step="0.5" value="8">
-                              </div>
-
                             </div>
-                          </div>
-
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-12">
-                      <div class="mt-5 mb-1 pt-2 pb-2 module border-color h-fill" id="cbox" style="--notchSize:60px;--bcolor:#3f4569;width:90%;height:25vh;">
-                        <div class="container-fluid">
-                          <div class="row">
-                            <div class="col-12">
-                              <span class="text-white">S E L E C T &nbsp;&nbsp;&nbsp; C L A S S I F I C A T I O N &nbsp;&nbsp;&nbsp; M E T H O D S</span>
-                            </div>
-                          </div>
                             <div class="row mt-2 d-flex justify-content-around" style="width:100%" id="class-select">
                               {% for i in classifiers %}
                               <div class="col-4 mb-2 mt-3 d-flex justify-content-center">
                                 <div class="ch-wrap">
-                                  <input type="checkbox" name="classifier" value="{{i}}" id="classify{{forloop.counter}}" class="attrs classify" hidden/>
-                                  <label for="classify{{forloop.counter}}"  class="mark"></label>
+                                  <input type="checkbox" name="classifier" value="{{i}}" id="classify{{forloop.counter}}" class="attrs classify" hidden />
+                                  <label for="classify{{forloop.counter}}" class="mark"></label>
                                 </div>
                                 &nbsp;&nbsp;
                                 <label for="classify{{forloop.counter}}" class="text-white text-uppercase" style="letter-spacing: 2px;"> {{i}} </label>
@@ -155,26 +157,26 @@
                               {% endfor %}
                               <div class="col-4 mb-2 mt-3 d-flex justify-content-center">
                                 <div class="ch-wrap">
-                                  <input type="checkbox" name="" value="{{i}}" id="classify-all" class="attrs" hidden/>
-                                  <label for="classify-all"  class="mark"></label>
+                                  <input type="checkbox" name="" value="{{i}}" id="classify-all" class="attrs" hidden />
+                                  <label for="classify-all" class="mark"></label>
                                 </div>
                                 &nbsp;&nbsp;&nbsp;&nbsp;
                                 <label for="classify-all" class="text-white" style="letter-spacing: 2px;"> ALL CLASSIFIERS</label>
                               </div>
                             </div>
 
+                          </div>
                         </div>
-                      </div>
-                      <div id="class-error" style="display:none">
-                        <span style="color:red">P L E A S E &nbsp; S E L E C T &nbsp; A &nbsp; F I E L D </span>
+                        <div id="class-error" style="display:none">
+                          <span style="color:red">P L E A S E &nbsp; S E L E C T &nbsp; A &nbsp; F I E L D </span>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
 
-                <!-- </center> -->
+                  <!-- </center> -->
 
-                <div style="width:75%">
+                  <div style="width:75%">
 
                     <div class="d-flex justify-content-between align-items-center">
 
@@ -184,12 +186,12 @@
                         </center>
                       </div>
 
-                        <div class="mt-3 mb-3 pt-2 pb-2 module border-color light-card hover-btn" id="start" style="--notchSize:15px;--bcolor:#014143;--btn:25%">
-                          <center>
-                            <span id="loading">S T A R T</span>
-                          </center>
-                        </div>
-                        <div style="display:none">
+                      <div class="mt-3 mb-3 pt-2 pb-2 module border-color light-card hover-btn" id="start" style="--notchSize:15px;--bcolor:#014143;--btn:25%">
+                        <center>
+                          <span id="loading">S T A R T</span>
+                        </center>
+                      </div>
+                      <div style="display:none">
 
                         <input type="number" name="train" id="train_val" value="80" />
                         <input type="number" name="test" id="test_val" value="20" />
@@ -200,45 +202,45 @@
 
                     </div>
 
-              </div>
+                  </div>
 
-              </center>
+                </center>
 
-            </div>
-          </form>
               </div>
+            </form>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
-    <script type="text/javascript">
-          var elem = document.querySelector('input[type="range"]');
+  <script type="text/javascript">
+    var elem = document.querySelector('input[type="range"]');
 
-          var rangeValue = function(){
-            var x = elem.value;
-            var val = document.getElementById('value');
-            var tval = document.getElementById('tvalue');
-            var train = x*10;
-            var test = 100-train;
-            console.log(train,test);
-            var dispval = "T r a i n : &nbsp; "+ train + "%";
-            var disptval = "T e s t : &nbsp; "+ test + "%";
-            val.innerHTML = dispval;
-            tval.innerHTML = disptval;
+    var rangeValue = function() {
+      var x = elem.value;
+      var val = document.getElementById('value');
+      var tval = document.getElementById('tvalue');
+      var train = x * 10;
+      var test = 100 - train;
+      console.log(train, test);
+      var dispval = "T r a i n : &nbsp; " + train + "%";
+      var disptval = "T e s t : &nbsp; " + test + "%";
+      val.innerHTML = dispval;
+      tval.innerHTML = disptval;
 
-            var train_ip = document.getElementById("train_val");
-            var test_ip = document.getElementById("test_val");
+      var train_ip = document.getElementById("train_val");
+      var test_ip = document.getElementById("test_val");
 
-            train_ip.value = train;
-            test_ip.value = test;
-          }
+      train_ip.value = train;
+      test_ip.value = test;
+    }
 
-          elem.addEventListener("input", rangeValue);
-    </script>
-    
-    <!-- <script type="text/javascript">
-    
+    elem.addEventListener("input", rangeValue);
+  </script>
+
+  <!-- <script type="text/javascript">
+
 
         window.onbeforeunload = function (e) {
 
@@ -251,10 +253,11 @@
         };
     </script> -->
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> -->
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-  </body>
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+</body>
+
 </html>
