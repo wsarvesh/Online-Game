@@ -44,13 +44,14 @@
                       </div>
                     </div>
                     <div class="row d-flex justify-content-around">
-                      {% for i,j in classifier %}
+                      {% for i,j,a in classifier %}
                       <div class="col-4 mb-4 start-slide" id="ans{{forloop.counter}}" style="display:none">
                         <center>
                         <div class="module pt-2 pb-2 border-color h-fill instruct classify-card" style="--notchSize: 30px;--bcolor:#3f4569;width:80%;">
                           <div class="class-card" style="width:100%">
                             <center>
                               <span class="text-white text-uppercase" style="letter-spacing: 2px;">{{i}}</span><br>
+                              <span class="text-white text-uppercase" style="letter-spacing: 2px;">{{a}}%</span><br>
                             </center>
                           </div>
 
@@ -125,9 +126,6 @@
                       </div>
                     </div>
 
-                    <!-- <div style="width:100%">
-                      <center><span class="text-uppercase" style="color:red;letter-spacing:2px">SOME ERROR HAS OCCURED</span></center>
-                    </div> -->
 
                     <div style="width:95%">
                         <div class="d-flex justify-content-end align-items-center">
@@ -143,9 +141,6 @@
                         </div>
                   </div>
                   </form>
-
-
-
 
             </div>
               </div>

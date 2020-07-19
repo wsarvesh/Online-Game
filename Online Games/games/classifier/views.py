@@ -35,7 +35,6 @@ from io import StringIO, BytesIO
 from django.contrib.auth.models import User
 from django.contrib.sessions.models import Session
 from django.utils import timezone
-import os
 
 clfa = LogisticRegression(random_state = 42)
 clfb = SVC(random_state = 912, kernel = 'rbf')
@@ -69,7 +68,6 @@ def clean_report(cl):
 def clean_corr(corr):
     val = corr.values.tolist()
     head = list(corr.columns)
-    # head_b = [""]+head
     h_small = [i[:2] for i in head]
     fin = []
     for i in val:
@@ -79,7 +77,6 @@ def clean_corr(corr):
             if j > 0:
                 k = "+"+k
             x.append(k)
-        # l = [h]+x
         fin.append(x)
 
     return h_small,head,fin
@@ -100,8 +97,6 @@ def graph_range(x):
     val = 0.25 * (k+1)
     return val
 
-
-
 def training(clf,xtrain, xtest, ytrain, ytest,name,name2,sk):
     t0 = time.clock()
     cl = clf.fit(xtrain,ytrain)
@@ -115,18 +110,12 @@ def training(clf,xtrain, xtest, ytrain, ytest,name,name2,sk):
     tr_time = "{:.2f}".format((t1 - t0) * 1000)
     te_time = "{:.2f}".format((t2 - t1) * 1000)
     acc = "{:.2f}".format((sum(ytest == yp) / float(len(yp))) * 100)
-    # print(acc)
     acc_score = accuracy_score(ytest, yp)
-    # print(acc_score)
     d_acc = "{:.2f}".format(100-float(acc))
-    # print(d_acc)
     cl = classification_report(ytest, yp)
     cl_report = clean_report(cl)
-    # string = string.replace(/ +/g, ' ');
     prf_score = precision_recall_fscore_support(ytest, yp, average='macro')
-    # print(prf_score)
     prfs = ["{:.2f}".format(float(i)*100) for i in prf_score[:3]]
-    # print(prfs)
     report = [name,cl,acc,d_acc,tr_time,te_time,cl_report,prfs,name2]
     return report
 
@@ -149,37 +138,41 @@ def train_model(end, attr, classifier, train, test, data, sk):
             str_dict[c] = di
         else:
             int_feat.append(c)
-    print(str_dict)
     for c in str_feat:
         x[c] = x[c].map(str_dict[c])
-    print(x)
     xtrain, xtest, ytrain, ytest = train_test_split(x, y, test_size=test, random_state=0)
-    # print(len(xtrain), len(xtest), len(ytrain), len(ytest), xtrain)
     xtrain[int_feat] = scaler.fit_transform(xtrain[int_feat])
     xtest[int_feat] = scaler.transform(xtest[int_feat])
     classification_report = []
+    accr = []
     for i in classifier:
         if i == 'Logistic Regression':
             report = training(clfa,xtrain, xtest, ytrain, ytest,i,"Log Reg", sk)
             classification_report.append(report)
+            accr.append(report[2])
         elif i == 'Decision Tree':
             report = training(clfd,xtrain, xtest, ytrain, ytest,i,"D Tree", sk)
             classification_report.append(report)
+            accr.append(report[2])
         elif i == 'Support Vector Machine':
             report = training(clfb,xtrain, xtest, ytrain, ytest,i,"SVM", sk)
             classification_report.append(report)
+            accr.append(report[2])
         elif i == 'RandomForest':
             report = training(clff,xtrain, xtest, ytrain, ytest,i,"RF", sk)
             classification_report.append(report)
+            accr.append(report[2])
         elif i == 'XGBoost':
             report = training(clfc,xtrain, xtest, ytrain, ytest,i,"XGB", sk)
             classification_report.append(report)
+            accr.append(report[2])
     path = 'Online-Game/Online Games/games/classifier/media/models/'
     filename = path + sk + "_" +'scaler.pkl'
     dump(scaler, open(filename, 'wb'))
     pred_req = []
     pred_req.append(int_feat)
     pred_req.append(str_dict)
+    pred_req.append(accr)
     return classification_report, pred_req
 
 def load_model(sk, name):
@@ -190,7 +183,6 @@ def load_model(sk, name):
     for i in name:
         path = 'Online-Game/Online Games/games/classifier/media/models/'
         filename = path + i + "_" + sk + "_" +'model.sav'
-        # print(filename)
         loaded_model = pickle.load(open(filename, 'rb'))
         models.append(loaded_model)
     return models, scaler
@@ -200,12 +192,9 @@ def pred_model(data,models,int_feat, str_dict, attr, scaler):
     predi = [float(i) if i.replace('.','').isdigit() else i for i in pred]
     predict = {}
     for i in range(len(predi)):
-        # print(attr[i])
         if attr[i] in  int_feat:
             predict[attr[i]] = predi[i]
         else:
-            # print(str_dict[attr[i]])
-            # print(str_dict[attr[i]][predi[i]])
             predict[attr[i]] = str_dict[attr[i]][predi[i]]
     pre = pd.DataFrame(predict,index = [0])
     pre[int_feat] = scaler.transform(pre[int_feat])
@@ -216,7 +205,6 @@ def pred_model(data,models,int_feat, str_dict, attr, scaler):
 
 
 def home(request):
-    print(request.session.session_key)
     if request.method == "POST":
         IP = InputForm(request.POST)
         SP = SessionForm(request.POST)
@@ -225,7 +213,6 @@ def home(request):
             if session == "no":
                 return render(request,'classifier/index.html', {'error':1})
             elif session == "yes":
-                # del request.session['data']
                 request.session.flush()
                 return render(request,'classifier/index.html', {'error':0})
         if IP.is_valid():
@@ -254,7 +241,6 @@ def home(request):
 
 def select(request):
     if 'data' in request.session:
-        print(request.session.session_key)
         if request.method == "POST":
             SF = SelectForm(request.POST)
             if SF.is_valid():
@@ -330,7 +316,6 @@ def result(request):
                     for i in attr:
                         temp = []
                         stemp = []
-                        # x = dataf[i].mean().round(2)
                         try:
                             x = dataf[i].mean()
                             temp.append(i)
@@ -338,10 +323,8 @@ def result(request):
                             temp.append(dataf[i].max())
                             k = "{:.2f}".format(x)
                             temp.append(k)
-                            # temp.append("mean")
                             mmm.append(temp)
                         except:
-                            # dataf[i].min()
                             stemp.append(i)
                             count1 = dataf[i].value_counts()
                             min_max = count1.values.tolist()
@@ -358,7 +341,6 @@ def result(request):
                             freq.append(j)
                             unique.append(k)
                         unique_freq.append([i, unique, freq])
-                    # mmm_t = [end, data[end].min(), data[end].max(), data[end].mean().round(2)]
                     count = data[end].value_counts()
                     unique_freq_t = [end, count.index.tolist(), count.values.tolist()]
                     ut = len(unique_freq_t[1])
@@ -371,9 +353,7 @@ def result(request):
                     all_attr = [i for i in attr]
                     all_attr.append(end)
                     u_data = pd.DataFrame(data, columns=all_attr)
-
-
-
+                    
                     str_feat = []
                     str_dict = {}
                     int_feat = []
@@ -386,13 +366,10 @@ def result(request):
                             str_dict[c] = di
                         else:
                             int_feat.append(c)
-                    print(str_dict)
                     for c in str_feat:
                         x[c] = x[c].map(str_dict[c])
 
-
                     corr = x.corr(method='pearson')
-                    print(corr)
                     sk= x.skew()
                     corr_head,chead,corel = clean_corr(corr)
                     corelation = zip(chead,corel,corr_head)
@@ -401,7 +378,6 @@ def result(request):
 
                     corel_num1 = [float(i) for i in corel[-1]]
                     corel_num = corel_num1[:-1]
-                    print("corl num", corel_num1, corel_num)
                     if min(corel_num) < 0:
                         m = (-1)*min(corel_num)
                         corel_minmax = [round((m),1)*(-1) - 0.10,round(max(corel_num),1) + 0.10]
@@ -413,7 +389,6 @@ def result(request):
                         corel_minmax = [round(min(corel_num),1) - 0.10,round(max(corel_num),1) + 0.10]
                     skw_num1 = [float(i) for i in skw_graph]
                     skw_num = skw_num1[:-1]
-                    print("skew", skw_num1, skw_num)
                     if min(skw_num) < 0:
                         m = (-1)*min(skw_num)
                         skw_minmax = [round((m),1)*(-1) - 0.10,round(max(skw_num),1) + 0.10]
@@ -431,10 +406,10 @@ def result(request):
                     d['bar_graph'] = bar_graph
                     d['attr_dist'] = unique_freq
                     return render(request, 'classifier/data.html',d)
+                    
                 elif redirect == "results_page":
                     sk = str(request.session.session_key)
                     classification_report, pred_req = train_model(end, attr, classifier, float(train)/100, float(test)/100, data, sk)
-                    # print(classification_report)
                     request.session['report'] = pred_req
                     acc = []
                     pre = []
@@ -461,12 +436,10 @@ def result(request):
                 start = PF.cleaned_data['start']
                 if start == "down":
                         path = 'Online-Game/Online Games/games/classifier/media/models/'
-                        # filename = path + i + "_" + sk + "_" +'model.sav'
                         classifier = request.session['classifier']
                         classifier = re.findall(r"\'(.+?)\'", classifier)
                         sk = str(request.session.session_key)
                         filenames = [path + i + "_" + sk + "_" + 'model.sav' for i in classifier]
-                        print(filenames)
 
                         zip_subdir = "Models"
                         zip_filename = zip_subdir + ".zip"
@@ -475,16 +448,10 @@ def result(request):
                         zf = zipfile.ZipFile(s, "w")
 
                         for fpath in filenames:
-                            # Calculate path for file in zip
                             fdir, fname = os.path.split(fpath)
                             zip_path = os.path.join(zip_subdir, fname)
-
-                            # Add file, at correct path
                             zf.write(fpath, zip_path)
-
-                        # Must close zip for all contents to be written
                         zf.close()
-
 
                         response = HttpResponse(s.getvalue(), content_type='application/zip')
                         response['Content-Disposition'] = 'attachment; filename=' + zip_filename
@@ -518,22 +485,18 @@ def result(request):
                             mmm.append(temp)
 
                     pred_data = PF.cleaned_data['data'].split(";")[:-1]
-                    print(pred_data)
                     prediction = [" " for i in classifier]
                     if len(pred_data) != 0:
                         report = request.session['report']
-                        print(report)
-                        int_feat = report[-2]
-                        str_dict = report[-1]
+                        int_feat = report[0]
+                        str_dict = report[1]
+                        accr = report[2]
                         sk = str(request.session.session_key)
                         models, scaler = load_model(sk, classifier)
                         pred = pred_model(PF.cleaned_data['data'], models, int_feat, str_dict, attr, scaler)
                         prediction = [i[0] for i in pred]
-                        print(prediction)
-                    return render(request, 'classifier/predict.html', {'attr':zip(attr, mmm), 'end':end, 'classifier':zip(classifier,prediction), 'file':file})
+                    return render(request, 'classifier/predict.html', {'attr':zip(attr, mmm), 'end':end, 'classifier':zip(classifier,prediction,accr), 'file':file})
 
     return render(request,'classifier/index.html')
 
-def predict(request,x):
-    return render(request,'classifier/predict.html')
 # Create your views here.
