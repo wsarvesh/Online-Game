@@ -141,8 +141,9 @@ def train_model(end, attr, classifier, train, test, data, sk):
     for c in str_feat:
         x[c] = x[c].map(str_dict[c])
     xtrain, xtest, ytrain, ytest = train_test_split(x, y, test_size=test, random_state=0)
-    xtrain[int_feat] = scaler.fit_transform(xtrain[int_feat])
-    xtest[int_feat] = scaler.transform(xtest[int_feat])
+    if len(int_feat) > 0 :
+        xtrain[int_feat] = scaler.fit_transform(xtrain[int_feat])
+        xtest[int_feat] = scaler.transform(xtest[int_feat])
     classification_report = []
     accr = []
     for i in classifier:
@@ -197,7 +198,8 @@ def pred_model(data,models,int_feat, str_dict, attr, scaler):
         else:
             predict[attr[i]] = str_dict[attr[i]][predi[i]]
     pre = pd.DataFrame(predict,index = [0])
-    pre[int_feat] = scaler.transform(pre[int_feat])
+    if len(int_feat) > 0:
+        pre[int_feat] = scaler.transform(pre[int_feat])
     p = []
     for i in models:
         p.append(i.predict(pre))
@@ -353,7 +355,7 @@ def result(request):
                     all_attr = [i for i in attr]
                     all_attr.append(end)
                     u_data = pd.DataFrame(data, columns=all_attr)
-                    
+
                     str_feat = []
                     str_dict = {}
                     int_feat = []
@@ -406,7 +408,7 @@ def result(request):
                     d['bar_graph'] = bar_graph
                     d['attr_dist'] = unique_freq
                     return render(request, 'classifier/data.html',d)
-                    
+
                 elif redirect == "results_page":
                     sk = str(request.session.session_key)
                     classification_report, pred_req = train_model(end, attr, classifier, float(train)/100, float(test)/100, data, sk)
@@ -486,11 +488,12 @@ def result(request):
 
                     pred_data = PF.cleaned_data['data'].split(";")[:-1]
                     prediction = [" " for i in classifier]
+                    report = request.session['report']
+                    accr = report[2]
                     if len(pred_data) != 0:
                         report = request.session['report']
                         int_feat = report[0]
                         str_dict = report[1]
-                        accr = report[2]
                         sk = str(request.session.session_key)
                         models, scaler = load_model(sk, classifier)
                         pred = pred_model(PF.cleaned_data['data'], models, int_feat, str_dict, attr, scaler)

@@ -5,5 +5,4 @@ urlpatterns = [
     path('',views.home),
     path('select/',views.select),
     path('result/',views.result),
-    path('predict/',views.predict),
 ]
