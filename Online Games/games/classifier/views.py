@@ -106,7 +106,7 @@ def training(clf,xtrain, xtest, ytrain, ytest,name,name2,sk):
     t0 = time.clock()
     cl = clf.fit(xtrain,ytrain)
     model = cl
-    path = 'classifier/media/models/'
+    path = 'Online-Game/Online Games/games/classifier/media/models/'
     filename = path + name + "_" + sk + "_" +'model.sav'
     pickle.dump(model, open(filename, 'wb'))
     t1 = time.clock()
@@ -174,7 +174,7 @@ def train_model(end, attr, classifier, train, test, data, sk):
         elif i == 'XGBoost':
             report = training(clfc,xtrain, xtest, ytrain, ytest,i,"XGB", sk)
             classification_report.append(report)
-    path = 'classifier/media/models/'
+    path = 'Online-Game/Online Games/games/classifier/media/models/'
     filename = path + sk + "_" +'scaler.pkl'
     dump(scaler, open(filename, 'wb'))
     pred_req = []
@@ -184,11 +184,11 @@ def train_model(end, attr, classifier, train, test, data, sk):
 
 def load_model(sk, name):
     models = []
-    path = 'classifier/media/models/'
+    path = 'Online-Game/Online Games/games/classifier/media/models/'
     filename = path + sk + "_" +'scaler.pkl'
     scaler = load(open(filename, 'rb'))
     for i in name:
-        path = 'classifier/media/models/'
+        path = 'Online-Game/Online Games/games/classifier/media/models/'
         filename = path + i + "_" + sk + "_" +'model.sav'
         # print(filename)
         loaded_model = pickle.load(open(filename, 'rb'))
@@ -233,24 +233,24 @@ def home(request):
             if demo != "" :
                 demo = demo + ".csv"
                 og_name = demo
-                data = pd.read_csv("classifier/media/demo_data/" + demo, encoding='latin1')
+                data = pd.read_csv("Online-Game/Online Games/games/classifier/media/demo_data/" + demo, encoding='latin1')
                 request.session['data'] = data.to_json()
                 return HttpResponseRedirect("select/?file="+og_name)
             file = request.FILES['file']
             fs = FileSystemStorage(location='classifier/media/user_data/')
             name = "user_file." + file.name.split(".")[-1]
             og_name = file.name
-            dir = listdir('classifier/media/user_data/')
+            dir = listdir('Online-Game/Online Games/games/classifier/media/user_data/')
             [fs.delete(i) for i in dir]
             filename = fs.save(name, file)
-            data = pd.read_csv("classifier/media/user_data/"+filename, encoding='latin1')
+            data = pd.read_csv("Online-Game/Online Games/games/classifier/media/user_data/"+filename, encoding='latin1')
             request.session['data'] = data.to_json()
             return HttpResponseRedirect("select/?file="+og_name)
     if 'data' in request.session:
         return render(request,'classifier/index.html', {'error':1})
     IP = InputForm()
     SP = SessionForm()
-    return render(request,'classifier/index.html')
+    return render(request,'classifier/index.html',)
 
 def select(request):
     if 'data' in request.session:
@@ -330,12 +330,15 @@ def result(request):
                     for i in attr:
                         temp = []
                         stemp = []
+                        # x = dataf[i].mean().round(2)
                         try:
-                            dataf[i].mean().round(2)
+                            x = dataf[i].mean()
                             temp.append(i)
                             temp.append(dataf[i].min())
                             temp.append(dataf[i].max())
-                            temp.append(dataf[i].mean().round(2))
+                            k = "{:.2f}".format(x)
+                            temp.append(k)
+                            # temp.append("mean")
                             mmm.append(temp)
                         except:
                             # dataf[i].min()
@@ -454,15 +457,10 @@ def result(request):
                     max_time = max(max(time_tr),max(time_te))
                     time_graph = [time_tr,time_te,max_time]
                     return render(request, 'classifier/result.html', {'classification_report':classification_report,'graphs':graphs,"time_graph":time_graph,"name":name,"file":file})
-                # elif start == "predict":
-                #     model == SF.cleaned_data['model']
-                #     print(model)
-                #     return render(request, 'classifier/predict.html', {"file":file, "model":model})
             if PF.is_valid():
-                # report = request.session['report']
                 start = PF.cleaned_data['start']
                 if start == "down":
-                        path = 'classifier/media/models/'
+                        path = 'Online-Game/Online Games/games/classifier/media/models/'
                         # filename = path + i + "_" + sk + "_" +'model.sav'
                         classifier = request.session['classifier']
                         classifier = re.findall(r"\'(.+?)\'", classifier)
@@ -473,10 +471,7 @@ def result(request):
                         zip_subdir = "Models"
                         zip_filename = zip_subdir + ".zip"
 
-                        # Open StringIO to grab in-memory ZIP contents
-                        # s = StringIO()
                         s = BytesIO()
-                        # The zip compressor
                         zf = zipfile.ZipFile(s, "w")
 
                         for fpath in filenames:
@@ -504,23 +499,13 @@ def result(request):
                     mmm  = []
                     for i in attr:
                         temp = []
-                        # stemp = []
-                        # temp.append(i)
-                        # temp.append(data[i].min())
-                        # temp.append(data[i].max())
-                        # temp.append(data[i].mean().round(2))
-                        # temp.append("min")
-                        # temp.append("max")
-                        # temp.append("mean")
-                        # mmm.append(temp)
-
-
                         try:
-                            data[i].mean().round(2)
+                            x = data[i].mean()
                             temp.append(i)
                             temp.append(data[i].min())
                             temp.append(data[i].max())
-                            temp.append(data[i].mean().round(2))
+                            k = "{:.2f}".format(x)
+                            temp.append(k)
                             mmm.append(temp)
                         except:
                             temp.append(i)
@@ -545,8 +530,6 @@ def result(request):
                         pred = pred_model(PF.cleaned_data['data'], models, int_feat, str_dict, attr, scaler)
                         prediction = [i[0] for i in pred]
                         print(prediction)
-                        # return render(request, 'classifier/predict.html', {'attr':zip(attr, mmm), 'end':end, 'classifier':zip(classifier,prediction), 'file':file})
-                    # return render(request, 'classifier/predict.html', {'attr':zip(attr, mmm), 'end':end, 'classifier':classifier, 'file':file})
                     return render(request, 'classifier/predict.html', {'attr':zip(attr, mmm), 'end':end, 'classifier':zip(classifier,prediction), 'file':file})
 
     return render(request,'classifier/index.html')
