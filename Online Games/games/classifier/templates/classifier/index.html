@@ -1,4 +1,5 @@
 {% load static %}
+{% load user_agents %}
 
 <html lang="en">
 
@@ -109,7 +110,60 @@
 </body>
 {% else %}
 
-<body class="dark">
+
+    {% if request|is_mobile %}
+    <body class="dark">
+
+  <div class="d-flex justify-content-center align-items-center screen-size">
+    <div class="container">
+      <div class="row">
+
+        <div class="col-12 mt-3">
+          <div class="card dark-card module border-color" id="main1" style="--notchSize: 80px;--bcolor:#008e8c;display:none;">
+            <div class="mt-5 mb-3">
+              <center>
+                <h1 class="text-white text-uppercase">Welcome to the Classifier</h1>
+              </center>
+            </div>
+            <div id="main" style="display:none">
+
+                <center>
+                  <div class="module pt-2 pb-2 mb-4 border-color" style="--notchSize: 20px;--bcolor:#3f4569;width:80%;">
+                    <center><span class="text-danger font-weight-bold">W A R N I N G</span></center>
+                    <div class="mr-3 ml-3 mt-3 mb-3 text-white">
+                      <span style="font-size:4vh">THIS WEBSITE IS ONLY DESKTOP COMPATABLE</span>
+                    </div>
+                  </div>
+                  <!-- </center> -->
+
+
+                  <div style="width:70%">
+                    <div class="d-flex justify-content-center align-items-center">
+                      <div class="mt-3 mb-5 pt-2 pb-2 module border-color light-card hover-btn2" style="--notchSize:15px;--bcolor:#014143;--btn:35%">
+                        <center>
+                            <a href = '/' style="color:white; text-decoration:none;"> <span> B A C K </span> </a>
+                        </center>
+                      </div>
+                    </div>
+                  </div>
+                </center>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+</body>
+    {% else %}
+    <body class="dark">
 
   <div class="d-flex justify-content-center align-items-center screen-size">
     <div class="container">
@@ -225,6 +279,8 @@
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 </body>
+    {% endif %}
+
 {% endif %}
 
 </html>
